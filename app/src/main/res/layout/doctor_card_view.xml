@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:cardCornerRadius="8dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="@color/backgroundDark">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="15dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:elevation="5dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/d1"
+            android:id="@+id/portrait_iv"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            app:layout_constraintHorizontal_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp"
+            android:paddingBottom="15dp"
+            android:paddingRight="15dp"
+            app:layout_constraintLeft_toRightOf="@id/portrait_iv"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="25dp"
+            android:id="@+id/mini_description_layout">
+
+            <TextView
+                android:id="@+id/name_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="СИБРИНА\nЕлена Викторовна"
+                android:textColor="@color/colorPrimaryLight"
+                android:fontFamily="sans-serif"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_gravity="start" />
+
+            <TextView
+                android:id="@+id/spec_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:layout_gravity="start"
+                android:textSize="12sp"
+                android:textColor="@color/textColorLight"
+                android:text="Главный врач, косметолог"/>
+
+            <Button
+                android:id="@+id/log_in_btn"
+                android:maxWidth="165dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="Записаться на прием"
+                android:textColor="@color/colorAccent"
+                android:fontFamily="sans-serif-medium"
+                android:background="@drawable/mini_log_in_btn"
+                android:textSize="10sp"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mini_description_layout"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/textColor"
+            android:visibility="visible"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.cardview.widget.CardView>

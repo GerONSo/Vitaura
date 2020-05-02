@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/services"
+        android:icon="@drawable/ic_list_24dp"
+        android:title="Услуги"/>
+    <item
+        android:id="@+id/doctors"
+        android:icon="@drawable/ic_assignment_ind_black_24dp"
+        android:title="Специалисты"/>
+
+    <item
+        android:id="@+id/prices"
+        android:icon="@drawable/ic_playlist_add_24dp"
+        android:title="Цены"/>
+
+    <item
+        android:id="@+id/reviews"
+        android:title="Отзывы"
+        android:icon="@drawable/ic_message_24dp"/>
+
+</menu>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".about.TabAboutFragment"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_title_about1"
+        tools:text="Клиника эстетической медицины Vitaura"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:textSize="23sp"
+        android:fontFamily="sans-serif"
+        android:layout_marginTop="15dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_text_about1"
+        android:textColor="@color/textColor"
+        android:fontFamily="sans-serif"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_title_about2"
+        tools:text="ПАЦИЕНТЫ КЛИНИКИ Vitaura"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:fontFamily="sans-serif"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_text_about2"
+        android:textColor="@color/textColor"
+        android:textSize="15sp"
+        android:fontFamily="sans-serif"
+        android:layout_marginTop="15dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_title_about3"
+        tools:text="ПОЧЕМУ ВЫБИРАЮТ КЛИНИКУ Vitaura"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:fontFamily="sans-serif"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_text_about3"
+        android:textColor="@color/textColor"
+        android:textSize="15sp"
+        android:fontFamily="sans-serif"
+        android:layout_marginTop="15dp"
+        />
+
+    <Button
+        android:id="@+id/log_in_about_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/sign_up_button"
+        android:text="Записаться на прием"
+        android:textColor="@color/colorAccent"
+        android:layout_marginBottom="15dp"/>
+
+
+
+</LinearLayout>
