@@ -10,23 +10,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 
 import com.example.vitaura.R
-import com.example.vitaura.SendReviewFragment
 import kotlinx.android.synthetic.main.fragment_tab_about.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class TabAboutFragment : Fragment() {
-
-    companion object {
-
-        lateinit var openSendReviewFragment: () -> Unit
-
-        fun newInstance(fragmentCallback: () -> Unit): TabAboutFragment {
-            openSendReviewFragment = fragmentCallback
-            return TabAboutFragment()
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

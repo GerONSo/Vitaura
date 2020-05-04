@@ -1,46 +1,54 @@
-package com.example.vitaura
+package com.example.vitaura.send_review
 
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.text.Layout
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+
+import com.example.vitaura.R
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_send_review.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class SendReviewFragment : Fragment() {
+class SendReviewResultFragment : Fragment() {
 
     lateinit var toolbar: Toolbar
+
+    companion object {
+
+        lateinit var tag: String
+
+        fun newInstance(newTag: String): SendReviewResultFragment {
+            tag = newTag
+            return SendReviewResultFragment()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_send_review, container, false)
+        return inflater.inflate(R.layout.fragment_send_review_result, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        updateUI()
-        et_name.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                send_review_logo_layout.visibility = View.GONE
-            } else {
-                send_review_logo_layout.visibility = View.VISIBLE
+        when(SendReviewResultFragment.tag) {
+            SendReviewViewModel.SEND_REVIEW -> {
+                updateUI("Отзыв")
+            }
+            SendReviewViewModel.LOGIN -> {
+                updateUI("Запись на прием")
             }
         }
     }
 
-    fun updateUI() {
+    fun updateUI(newTitle: String) {
         toolbar = activity?.toolbar!!
         toolbar.setBackgroundColor(
             ContextCompat.getColor(requireContext(),
@@ -48,8 +56,11 @@ class SendReviewFragment : Fragment() {
             ))
         toolbar.navigationIcon?.setColorFilter(resources.getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP)
         val title = activity?.toolbar_title
-        title?.setTextColor(ContextCompat.getColor(requireContext(), R.color.textColor))
-        title?.text = "Специалисты"
+        title?.setTextColor(
+            ContextCompat.getColor(requireContext(),
+                R.color.textColor
+            ))
+        title?.text = newTitle
         val toolbarLogo = activity?.toolbar_logo
         toolbarLogo?.visibility = View.INVISIBLE
         val toolbarTitle = activity?.toolbar_title

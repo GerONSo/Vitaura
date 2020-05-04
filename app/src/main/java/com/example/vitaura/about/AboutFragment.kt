@@ -28,16 +28,6 @@ class AboutFragment : Fragment() {
     val TAB_ABOUT = "T1"
     val TAB_LICENSE = "T2"
 
-    companion object {
-
-        lateinit var openSendReviewFragment: () -> Unit
-
-        fun newInstance(fragmentCallback: () -> Unit): AboutFragment {
-            openSendReviewFragment = fragmentCallback
-            return AboutFragment()
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,7 +51,7 @@ class AboutFragment : Fragment() {
             })
         }
 
-        val tabAboutFragment = TabAboutFragment.newInstance(openSendReviewFragment)
+        val tabAboutFragment = TabAboutFragment()
         changeAboutFragment(tabAboutFragment, TAB_ABOUT)
         about_tab_layout.apply {
             addTab(about_tab_layout.newTab().setText("Информация"))
@@ -74,7 +64,7 @@ class AboutFragment : Fragment() {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     when (about_tab_layout.selectedTabPosition) {
                         0 -> {
-                            val tabAboutFragment = TabAboutFragment.newInstance(openSendReviewFragment)
+                            val tabAboutFragment = TabAboutFragment()
                             changeAboutFragment(tabAboutFragment, TAB_ABOUT)
                         }
                         1 -> {

@@ -2,7 +2,6 @@ package com.example.vitaura
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -11,13 +10,16 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import com.example.vitaura.about.AboutDataRepository
 import com.example.vitaura.about.AboutFragment
 import com.example.vitaura.doctors.DoctorFragment
 import com.example.vitaura.doctors.DoctorsFragment
 import com.example.vitaura.prices.PricesFragment
 import com.example.vitaura.reviews.ReviewFragment
+import com.example.vitaura.send_review.SendReviewFragment
+import com.example.vitaura.send_review.SendReviewRepository
+import com.example.vitaura.send_review.SendReviewResultFragment
+import com.example.vitaura.send_review.SendReviewViewModel
 import com.example.vitaura.special.SpecialFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -29,7 +31,7 @@ import java.lang.IllegalStateException
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-//    var fragmentStack = ArrayList<String>()
+    //    var fragmentStack = ArrayList<String>()
     val model: MainViewModel by viewModels()
     val ABOUT_FRAGMENT_TAG = "F0"
     val DOCTORS_FRAGMENT_TAG = "F1"
@@ -38,6 +40,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     val PRICES_FRAGMENT_TAG = "F4"
     val DOCTOR_FRAGMENT_TAG = "F5"
     val SEND_REVIEW_FRAGMENT_TAG = "F6"
+    val SEND_REVIEW_RESULT_FRAGMENT_TAG = "F7"
 
 
     fun initData() = runBlocking {
@@ -55,6 +58,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         initData()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initViews()
         setSupportActionBar(toolbar)
         val drawerToggle = ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close)
         drawer.addDrawerListener(drawerToggle)
@@ -62,29 +66,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigation_view.setNavigationItemSelectedListener(this)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        initViews()
+
         initViewModel()
 
     }
 
     private fun initViews() {
-        if(model.getFragmentStack().value?.size != 0) {
+        if (model.getFragmentStack().value?.size != 0) {
             for (fragmentTag in model.getFragmentStack().value!!) {
                 val fragment = getFragmentByTag(fragmentTag)
 //                changeFragmentWithoutAdding(fragment, fragmentTag)
             }
 //            fragmentStack = model.getFragmentStack().value!!
-        }
-        else {
+        } else {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, AboutFragment.newInstance {
-                    changeFragment(SendReviewFragment(), SEND_REVIEW_FRAGMENT_TAG)
-                }, ABOUT_FRAGMENT_TAG)
+                .replace(R.id.frame_layout, AboutFragment(), ABOUT_FRAGMENT_TAG)
                 .commit()
         }
         bottom_navigation_view.uncheckAllItems()
         AboutDataRepository.openSendReviewFragment = {
             changeFragment(SendReviewFragment(), SEND_REVIEW_FRAGMENT_TAG)
+        }
+        SendReviewRepository.openSendReviewResult = { tag ->
+            changeFragment(SendReviewResultFragment.newInstance(tag), SEND_REVIEW_RESULT_FRAGMENT_TAG)
         }
         val bottomNavigationListener = BottomNavigationView.OnNavigationItemSelectedListener {
             when (it.itemId) {
@@ -166,9 +170,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         bottom_navigation_view.uncheckAllItems()
         when (item.itemId) {
             R.id.about -> {
-                val aboutFragment = AboutFragment.newInstance {
-                    changeFragment(SendReviewFragment(), SEND_REVIEW_FRAGMENT_TAG)
-                }
+                val aboutFragment = AboutFragment()
                 changeFragment(aboutFragment, ABOUT_FRAGMENT_TAG)
             }
 
@@ -196,13 +198,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    private fun changeFragmentWithoutAdding(newFragment: Fragment, tag: String) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.frame_layout, newFragment, tag)
-            .addToBackStack(null)
-            .commit()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return super.onCreateOptionsMenu(menu)
@@ -218,9 +213,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun getFragmentByTag(tag: String): Fragment =
         when (tag) {
-            ABOUT_FRAGMENT_TAG -> AboutFragment.newInstance {
-                changeFragment(SendReviewFragment(), SEND_REVIEW_FRAGMENT_TAG)
-            }
+            ABOUT_FRAGMENT_TAG -> AboutFragment()
             DOCTORS_FRAGMENT_TAG -> DoctorsFragment.newInstance { position ->
                 val fragment = DoctorFragment.newInstance(position)
                 changeFragment(fragment, DOCTOR_FRAGMENT_TAG)
