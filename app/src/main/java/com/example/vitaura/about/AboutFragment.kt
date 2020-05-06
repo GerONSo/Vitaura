@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.vitaura.R
@@ -27,6 +29,7 @@ class AboutFragment : Fragment() {
 
     val TAB_ABOUT = "T1"
     val TAB_LICENSE = "T2"
+    lateinit var toolbar: Toolbar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,6 +82,12 @@ class AboutFragment : Fragment() {
     }
 
     fun updateUI() {
+        toolbar = activity?.toolbar!!
+        toolbar.setBackgroundColor(
+            ContextCompat.getColor(requireContext(),
+            R.color.colorAccent
+        ))
+        toolbar.navigationIcon?.setColorFilter(resources.getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP)
         val toolbarLogo = activity?.toolbar_logo
         toolbarLogo?.visibility = View.VISIBLE
         val toolbarTitle = activity?.toolbar_title

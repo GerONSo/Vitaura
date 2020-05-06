@@ -14,6 +14,9 @@ import com.example.vitaura.about.AboutDataRepository
 import com.example.vitaura.about.AboutFragment
 import com.example.vitaura.doctors.DoctorFragment
 import com.example.vitaura.doctors.DoctorsFragment
+import com.example.vitaura.media.GalleryFragment
+import com.example.vitaura.media.MediaFragment
+import com.example.vitaura.media.MediaRepository
 import com.example.vitaura.prices.PricesFragment
 import com.example.vitaura.reviews.ReviewFragment
 import com.example.vitaura.send_review.SendReviewFragment
@@ -41,6 +44,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     val DOCTOR_FRAGMENT_TAG = "F5"
     val SEND_REVIEW_FRAGMENT_TAG = "F6"
     val SEND_REVIEW_RESULT_FRAGMENT_TAG = "F7"
+    val MEDIA_FRAGMENT_TAG = "F8"
+    val GALLERY_FRAGMENT_TAG = "F9"
 
 
     fun initData() = runBlocking {
@@ -50,6 +55,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             ServerHelper.getPrices()
             ServerHelper.getReviews()
             ServerHelper.getSpecials()
+            ServerHelper.getVideos()
         }
         job.join()
     }
@@ -87,6 +93,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         AboutDataRepository.openSendReviewFragment = {
             changeFragment(SendReviewFragment(), SEND_REVIEW_FRAGMENT_TAG)
         }
+        MainRepository.openSendReviewFragment = {
+            changeFragment(SendReviewFragment(), SEND_REVIEW_FRAGMENT_TAG)
+        }
+        MediaRepository.openGalleryFragment = {
+            changeFragment(GalleryFragment(), GALLERY_FRAGMENT_TAG)
+        }
         SendReviewRepository.openSendReviewResult = { tag ->
             changeFragment(SendReviewResultFragment.newInstance(tag), SEND_REVIEW_RESULT_FRAGMENT_TAG)
         }
@@ -122,6 +134,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 else -> false
             }
+        }
+        sign_up_btn.setOnClickListener {
+            MainRepository.currentSendReviewTab = SendReviewViewModel.LOGIN
+            changeFragment(SendReviewFragment(), SEND_REVIEW_FRAGMENT_TAG)
+            drawer.closeDrawer(GravityCompat.START)
         }
         bottom_navigation_view.setOnNavigationItemSelectedListener(bottomNavigationListener)
     }
@@ -180,6 +197,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 toolbar_logo.visibility = View.INVISIBLE
                 toolbar_title.visibility = View.VISIBLE
             }
+            R.id.media -> {
+                changeFragment(MediaFragment(), MEDIA_FRAGMENT_TAG)
+            }
         }
         drawer.closeDrawer(GravityCompat.START)
         return false
@@ -223,6 +243,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             PRICES_FRAGMENT_TAG -> PricesFragment()
             DOCTOR_FRAGMENT_TAG -> DoctorFragment()
             SEND_REVIEW_FRAGMENT_TAG -> SendReviewFragment()
+            MEDIA_FRAGMENT_TAG -> MediaFragment()
+            GALLERY_FRAGMENT_TAG -> GalleryFragment()
             else -> throw IllegalStateException("No fragment with such tag")
         }
 }

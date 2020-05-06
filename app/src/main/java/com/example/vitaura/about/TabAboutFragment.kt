@@ -8,8 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import com.example.vitaura.MainRepository
 
 import com.example.vitaura.R
+import com.example.vitaura.send_review.SendReviewRepository
+import com.example.vitaura.send_review.SendReviewViewModel
 import kotlinx.android.synthetic.main.fragment_tab_about.*
 
 /**
@@ -27,6 +30,7 @@ class TabAboutFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         log_in_about_btn.setOnClickListener {
+            MainRepository.currentSendReviewTab = SendReviewViewModel.LOGIN
             AboutDataRepository.openSendReviewFragment()
         }
         AboutDataRepository.getAboutText().observe(viewLifecycleOwner, Observer {

@@ -4,13 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".reviews.ReviewFragment"
-    >
+    android:orientation="vertical"
+    android:paddingBottom="15dp"
+    android:clipToPadding="false">
 
     <androidx.recyclerview.widget.RecyclerView
         android:paddingTop="10dp"
         android:clipToPadding="false"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:id="@+id/review_rv"/>
+
+    <Button
+        android:id="@+id/btn_send_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/sign_up_button"
+        android:text="Оставить отзыв"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/colorAccent"/>
 
 </LinearLayout>

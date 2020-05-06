@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.vitaura.about.AboutDataParser
 import com.example.vitaura.about.AboutDataRepository
 import com.example.vitaura.doctors.DoctorsRepository
+import com.example.vitaura.media.VideoAdapter
 import com.example.vitaura.prices.Prices
 import com.example.vitaura.prices.PricesDeserializer
 import com.example.vitaura.prices.PricesRepository
@@ -145,6 +146,46 @@ object ServerHelper {
                 }
             }
         }
+    }
+
+    fun getVideos() {
+        val service = makeApi2Service()
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.getVideos()
+            withContext(Dispatchers.Main) {
+                try {
+                    if(response.isSuccessful) {
+                        var videoList = response.body()
+                        videoList?.data = videoList?.data?.filter { it.attrs.link != null }!!
+                        VideoAdapter.videoList = videoList
+                    }
+                    else {
+                        Log.d("HTTP request", "Server didn't send response")
+                    }
+                } catch (e: Exception) {
+                    Log.d("HTTP request", "Server didn't send response")
+                }
+            }
+        }
+    }
+
+    fun getGallery() {
+//        val service = makeApi2Service()
+//        CoroutineScope(Dispatchers.IO).launch {
+//            val response = service.getGallery()
+//            withContext(Dispatchers.Main) {
+//                try {
+//                    if(response.isSuccessful) {
+//
+//                    }
+//                    else {
+//                        Log.d("HTTP request", "Server didn't send response")
+//                    }
+//                } catch (e: Exception) {
+//                    Log.d("HTTP request", "Server didn't send response")
+//                }
+//            }
+//        }
     }
 
     private fun makeApiService(): ApiService {

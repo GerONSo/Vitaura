@@ -18,10 +18,10 @@
     </group>
 
     <group
-        android:id="@+id/g_photos"
+        android:id="@+id/g_media"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/photos"
+            android:id="@+id/media"
             android:title="Фото и видео" />
     </group>
 

@@ -57,9 +57,7 @@ class PricesDeserializer : JsonDeserializer<Prices> {
     ): Prices {
         val jsonObject = json?.asJsonObject
         val data = jsonObject?.get("data")!!
-
         dfs(data, mutableListOf(0, 0), 0)
-        print(1)
         return Prices(array)
     }
 }

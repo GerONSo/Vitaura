@@ -2,6 +2,8 @@ package com.example.vitaura
 
 import com.example.vitaura.about.Pages
 import com.example.vitaura.doctors.Doctor
+import com.example.vitaura.media.Video
+import com.example.vitaura.media.VideoData
 import com.example.vitaura.prices.Prices
 import com.example.vitaura.reviews.Patients
 import com.example.vitaura.special.Special
@@ -24,4 +26,10 @@ interface ApiService {
 
     @GET("/jsonapi/node/page")
     suspend fun getAboutData(): Response<Pages>
+
+    @GET("/jsonapi/node/video")
+    suspend fun getVideos(): Response<VideoData>
+
+//    @GET("/jsonapi/node/gallery")
+//    suspend fun getGallery(): Response<>
 }

@@ -9,7 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
+import com.example.vitaura.MainRepository
 import com.example.vitaura.R
+import com.example.vitaura.send_review.SendReviewViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_doctor.*
@@ -65,6 +67,10 @@ class DoctorFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         toolbar.menu.clear()
         inflater.inflate(R.menu.toolbar_menu_profile, menu)
+        log_in_btn.setOnClickListener {
+            MainRepository.currentSendReviewTab = SendReviewViewModel.LOGIN
+            MainRepository.openSendReviewFragment()
+        }
         super.onCreateOptionsMenu(menu, inflater)
     }
 

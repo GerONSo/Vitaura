@@ -1,5 +1,4 @@
-package com.example.vitaura.reviews
-
+package com.example.vitaura.media
 
 import android.graphics.PorterDuff
 import android.os.Bundle
@@ -9,41 +8,56 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.vitaura.MainRepository
 
 import com.example.vitaura.R
-import com.example.vitaura.send_review.SendReviewViewModel
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_review.*
+import kotlinx.android.synthetic.main.fragment_media.*
+import java.lang.IllegalStateException
 
 /**
  * A simple [Fragment] subclass.
  */
-class ReviewFragment : Fragment() {
+class MediaFragment : Fragment() {
 
     lateinit var toolbar: Toolbar
+    val PHOTO_TAG = "T1"
+    val VIDEO_TAG = "T2"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_review, container, false)
+        return inflater.inflate(R.layout.fragment_media, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         updateUI()
-        val mLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        val reviewAdapter = ReviewAdapter()
-        review_rv.apply {
-            layoutManager = mLayoutManager
-            adapter = reviewAdapter
+        changeFragment(PhotoFragment(), PHOTO_TAG)
+        media_tab_layout.apply {
+            addTab(media_tab_layout.newTab().setText("Фото"))
+            addTab(media_tab_layout.newTab().setText("Видео"))
+            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    when(media_tab_layout.selectedTabPosition) {
+                        0 -> changeFragment(PhotoFragment(), PHOTO_TAG)
+                        1 -> changeFragment(VideoFragment(), VIDEO_TAG)
+                    }
+                }
+
+            })
         }
-        btn_send_review.setOnClickListener {
-            MainRepository.currentSendReviewTab = SendReviewViewModel.SEND_REVIEW
-            MainRepository.openSendReviewFragment()
-        }
+    }
+
+    private fun changeFragment(newFragment: Fragment, tag: String) {
+        childFragmentManager.beginTransaction()
+            .replace(R.id.frame_layout_media, newFragment, tag)
+            .commit()
     }
 
     fun updateUI() {
@@ -55,7 +69,7 @@ class ReviewFragment : Fragment() {
         toolbar.navigationIcon?.setColorFilter(resources.getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP)
         val title = activity?.toolbar_title
         title?.setTextColor(ContextCompat.getColor(requireContext(), R.color.textColor))
-        title?.text = "Отзывы"
+        title?.text = "Фото и видео"
         val toolbarLogo = activity?.toolbar_logo
         toolbarLogo?.visibility = View.INVISIBLE
         val toolbarTitle = activity?.toolbar_title

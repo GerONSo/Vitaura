@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import com.example.vitaura.MainRepository
 import com.example.vitaura.R
 import com.example.vitaura.about.TabAboutFragment
 import com.example.vitaura.about.TabLicenseFragment
@@ -62,7 +63,7 @@ class SendReviewFragment : Fragment() {
 
             })
         }
-        if(viewModel.lastSavedFragment == SendReviewViewModel.SEND_REVIEW) {
+        if(MainRepository.currentSendReviewTab == SendReviewViewModel.SEND_REVIEW) {
             val tab = send_review_tab_layout.getTabAt(0)
             tab?.select()
             changeSendReviewFragment(TabSendReviewFragment(), REVIEW_TAG)

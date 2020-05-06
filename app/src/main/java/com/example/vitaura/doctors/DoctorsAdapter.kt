@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.vitaura.MainRepository
 import com.example.vitaura.R
+import com.example.vitaura.send_review.SendReviewViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.doctor_card_view.view.*
 
@@ -27,6 +29,10 @@ class DoctorsAdapter(val openDoctorFragment:(Int) -> Unit) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.nameTextView.text = DoctorsRepository.getDoctors().value?.get(position)?.name
         holder.specTextView.text = DoctorsRepository.getDoctors().value?.get(position)?.spec
+        holder.loginButton.setOnClickListener {
+            MainRepository.currentSendReviewTab = SendReviewViewModel.LOGIN
+            MainRepository.openSendReviewFragment()
+        }
         Picasso.get()
             .load("https://vitaura-clinic.ru/sites/default/files/${DoctorsRepository.getDoctors().value?.get(position)?.photoName}")
             .into(holder.portraitImageView)

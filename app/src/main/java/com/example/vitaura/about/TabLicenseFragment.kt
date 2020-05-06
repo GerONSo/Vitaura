@@ -8,9 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import com.example.vitaura.MainRepository
 
 import com.example.vitaura.R
 import com.example.vitaura.doctors.DoctorsRepository
+import com.example.vitaura.send_review.SendReviewFragment
+import com.example.vitaura.send_review.SendReviewRepository
+import com.example.vitaura.send_review.SendReviewViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_tab_license.*
 
@@ -35,6 +39,10 @@ class TabLicenseFragment : Fragment() {
         AboutDataRepository.getLicenseText().observe(viewLifecycleOwner, Observer {
             tv_text_license2.text = Html.fromHtml(it[0])
         })
+        log_in_license_btn.setOnClickListener {
+            MainRepository.currentSendReviewTab = SendReviewViewModel.LOGIN
+            AboutDataRepository.openSendReviewFragment()
+        }
         license_layout1.setOnClickListener {
             if(iv_license1.visibility == View.GONE) {
                 iv_license1.visibility = View.VISIBLE
