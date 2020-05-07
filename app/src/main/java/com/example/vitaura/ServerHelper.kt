@@ -4,7 +4,8 @@ import android.util.Log
 import com.example.vitaura.about.AboutDataParser
 import com.example.vitaura.about.AboutDataRepository
 import com.example.vitaura.doctors.DoctorsRepository
-import com.example.vitaura.media.VideoAdapter
+import com.example.vitaura.media.MediaRepository
+import com.example.vitaura.media.video.VideoAdapter
 import com.example.vitaura.prices.Prices
 import com.example.vitaura.prices.PricesDeserializer
 import com.example.vitaura.prices.PricesRepository
@@ -169,22 +170,41 @@ object ServerHelper {
     }
 
     fun getGallery() {
-//        val service = makeApi2Service()
-//        CoroutineScope(Dispatchers.IO).launch {
-//            val response = service.getGallery()
-//            withContext(Dispatchers.Main) {
-//                try {
-//                    if(response.isSuccessful) {
-//
-//                    }
-//                    else {
-//                        Log.d("HTTP request", "Server didn't send response")
-//                    }
-//                } catch (e: Exception) {
-//                    Log.d("HTTP request", "Server didn't send response")
-//                }
-//            }
-//        }
+        val service = makeApi2Service()
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.getGallery()
+            withContext(Dispatchers.Main) {
+                try {
+                    if(response.isSuccessful) {
+                        MediaRepository.clinicGallery = response.body()?.data?.get(1)
+                    }
+                    else {
+                        Log.d("HTTP request", "Server didn't send response")
+                    }
+                } catch (e: Exception) {
+                    Log.d("HTTP request", "Server didn't send response")
+                }
+            }
+        }
+    }
+
+    fun getFiles() {
+        val service = makeApi2Service()
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.getFiles()
+            withContext(Dispatchers.Main) {
+                try {
+                    if(response.isSuccessful) {
+                        MediaRepository.clinicFileData = response.body()
+                    }
+                    else {
+                        Log.d("HTTP request", "Server didn't send response")
+                    }
+                } catch (e: Exception) {
+                    Log.d("HTTP request", "Server didn't send response")
+                }
+            }
+        }
     }
 
     private fun makeApiService(): ApiService {

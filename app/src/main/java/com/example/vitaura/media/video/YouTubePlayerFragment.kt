@@ -1,19 +1,28 @@
-package com.example.vitaura.media
+package com.example.vitaura.media.video
 
+import android.content.res.Configuration
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
+import android.text.Layout
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 
 import com.example.vitaura.R
+import com.example.vitaura.media.MediaViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerTracker
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_you_tube_player.*
 import kotlinx.android.synthetic.main.fragment_you_tube_player.view.*
 
@@ -21,6 +30,10 @@ import kotlinx.android.synthetic.main.fragment_you_tube_player.view.*
  * A simple [Fragment] subclass.
  */
 class YouTubePlayerFragment : Fragment() {
+
+    lateinit var toolbar: Toolbar
+    lateinit var bottomNavigation: BottomNavigationView
+    lateinit var upToolbar: RelativeLayout
 
     companion object {
         var position = 0
@@ -43,6 +56,7 @@ class YouTubePlayerFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        updateUI()
         val playerView = view.player
         lifecycle.addObserver(playerView)
         playerView.addYouTubePlayerListener(object: AbstractYouTubePlayerListener() {
@@ -68,6 +82,37 @@ class YouTubePlayerFragment : Fragment() {
 
     override fun onDestroyView() {
         viewModel.setLastSavedSecond(tracker.currentSecond)
+        toolbar.visibility = View.VISIBLE
+        bottomNavigation.visibility = View.VISIBLE
+        upToolbar.visibility = View.VISIBLE
         super.onDestroyView()
+    }
+
+    fun updateUI() {
+        toolbar = activity?.toolbar!!
+        bottomNavigation = activity?.bottom_navigation_view!!
+        upToolbar = activity?.up_toolbar_layout!!
+        toolbar.setBackgroundColor(
+            ContextCompat.getColor(requireContext(),
+                R.color.colorAccent
+            ))
+        toolbar.navigationIcon?.setColorFilter(resources.getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP)
+        val title = activity?.toolbar_title
+        title?.setTextColor(ContextCompat.getColor(requireContext(), R.color.textColor))
+        title?.text = "Фото и видео"
+        val toolbarLogo = activity?.toolbar_logo
+        toolbarLogo?.visibility = View.INVISIBLE
+        val toolbarTitle = activity?.toolbar_title
+        toolbarTitle?.visibility = View.VISIBLE
+        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            toolbar.visibility = View.GONE
+            bottomNavigation.visibility = View.GONE
+            upToolbar.visibility = View.GONE
+        }
+        else {
+            toolbar.visibility = View.VISIBLE
+            bottomNavigation.visibility = View.VISIBLE
+            upToolbar.visibility = View.VISIBLE
+        }
     }
 }

@@ -14,10 +14,10 @@ import com.example.vitaura.about.AboutDataRepository
 import com.example.vitaura.about.AboutFragment
 import com.example.vitaura.doctors.DoctorFragment
 import com.example.vitaura.doctors.DoctorsFragment
-import com.example.vitaura.media.GalleryFragment
+import com.example.vitaura.media.gallery.GalleryFragment
 import com.example.vitaura.media.MediaFragment
 import com.example.vitaura.media.MediaRepository
-import com.example.vitaura.media.YouTubePlayerFragment
+import com.example.vitaura.media.video.YouTubePlayerFragment
 import com.example.vitaura.prices.PricesFragment
 import com.example.vitaura.reviews.ReviewFragment
 import com.example.vitaura.send_review.SendReviewFragment
@@ -31,7 +31,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.lang.IllegalStateException
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -58,6 +57,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             ServerHelper.getReviews()
             ServerHelper.getSpecials()
             ServerHelper.getVideos()
+            ServerHelper.getGallery()
+            ServerHelper.getFiles()
         }
         job.join()
     }
@@ -93,7 +94,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             changeFragment(SendReviewFragment(), SEND_REVIEW_FRAGMENT_TAG)
         }
         MediaRepository.openGalleryFragment = {
-            changeFragment(GalleryFragment(), GALLERY_FRAGMENT_TAG)
+            changeFragment(GalleryFragment.newInstance(it), GALLERY_FRAGMENT_TAG)
         }
         MediaRepository.openYouTubePlayerFragment = {
             changeFragment(YouTubePlayerFragment.newInstance(it), YOU_TUBE_PLAYER_FRAGMENT_TAG)

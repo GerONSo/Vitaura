@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".media.VideoFragment"
+    tools:context=".media.video.VideoFragment"
     android:id="@+id/rv_video"
     android:paddingBottom="15dp"
     android:clipToPadding="false"/>

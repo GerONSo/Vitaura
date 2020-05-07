@@ -10,11 +10,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 
 import com.example.vitaura.R
+import com.example.vitaura.media.gallery.PhotoFragment
+import com.example.vitaura.media.video.VideoFragment
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_media.*
-import kotlinx.android.synthetic.main.fragment_send_review.*
-import java.lang.IllegalStateException
 
 /**
  * A simple [Fragment] subclass.

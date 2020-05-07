@@ -1,4 +1,4 @@
-package com.example.vitaura.media
+package com.example.vitaura.media.gallery
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.vitaura.R
+import com.example.vitaura.media.MediaRepository
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_photo.*
 
@@ -41,13 +42,13 @@ class PhotoFragment : Fragment() {
         special_description_3.text = "Победа в номинации \"Лучшая клиника эстетической медицины\""
 
         card_clinic.setOnClickListener {
-            MediaRepository.openGalleryFragment()
+            MediaRepository.openGalleryFragment(MediaRepository.CLINIC_TAG)
         }
         card_change.setOnClickListener {
-
+            MediaRepository.openGalleryFragment(MediaRepository.CHANGE_TAG)
         }
         card_prize.setOnClickListener {
-
+            MediaRepository.openGalleryFragment(MediaRepository.PRIZE_TAG)
         }
     }
 }

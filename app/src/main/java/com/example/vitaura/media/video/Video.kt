@@ -1,4 +1,4 @@
-package com.example.vitaura.media
+package com.example.vitaura.media.video
 
 import com.squareup.moshi.Json
 
@@ -8,13 +8,11 @@ data class Video(@field:Json(name = "attributes") var attrs: VideoAttrs)
 
 data class VideoAttrs(@field:Json(name = "title") var title: String,
                       @field:Json(name = "field_youtube") var link: VideoLink?,
-                        @field:Json(name = "body") var body: VideoBody)
+                      @field:Json(name = "body") var body: VideoBody
+)
 
 data class VideoBody(@field:Json(name = "processed") var value: String)
 
 data class VideoLink(@field:Json(name = "video_id") var id: String)
 
 
-data class GalleryData(@field:Json(name = "data") var data: List<Gallery>)
-
-data class Gallery(@field:Json(name = "title") var title: String)

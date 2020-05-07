@@ -1,4 +1,4 @@
-package com.example.vitaura.media
+package com.example.vitaura.media.gallery
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData

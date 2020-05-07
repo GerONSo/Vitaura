@@ -1,6 +1,5 @@
-package com.example.vitaura.media
+package com.example.vitaura.media.video
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +7,7 @@ import android.widget.TextView
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vitaura.R
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.loadOrCueVideo
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+import com.example.vitaura.media.MediaRepository
 import kotlinx.android.synthetic.main.card_video.view.*
 
 class VideoAdapter(val lifecycle: Lifecycle): RecyclerView.Adapter<VideoAdapter.ViewHolder>() {
@@ -31,7 +26,9 @@ class VideoAdapter(val lifecycle: Lifecycle): RecyclerView.Adapter<VideoAdapter.
         if(videoList != null && videoList?.data?.get(position)?.attrs?.link?.id != null) {
             holder.videoTitle.text = videoList?.data?.get(position)?.attrs?.title
             holder.view.setOnClickListener {
-                MediaRepository.openYouTubePlayerFragment(position)
+                MediaRepository.openYouTubePlayerFragment(
+                    position
+                )
             }
         }
     }

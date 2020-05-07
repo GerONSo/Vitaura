@@ -2,14 +2,15 @@ package com.example.vitaura
 
 import com.example.vitaura.about.Pages
 import com.example.vitaura.doctors.Doctor
-import com.example.vitaura.media.Video
-import com.example.vitaura.media.VideoData
+import com.example.vitaura.media.gallery.GalleryData
+import com.example.vitaura.media.gallery.GalleryFile
+import com.example.vitaura.media.gallery.GalleryFileData
+import com.example.vitaura.media.video.VideoData
 import com.example.vitaura.prices.Prices
 import com.example.vitaura.reviews.Patients
 import com.example.vitaura.special.Special
 import retrofit2.Response
 import retrofit2.http.GET
-import java.security.interfaces.RSAKey
 
 interface ApiService {
     @GET("/get_doctors")
@@ -30,6 +31,9 @@ interface ApiService {
     @GET("/jsonapi/node/video")
     suspend fun getVideos(): Response<VideoData>
 
-//    @GET("/jsonapi/node/gallery")
-//    suspend fun getGallery(): Response<>
+    @GET("/jsonapi/node/gallery")
+    suspend fun getGallery(): Response<GalleryData>
+
+    @GET("/jsonapi/file/file")
+    suspend fun getFiles(): Response<GalleryFileData>
 }
