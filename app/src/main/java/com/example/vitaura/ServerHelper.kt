@@ -136,7 +136,6 @@ object ServerHelper {
 
                         val licenseText = AboutDataParser.parseLicenseEmail(response.body()?.data?.get(8)?.attributes?.body?.text)
                         AboutDataRepository.setLicenseText(listOf(licenseText))
-                        Log.d("parse", licenseText)
                     } else {
                         Log.d("HTTP request", "Server didn't send response")
                     }

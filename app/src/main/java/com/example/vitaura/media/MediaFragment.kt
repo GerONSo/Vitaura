@@ -13,6 +13,7 @@ import com.example.vitaura.R
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_media.*
+import kotlinx.android.synthetic.main.fragment_send_review.*
 import java.lang.IllegalStateException
 
 /**
@@ -21,8 +22,7 @@ import java.lang.IllegalStateException
 class MediaFragment : Fragment() {
 
     lateinit var toolbar: Toolbar
-    val PHOTO_TAG = "T1"
-    val VIDEO_TAG = "T2"
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +34,6 @@ class MediaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         updateUI()
-        changeFragment(PhotoFragment(), PHOTO_TAG)
         media_tab_layout.apply {
             addTab(media_tab_layout.newTab().setText("Фото"))
             addTab(media_tab_layout.newTab().setText("Видео"))
@@ -45,12 +44,29 @@ class MediaFragment : Fragment() {
 
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     when(media_tab_layout.selectedTabPosition) {
-                        0 -> changeFragment(PhotoFragment(), PHOTO_TAG)
-                        1 -> changeFragment(VideoFragment(), VIDEO_TAG)
+                        0 -> {
+                            MediaRepository.lastTab = MediaRepository.PHOTO_TAG
+                            changeFragment(PhotoFragment(), MediaRepository.PHOTO_TAG)
+                        }
+                        1 -> {
+
+                            MediaRepository.lastTab = MediaRepository.VIDEO_TAG
+                            changeFragment(VideoFragment(), MediaRepository.VIDEO_TAG)
+                        }
                     }
                 }
 
             })
+        }
+        if(MediaRepository.lastTab == MediaRepository.PHOTO_TAG) {
+            val tab = media_tab_layout.getTabAt(0)
+            tab?.select()
+            changeFragment(PhotoFragment(), MediaRepository.PHOTO_TAG)
+        }
+        else {
+            val tab = media_tab_layout.getTabAt(1)
+            tab?.select()
+            changeFragment(VideoFragment(), MediaRepository.VIDEO_TAG)
         }
     }
 

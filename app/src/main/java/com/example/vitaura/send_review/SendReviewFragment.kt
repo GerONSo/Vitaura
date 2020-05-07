@@ -51,11 +51,11 @@ class SendReviewFragment : Fragment() {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     when (send_review_tab_layout.selectedTabPosition) {
                         0 -> {
-                            viewModel.lastSavedFragment = SendReviewViewModel.SEND_REVIEW
+                            MainRepository.currentSendReviewTab = SendReviewViewModel.SEND_REVIEW
                             changeSendReviewFragment(TabSendReviewFragment(), REVIEW_TAG)
                         }
                         1 -> {
-                            viewModel.lastSavedFragment = SendReviewViewModel.LOGIN
+                            MainRepository.currentSendReviewTab = SendReviewViewModel.LOGIN
                             changeSendReviewFragment(TabLoginFragment(), LOG_IN_TAG)
                         }
                     }

@@ -26,7 +26,7 @@ class VideoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         rv_video.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = VideoAdapter()
+            adapter = VideoAdapter(lifecycle)
         }
     }
 }

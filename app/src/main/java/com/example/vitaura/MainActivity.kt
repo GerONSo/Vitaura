@@ -17,6 +17,7 @@ import com.example.vitaura.doctors.DoctorsFragment
 import com.example.vitaura.media.GalleryFragment
 import com.example.vitaura.media.MediaFragment
 import com.example.vitaura.media.MediaRepository
+import com.example.vitaura.media.YouTubePlayerFragment
 import com.example.vitaura.prices.PricesFragment
 import com.example.vitaura.reviews.ReviewFragment
 import com.example.vitaura.send_review.SendReviewFragment
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     val SEND_REVIEW_RESULT_FRAGMENT_TAG = "F7"
     val MEDIA_FRAGMENT_TAG = "F8"
     val GALLERY_FRAGMENT_TAG = "F9"
+    val YOU_TUBE_PLAYER_FRAGMENT_TAG = "F10"
 
 
     fun initData() = runBlocking {
@@ -78,13 +80,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun initViews() {
-        if (model.getFragmentStack().value?.size != 0) {
-            for (fragmentTag in model.getFragmentStack().value!!) {
-                val fragment = getFragmentByTag(fragmentTag)
-//                changeFragmentWithoutAdding(fragment, fragmentTag)
-            }
-//            fragmentStack = model.getFragmentStack().value!!
-        } else {
+        if (model.getFragmentStack().value?.size == 0) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.frame_layout, AboutFragment(), ABOUT_FRAGMENT_TAG)
                 .commit()
@@ -98,6 +94,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         MediaRepository.openGalleryFragment = {
             changeFragment(GalleryFragment(), GALLERY_FRAGMENT_TAG)
+        }
+        MediaRepository.openYouTubePlayerFragment = {
+            changeFragment(YouTubePlayerFragment.newInstance(it), YOU_TUBE_PLAYER_FRAGMENT_TAG)
         }
         SendReviewRepository.openSendReviewResult = { tag ->
             changeFragment(SendReviewResultFragment.newInstance(tag), SEND_REVIEW_RESULT_FRAGMENT_TAG)
@@ -230,21 +229,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         menu.setGroupCheckable(0, true, true)
     }
-
-    private fun getFragmentByTag(tag: String): Fragment =
-        when (tag) {
-            ABOUT_FRAGMENT_TAG -> AboutFragment()
-            DOCTORS_FRAGMENT_TAG -> DoctorsFragment.newInstance { position ->
-                val fragment = DoctorFragment.newInstance(position)
-                changeFragment(fragment, DOCTOR_FRAGMENT_TAG)
-            }
-            SPECIAL_FRAGMENT_TAG -> SpecialFragment()
-            REVIEW_FRAGMENT_TAG -> ReviewFragment()
-            PRICES_FRAGMENT_TAG -> PricesFragment()
-            DOCTOR_FRAGMENT_TAG -> DoctorFragment()
-            SEND_REVIEW_FRAGMENT_TAG -> SendReviewFragment()
-            MEDIA_FRAGMENT_TAG -> MediaFragment()
-            GALLERY_FRAGMENT_TAG -> GalleryFragment()
-            else -> throw IllegalStateException("No fragment with such tag")
-        }
 }
