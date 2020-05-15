@@ -2,15 +2,20 @@ package com.example.vitaura
 
 import com.example.vitaura.about.Pages
 import com.example.vitaura.doctors.Doctor
+import com.example.vitaura.media.gallery.ChangeFile
 import com.example.vitaura.media.gallery.GalleryData
 import com.example.vitaura.media.gallery.GalleryFile
 import com.example.vitaura.media.gallery.GalleryFileData
 import com.example.vitaura.media.video.VideoData
 import com.example.vitaura.prices.Prices
 import com.example.vitaura.reviews.Patients
+import com.example.vitaura.services.ServiceData
+import com.example.vitaura.services.Services
+import com.example.vitaura.services.ServicesJSON
 import com.example.vitaura.special.Special
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface ApiService {
     @GET("/get_doctors")
@@ -34,6 +39,15 @@ interface ApiService {
     @GET("/jsonapi/node/gallery")
     suspend fun getGallery(): Response<GalleryData>
 
-    @GET("/jsonapi/file/file")
-    suspend fun getFiles(): Response<GalleryFileData>
+    @GET("/jsonapi/file/file/{id}")
+    suspend fun getFile(@Path("id") id: String): Response<GalleryFileData>
+
+    @GET("/rest/do-i-posle")
+    suspend fun getChangeGallery(): Response<List<ChangeFile>>
+
+    @GET("/jsonapi/taxonomy_term/services_type")
+    suspend fun getServiceTypes(): Response<ServicesJSON>
+
+    @GET("/jsonapi/taxonomy_term/services/{id}")
+    suspend fun getService(@Path("id") id: String): Response<Services>
 }

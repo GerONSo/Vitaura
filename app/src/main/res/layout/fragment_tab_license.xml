@@ -1,178 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    tools:context=".about.TabLicenseFragment"
-    android:padding="15dp">
+    android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_title_license1"
-        tools:text="Лицензия на медицинскую деятельность"
-        android:textColor="@color/colorPrimary"
-        android:textSize="23sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="sans-serif"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="15dp"
+        tools:context=".about.TabLicenseFragment">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/dividerColor"/>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:id="@+id/license_layout1"
-        android:animateLayoutChanges="true">
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Лицензия на медицинскую деятельность"
-            android:fontFamily="sans-serif-medium"
-            android:textColor="@color/textColor"
-            android:textSize="15sp"
-            android:layout_gravity="center"
-            app:layout_constraintRight_toLeftOf="@id/img_file_1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/img_file_1"
-            android:layout_marginRight="15dp"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_file"
-            android:id="@+id/img_file_1"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/iv_license1"/>
-        <ImageView
+            android:id="@+id/tv_title_license1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/iv_license1"
-            android:layout_marginTop="15dp"
-            app:layout_constraintTop_toBottomOf="@id/img_file_1"
-            android:visibility="gone"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginBottom="20dp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/colorPrimary"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            tools:text="Лицензия на медицинскую деятельность" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/dividerColor"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dividerColor" />
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:id="@+id/license_layout2"
-        android:animateLayoutChanges="true">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Лицензия на медицинскую деятельность (адрес организации)"
-            android:fontFamily="sans-serif-medium"
-            android:textColor="@color/textColor"
-            android:textSize="15sp"
-            android:layout_gravity="center"
-            app:layout_constraintRight_toLeftOf="@id/img_file_2"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/img_file_2"
-            android:layout_marginRight="15dp"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/img_file_2"
-            android:src="@drawable/ic_file"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/iv_license2"/>
-        <ImageView
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/license_layout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/iv_license2"
             android:layout_marginTop="15dp"
-            app:layout_constraintTop_toBottomOf="@id/img_file_2"
-            android:visibility="gone"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginBottom="15dp"
+            android:animateLayoutChanges="true">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/dividerColor"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:text="Лицензия на медицинскую деятельность"
+                android:textColor="@color/textColor"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/img_file_1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/img_file_1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/img_file_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_file"
+                app:layout_constraintBottom_toTopOf="@id/iv_license1"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_license1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/img_file_1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dividerColor" />
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:id="@+id/license_layout3"
-        android:animateLayoutChanges="true">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Лицензия на медицинскую деятельность (приложение №1)"
-            android:fontFamily="sans-serif-medium"
-            android:textColor="@color/textColor"
-            android:textSize="15sp"
-            android:layout_gravity="center"
-            app:layout_constraintRight_toLeftOf="@id/img_file_3"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/img_file_3"
-            android:layout_marginRight="15dp"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_file"
-            android:id="@+id/img_file_3"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/iv_license3"/>
-        <ImageView
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/license_layout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/iv_license3"
             android:layout_marginTop="15dp"
-            app:layout_constraintTop_toBottomOf="@id/img_file_3"
-            android:visibility="gone"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginBottom="15dp"
+            android:animateLayoutChanges="true">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/dividerColor"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:text="Лицензия на медицинскую деятельность (адрес организации)"
+                android:textColor="@color/textColor"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/img_file_2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/img_file_2"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_title_license2"
-        tools:text="Контакты органов исполнительной власти в сфере охраны здоровья граждан"
-        android:textColor="@color/colorPrimary"
-        android:textSize="23sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="sans-serif"
-        android:layout_marginTop="15dp"/>
+            <ImageView
+                android:id="@+id/img_file_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_file"
+                app:layout_constraintBottom_toTopOf="@id/iv_license2"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_text_license2"
-        tools:text="Департамент здравоохранения города Москвы\n
+            <ImageView
+                android:id="@+id/iv_license2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/img_file_2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dividerColor" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/license_layout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:animateLayoutChanges="true">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:text="Лицензия на медицинскую деятельность (приложение №1)"
+                android:textColor="@color/textColor"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/img_file_3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/img_file_3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/img_file_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_file"
+                app:layout_constraintBottom_toTopOf="@id/iv_license3"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_license3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/img_file_3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dividerColor" />
+
+        <TextView
+            android:id="@+id/tv_title_license2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/colorPrimary"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            tools:text="Контакты органов исполнительной власти в сфере охраны здоровья граждан" />
+
+        <TextView
+            android:id="@+id/tv_text_license2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/textColor"
+            android:textSize="15sp"
+            tools:text="Департамент здравоохранения города Москвы\n
 \n
 Сокращенное название: ДЗМ\n
 \n
@@ -186,22 +203,26 @@ E-mail: zdrav@mos.ru\n
 \n
 Адрес: Графский переулок, д. 4. к.3, г. Москва, 129626\n
 Телефоны: 8 (495) 687–40-35\n
-E-mail: uprav@77.rospotrebnadzor.ru"
-        android:textColor="@color/textColor"
-        android:textSize="15sp"
-        android:fontFamily="sans-serif"
-        />
+E-mail: uprav@77.rospotrebnadzor.ru" />
 
-    <Button
-        android:id="@+id/log_in_license_btn"
+        <Button
+            android:id="@+id/log_in_license_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/sign_up_button"
+            android:text="Записаться на прием"
+            android:textColor="@color/colorAccent" />
+
+
+    </LinearLayout>
+    <include
+        android:id="@+id/flower_view"
+        layout="@layout/flower_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="50dp"
-        android:background="@drawable/sign_up_button"
-        android:text="Записаться на прием"
-        android:textColor="@color/colorAccent"
-        android:layout_marginBottom="15dp"/>
-
+        android:layout_gravity="bottom" />
 </LinearLayout>

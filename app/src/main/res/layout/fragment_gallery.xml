@@ -4,4 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".media.gallery.GalleryFragment"
-    android:id="@+id/rv_gallery"/>
+    android:id="@+id/rv_gallery"
+    android:paddingBottom="16dp"
+    android:clipToPadding="false"/>

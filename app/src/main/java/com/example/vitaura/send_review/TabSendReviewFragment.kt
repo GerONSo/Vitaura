@@ -10,10 +10,13 @@ import android.widget.LinearLayout
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import com.example.vitaura.GMailSender
 
 import com.example.vitaura.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_tab_send_review.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
 /**
@@ -36,6 +39,12 @@ class TabSendReviewFragment : Fragment() {
         updateUI()
         btn_send_review.setOnClickListener {
             if(et_name.text.toString() != "" && et_review.text.toString() != "") {
+                val name = et_name.text.toString()
+                val phone = et_phone.text.toString()
+                val review = et_review.text.toString()
+                SendReviewRepository.sendEmail(
+                    "Новый отзыв в приложении Vitaura Clinic",
+                    SendReviewRepository.getReviewBody(name, phone, review))
                 SendReviewRepository.openSendReviewResult(SendReviewViewModel.SEND_REVIEW)
             }
         }

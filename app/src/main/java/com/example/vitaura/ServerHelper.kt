@@ -5,12 +5,15 @@ import com.example.vitaura.about.AboutDataParser
 import com.example.vitaura.about.AboutDataRepository
 import com.example.vitaura.doctors.DoctorsRepository
 import com.example.vitaura.media.MediaRepository
+import com.example.vitaura.media.gallery.ChangeFile
 import com.example.vitaura.media.video.VideoAdapter
 import com.example.vitaura.prices.Prices
 import com.example.vitaura.prices.PricesDeserializer
 import com.example.vitaura.prices.PricesRepository
 import com.example.vitaura.reviews.Review
 import com.example.vitaura.reviews.ReviewRepository
+import com.example.vitaura.services.ServiceRepository
+import com.example.vitaura.services.Services
 import com.example.vitaura.special.SpecialsRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -137,6 +140,8 @@ object ServerHelper {
 
                         val licenseText = AboutDataParser.parseLicenseEmail(response.body()?.data?.get(8)?.attributes?.body?.text)
                         AboutDataRepository.setLicenseText(listOf(licenseText))
+
+                        MediaRepository.parseFileData(response.body()?.data?.get(17)?.attributes?.body?.text!!)
                     } else {
                         Log.d("HTTP request", "Server didn't send response")
                     }
@@ -188,14 +193,77 @@ object ServerHelper {
         }
     }
 
-    fun getFiles() {
+    fun getFile(id: String) {
         val service = makeApi2Service()
         CoroutineScope(Dispatchers.IO).launch {
-            val response = service.getFiles()
+            val response = service.getFile(id)
             withContext(Dispatchers.Main) {
                 try {
                     if(response.isSuccessful) {
-                        MediaRepository.clinicFileData = response.body()
+                        MediaRepository.clinicFileData.value = MediaRepository.clinicFileData.value.also {
+                            it?.add(response.body()?.data?.attrs?.uri?.url!!)
+                        }
+                    }
+                    else {
+                        Log.d("HTTP request", "Server didn't send response")
+                    }
+                } catch (e: Exception) {
+                    Log.d("HTTP request", "Server didn't send response")
+                }
+            }
+        }
+    }
+
+    fun getChangeGallery() {
+        val service = makeApi2Service()
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.getChangeGallery()
+            withContext(Dispatchers.Main) {
+                try {
+                    if(response.isSuccessful) {
+                        MediaRepository.changePathsList.value = response.body() as ArrayList<ChangeFile>
+                    }
+                    else {
+                        Log.d("HTTP request", "Server didn't send response")
+                    }
+                } catch (e: Exception) {
+                    Log.d("HTTP request", "Server didn't send response")
+                }
+            }
+        }
+    }
+
+    fun getServiceTypes() {
+        val service = makeApi2Service()
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.getServiceTypes()
+            withContext(Dispatchers.Main) {
+                try {
+                    if(response.isSuccessful) {
+                        ServiceRepository.serviceTypes.value = response.body()
+                    }
+                    else {
+                        Log.d("HTTP request", "Server didn't send response")
+                    }
+                } catch (e: Exception) {
+                    Log.d("HTTP request", "Server didn't send response")
+                }
+            }
+        }
+    }
+
+    fun getService(id: String,
+                    cacheToViewModel: (services: Services) -> Unit) {
+        val service = makeApi2Service()
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.getService(id)
+            withContext(Dispatchers.Main) {
+                try {
+                    if(response.isSuccessful) {
+                        ServiceRepository.services.value = ServiceRepository.services.value.also {
+                            it?.add(response.body()!!)
+                        }
+                        cacheToViewModel(response.body()!!)
                     }
                     else {
                         Log.d("HTTP request", "Server didn't send response")

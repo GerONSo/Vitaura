@@ -1,5 +1,6 @@
 package com.example.vitaura
 
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -24,6 +25,10 @@ import com.example.vitaura.send_review.SendReviewFragment
 import com.example.vitaura.send_review.SendReviewRepository
 import com.example.vitaura.send_review.SendReviewResultFragment
 import com.example.vitaura.send_review.SendReviewViewModel
+import com.example.vitaura.services.ServiceFragment
+import com.example.vitaura.services.ServiceRepository
+import com.example.vitaura.services.ServicesFragment
+import com.example.vitaura.services.ServicesTypesFragment
 import com.example.vitaura.special.SpecialFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -47,6 +52,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     val MEDIA_FRAGMENT_TAG = "F8"
     val GALLERY_FRAGMENT_TAG = "F9"
     val YOU_TUBE_PLAYER_FRAGMENT_TAG = "F10"
+    val SERVICE_TYPES_FRAGMENT = "F11"
+    val SERVICES_FRAGMENT = "F12"
+    val SERVICE_FRAGMENT = "F13"
 
 
     fun initData() = runBlocking {
@@ -58,7 +66,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             ServerHelper.getSpecials()
             ServerHelper.getVideos()
             ServerHelper.getGallery()
-            ServerHelper.getFiles()
+            ServerHelper.getChangeGallery()
+            ServerHelper.getServiceTypes()
         }
         job.join()
     }
@@ -99,13 +108,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         MediaRepository.openYouTubePlayerFragment = {
             changeFragment(YouTubePlayerFragment.newInstance(it), YOU_TUBE_PLAYER_FRAGMENT_TAG)
         }
+        ServiceRepository.openServicesFragment = {
+            changeFragment(ServicesFragment.newInstance(it), SERVICES_FRAGMENT)
+        }
+        ServiceRepository.openServiceFragment = { pos, t1, t2 ->
+            changeFragment(ServiceFragment.newInstance(pos, t1, t2), SERVICE_FRAGMENT)
+        }
         SendReviewRepository.openSendReviewResult = { tag ->
             changeFragment(SendReviewResultFragment.newInstance(tag), SEND_REVIEW_RESULT_FRAGMENT_TAG)
         }
+        ServiceRepository.imageList = listOf(
+            BitmapFactory.decodeResource(resources, R.drawable.face),
+            BitmapFactory.decodeResource(resources, R.drawable.body),
+            BitmapFactory.decodeResource(resources, R.drawable.hair),
+            BitmapFactory.decodeResource(resources, R.drawable.intim)
+        )
         val bottomNavigationListener = BottomNavigationView.OnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.services -> {
-
+                    changeFragment(ServicesTypesFragment(), SERVICE_TYPES_FRAGMENT)
                     true
                 }
 
@@ -136,6 +157,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
         sign_up_btn.setOnClickListener {
+            MainRepository.currentSendReviewTab = SendReviewViewModel.LOGIN
+            changeFragment(SendReviewFragment(), SEND_REVIEW_FRAGMENT_TAG)
+            drawer.closeDrawer(GravityCompat.START)
+        }
+        image_btn.setOnClickListener {
             MainRepository.currentSendReviewTab = SendReviewViewModel.LOGIN
             changeFragment(SendReviewFragment(), SEND_REVIEW_FRAGMENT_TAG)
             drawer.closeDrawer(GravityCompat.START)
@@ -229,5 +255,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             menu.getItem(i).isChecked = false
         }
         menu.setGroupCheckable(0, true, true)
+    }
+
+    fun onFlowerClicked(view: View) {
+        MainRepository.currentSendReviewTab = SendReviewViewModel.LOGIN
+        changeFragment(SendReviewFragment(), SEND_REVIEW_FRAGMENT_TAG)
     }
 }

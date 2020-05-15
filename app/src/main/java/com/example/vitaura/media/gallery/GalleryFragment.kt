@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.vitaura.R
+import com.example.vitaura.ServerHelper
 import com.example.vitaura.media.MediaRepository
+import kotlinx.android.synthetic.main.fragment_gallery.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
@@ -40,30 +43,44 @@ class GalleryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         when(galleryTag) {
             MediaRepository.CLINIC_TAG -> {
-                val files = MediaRepository.clinicFileData?.data
-                val ids = MediaRepository.clinicGallery?.relationships?.galleryImageField?.data
-                val result: ArrayList<String> = arrayListOf()
-                if(files != null && ids != null) {
+                val files = MediaRepository.clinicGallery?.relationships?.galleryImageField?.data
+                if(files != null) {
                     for (file in files) {
-                        Log.d("files", file.id)
-                        for (galleryFile in ids) {
-                            Log.d("files", "   " + galleryFile.id)
-                            if(file.id == galleryFile?.attrs?.uri?.url) {
-                                result.add(galleryFile?.attrs?.uri?.url)
-                                break
-                            }
-                        }
+                        ServerHelper.getFile(file.id)
                     }
                 }
+                var result: ArrayList<String> = arrayListOf()
+                MediaRepository.clinicFileData.observe(viewLifecycleOwner, Observer {
+                    result = it
+                    val galleryAdapter = GalleryAdapter(result)
+                    rv_gallery.apply {
+                        layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                        adapter = galleryAdapter
+                    }
+                    galleryAdapter.notifyDataSetChanged()
+                })
 
             }
 
             MediaRepository.CHANGE_TAG -> {
-                // todo change
+                MediaRepository.changePathsList.observe(viewLifecycleOwner, Observer {
+                    val galleryAdapter = GalleryChangeAdapter(it)
+                    rv_gallery.apply {
+                        layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                        adapter = galleryAdapter
+                    }
+                    galleryAdapter.notifyDataSetChanged()
+                })
             }
 
             MediaRepository.PRIZE_TAG -> {
-                // todo prize
+                MediaRepository.prizeFileData.observe(viewLifecycleOwner, Observer {
+                    val galleryAdapter = GalleryAdapter(it)
+                    rv_gallery.apply {
+                        layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                        adapter = galleryAdapter
+                    }
+                })
             }
         }
     }

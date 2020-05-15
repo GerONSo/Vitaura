@@ -10,9 +10,9 @@
 
 
     <RelativeLayout
+        android:id="@+id/up_toolbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/up_toolbar_layout">
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="match_parent"
@@ -116,35 +116,35 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <FrameLayout
+                <FrameLayout
 
-                android:id="@+id/frame_layout"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                    android:id="@+id/frame_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
-<!--                <TextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:text="Only for preview"-->
-<!--                    android:elevation="30dp"-->
-<!--                    android:textSize="50sp"-->
-<!--                    android:textColor="#ff0000"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:alpha="0.3"-->
-<!--                    android:textAlignment="center"/>-->
+                    <!--                <TextView-->
+                    <!--                    android:layout_width="match_parent"-->
+                    <!--                    android:layout_height="match_parent"-->
+                    <!--                    android:text="Only for preview"-->
+                    <!--                    android:elevation="30dp"-->
+                    <!--                    android:textSize="50sp"-->
+                    <!--                    android:textColor="#ff0000"-->
+                    <!--                    android:textStyle="bold"-->
+                    <!--                    android:alpha="0.3"-->
+                    <!--                    android:textAlignment="center"/>-->
 
-            </FrameLayout>
+                </FrameLayout>
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/bottom_navigation_view"
                 android:layout_gravity="bottom"
                 android:background="@color/colorAccent"
-                app:menu="@menu/bottom_navigation_menu"
+                android:padding="10dp"
                 app:labelVisibilityMode="labeled"
-                android:padding="10dp"/>
+                app:menu="@menu/bottom_navigation_menu" />
         </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView
@@ -169,14 +169,30 @@
                 android:paddingBottom="30dp">
 
                 <ImageButton
+                    android:id="@+id/image_btn"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginRight="12dp"
                     android:background="@drawable/next_button_white"
-                    android:elevation="8dp"
+                    android:elevation="3dp"
                     android:src="@drawable/ic_chevron_right_blue_24dp"
                     app:layout_constraintBottom_toBottomOf="@id/sign_up_btn"
                     app:layout_constraintRight_toRightOf="@id/sign_up_btn"
+                    app:layout_constraintTop_toTopOf="@id/sign_up_btn" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:elevation="3dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Запись на прием"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@id/sign_up_btn"
+                    app:layout_constraintLeft_toLeftOf="@id/sign_up_btn"
+                    app:layout_constraintRight_toLeftOf="@id/image_btn"
                     app:layout_constraintTop_toTopOf="@id/sign_up_btn" />
 
                 <Button
@@ -185,13 +201,6 @@
                     android:layout_height="60dp"
                     android:layout_margin="15dp"
                     android:background="@drawable/sign_up_button"
-                    android:fontFamily="sans-serif-medium"
-                    android:paddingLeft="40dp"
-                    android:text="Запись на прием"
-                    android:textAlignment="textStart"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="16sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
