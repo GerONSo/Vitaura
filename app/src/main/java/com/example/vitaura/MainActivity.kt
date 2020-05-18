@@ -15,6 +15,8 @@ import com.example.vitaura.about.AboutDataRepository
 import com.example.vitaura.about.AboutFragment
 import com.example.vitaura.doctors.DoctorFragment
 import com.example.vitaura.doctors.DoctorsFragment
+import com.example.vitaura.helpers.ServerHelper
+import com.example.vitaura.main.MainFragment
 import com.example.vitaura.media.gallery.GalleryFragment
 import com.example.vitaura.media.MediaFragment
 import com.example.vitaura.media.MediaRepository
@@ -36,6 +38,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -55,6 +58,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     val SERVICE_TYPES_FRAGMENT = "F11"
     val SERVICES_FRAGMENT = "F12"
     val SERVICE_FRAGMENT = "F13"
+    val MAIN_FRAGMENT = "F14"
 
 
     fun initData() = runBlocking {
@@ -68,6 +72,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             ServerHelper.getGallery()
             ServerHelper.getChangeGallery()
             ServerHelper.getServiceTypes()
+            ServerHelper.getMainSlider()
         }
         job.join()
     }
@@ -170,8 +175,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun initViewModel() {
-        model.getFragmentStack().observe(this, Observer { fragmentStack ->
+        var resultList: MutableList<String?> = mutableListOf()
+        MainRepository.sliderIds.observe(this, Observer {
+            resultList = Collections.nCopies(it.data.size, "").toMutableList()
+            for(slider in it.data) {
+                ServerHelper.getSliderFile(slider.relationships.photo.data.id)
+            }
         })
+        MainRepository.sliderMap.observe(this, Observer {
+            for(i in 0 until resultList.size) {
+                resultList[i] = it[MainRepository.sliderIds.value?.data?.get(i)?.relationships?.photo?.data?.id]
+            }
+            MainRepository.sliderImages.value = resultList.toList()
+        })
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -212,6 +229,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         bottom_navigation_view.uncheckAllItems()
         when (item.itemId) {
+            R.id.main -> {
+                changeFragment(MainFragment(), MAIN_FRAGMENT)
+            }
             R.id.about -> {
                 val aboutFragment = AboutFragment()
                 changeFragment(aboutFragment, ABOUT_FRAGMENT_TAG)

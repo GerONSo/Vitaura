@@ -1,4 +1,4 @@
-package com.example.vitaura
+package com.example.vitaura.helpers
 
 import java.lang.IllegalStateException
 import java.util.*
@@ -38,7 +38,12 @@ class NMeasureArray<T>(initValues: List<T?>) : ArrayList<T>(initValues) {
             measures.forEach {
                 size *= it
             }
-            instance = NMeasureArray(Collections.nCopies(size, null))
+            instance = NMeasureArray(
+                Collections.nCopies(
+                    size,
+                    null
+                )
+            )
             instance?.measures = measures
             instance?.suff = measures.toMutableList()
             for(i in measures.size - 2 downTo 0) {

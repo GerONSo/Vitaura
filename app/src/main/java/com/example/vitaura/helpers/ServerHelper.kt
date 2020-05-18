@@ -1,6 +1,9 @@
-package com.example.vitaura
+package com.example.vitaura.helpers
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
+import com.example.vitaura.ApiService
+import com.example.vitaura.MainRepository
 import com.example.vitaura.about.AboutDataParser
 import com.example.vitaura.about.AboutDataRepository
 import com.example.vitaura.doctors.DoctorsRepository
@@ -26,12 +29,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.lang.Exception
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 object ServerHelper {
 
     const val BASE_URL = "http://91.210.170.129:5000"
     const val BASE_URL2 = "https://vitaura-clinic.ru"
+
 
     fun getDoctors() {
         val service = makeApiService()
@@ -103,7 +109,8 @@ object ServerHelper {
     }
 
     fun getPrices() {
-        val service = makeApiPriceService()
+        val service =
+            makeApiPriceService()
         CoroutineScope(Dispatchers.IO).launch {
             val response = service.getPrices()
             withContext(Dispatchers.Main) {
@@ -264,6 +271,46 @@ object ServerHelper {
                             it?.add(response.body()!!)
                         }
                         cacheToViewModel(response.body()!!)
+                    }
+                    else {
+                        Log.d("HTTP request", "Server didn't send response")
+                    }
+                } catch (e: Exception) {
+                    Log.d("HTTP request", "Server didn't send response")
+                }
+            }
+        }
+    }
+
+    fun getMainSlider() {
+        val service = makeApi2Service()
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.getSlider()
+            withContext(Dispatchers.Main) {
+                try {
+                    if(response.isSuccessful) {
+                        MainRepository.sliderIds.value = response.body()!!
+                    }
+                    else {
+                        Log.d("HTTP request", "Server didn't send response")
+                    }
+                } catch (e: Exception) {
+                    Log.d("HTTP request", "Server didn't send response")
+                }
+            }
+        }
+    }
+
+    fun getSliderFile(id: String) {
+        val service = makeApi2Service()
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.getFile(id)
+            withContext(Dispatchers.Main) {
+                try {
+                    if(response.isSuccessful) {
+                        MainRepository.sliderMap.value = MainRepository.sliderMap.value.also {
+                            it?.set(id, response.body()?.data?.attrs?.uri?.url!!)
+                        }
                     }
                     else {
                         Log.d("HTTP request", "Server didn't send response")

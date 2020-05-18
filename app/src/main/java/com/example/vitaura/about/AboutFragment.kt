@@ -41,14 +41,14 @@ class AboutFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         updateUI()
         if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            val imageSlider: SliderView = view.findViewById(R.id.image_slider)
-            val imageSliderAdapter = ImageSliderAdapter()
-            imageSlider.setSliderAdapter(imageSliderAdapter)
-            pb_image_slider.indeterminateDrawable.setColorFilter(
-                resources.getColor(R.color.colorPrimary),
-                PorterDuff.Mode.SRC_IN
-            )
             AboutDataRepository.getAboutImages().observe(viewLifecycleOwner, Observer {
+                val imageSlider: SliderView = view.findViewById(R.id.image_slider)
+                val imageSliderAdapter = ImageSliderAdapter(it)
+                imageSlider.setSliderAdapter(imageSliderAdapter)
+                pb_image_slider.indeterminateDrawable.setColorFilter(
+                    resources.getColor(R.color.colorPrimary),
+                    PorterDuff.Mode.SRC_IN
+                )
                 imageSliderAdapter.notifyDataSetChanged()
                 pb_image_slider.visibility = View.GONE
             })

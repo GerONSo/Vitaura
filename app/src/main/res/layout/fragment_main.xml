@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/layout_about_animation_description"
-    tools:context=".about.AboutFragment">
+    app:layoutDescription="@xml/main_fragment_description">
 
     <com.smarteist.autoimageslider.SliderView
-        android:id="@+id/image_slider"
+        android:id="@+id/image_slider_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:maxHeight="250dp"
@@ -29,7 +27,7 @@
         app:sliderStartAutoCycle="true">
 
         <ProgressBar
-            android:id="@+id/pb_image_slider"
+            android:id="@+id/pb_image_slider_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -39,27 +37,51 @@
             android:progressDrawable="@color/colorPrimary"
             android:progressTint="@color/colorPrimary"
             android:visibility="visible" />
+
     </com.smarteist.autoimageslider.SliderView>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/about_tab_layout"
+    <TextView
+        android:id="@+id/tv_clinic_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/image_slider"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="КЛИНИКА ЭСТЕТИЧЕСКОЙ МЕДИЦИНЫ"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@id/image_slider_main" />
+
+    <TextView
+        android:id="@+id/tv_vitaura"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-thin"
+        android:text="Vitaura"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_clinic_main" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/main_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_vitaura"
+        app:tabGravity="fill"
         app:tabIndicatorColor="@color/colorPrimaryLight"
-        app:tabRippleColor="@color/colorPrimaryLight"
-        android:defaultFocusHighlightEnabled="false"/>
+        app:tabMaxWidth="0dp"
+        app:tabMode="fixed"
+        app:tabRippleColor="@color/colorPrimaryLight" />
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/about_scroll_view"
+        android:id="@+id/main_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/about_tab_layout">
+        app:layout_constraintTop_toBottomOf="@id/main_tab_layout">
 
         <FrameLayout
-            android:id="@+id/frame_layout_about"
+            android:id="@+id/frame_layout_main"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent" />

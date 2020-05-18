@@ -1,7 +1,6 @@
 package com.example.vitaura.media.gallery
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +9,9 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.vitaura.R
-import com.example.vitaura.ServerHelper
+import com.example.vitaura.helpers.ServerHelper
 import com.example.vitaura.media.MediaRepository
 import kotlinx.android.synthetic.main.fragment_gallery.*
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.URL
 
 /**
  * A simple [Fragment] subclass.

@@ -1,4 +1,6 @@
-package com.example.vitaura;
+package com.example.vitaura.helpers;
+
+import com.example.vitaura.helpers.JSSEProvider;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

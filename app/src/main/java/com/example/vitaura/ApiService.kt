@@ -2,6 +2,7 @@ package com.example.vitaura
 
 import com.example.vitaura.about.Pages
 import com.example.vitaura.doctors.Doctor
+import com.example.vitaura.main.SliderData
 import com.example.vitaura.media.gallery.ChangeFile
 import com.example.vitaura.media.gallery.GalleryData
 import com.example.vitaura.media.gallery.GalleryFile
@@ -50,4 +51,7 @@ interface ApiService {
 
     @GET("/jsonapi/taxonomy_term/services/{id}")
     suspend fun getService(@Path("id") id: String): Response<Services>
+
+    @GET("/jsonapi/node/sliders")
+    suspend fun getSlider(): Response<SliderData>
 }

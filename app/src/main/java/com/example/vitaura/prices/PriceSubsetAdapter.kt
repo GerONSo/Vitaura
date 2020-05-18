@@ -2,14 +2,13 @@ package com.example.vitaura.prices
 
 import android.content.res.Resources
 import android.graphics.Typeface
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
-import com.example.vitaura.MutablePair
+import com.example.vitaura.helpers.MutablePair
 import com.example.vitaura.R
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup

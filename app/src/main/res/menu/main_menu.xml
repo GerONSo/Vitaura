@@ -2,6 +2,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
+    <group
+        android:id="@+id/g_main"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/main"
+            android:title="Главная"/>
+    </group>
     <group
         android:id="@+id/g_about"
         android:checkableBehavior="single">

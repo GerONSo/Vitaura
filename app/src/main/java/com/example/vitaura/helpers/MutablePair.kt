@@ -1,4 +1,4 @@
-package com.example.vitaura
+package com.example.vitaura.helpers
 
 class MutablePair<T, E> {
     var first: T? = null

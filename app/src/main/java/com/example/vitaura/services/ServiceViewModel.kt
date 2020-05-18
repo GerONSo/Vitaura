@@ -1,7 +1,7 @@
 package com.example.vitaura.services
 
 import androidx.lifecycle.ViewModel
-import com.example.vitaura.ServerHelper
+import com.example.vitaura.helpers.ServerHelper
 
 class ServiceViewModel : ViewModel() {
 

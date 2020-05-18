@@ -1,8 +1,7 @@
 package com.example.vitaura.prices
 
 import android.util.Log
-import com.example.vitaura.MutablePair
-import com.example.vitaura.NMeasureArray
+import com.example.vitaura.helpers.MutablePair
 import com.google.gson.*
 import java.lang.reflect.Type
 import kotlin.collections.ArrayList

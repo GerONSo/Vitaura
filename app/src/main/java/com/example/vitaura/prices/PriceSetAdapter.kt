@@ -10,10 +10,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.example.vitaura.MutablePair
+import com.example.vitaura.helpers.MutablePair
 import com.example.vitaura.R
-import com.thoughtbot.expandablerecyclerview.listeners.GroupExpandCollapseListener
-import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 import kotlinx.android.synthetic.main.card_price_set.view.*
 
 

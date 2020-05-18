@@ -12,7 +12,7 @@ object AboutDataParser {
         val listElements = doc.getElementsByTag("ul")
         val title1 = titleElements[0].text()
         val title2 = titleElements[1].text()
-        Log.d("test", elements.toString())
+//        Log.d("test", elements.toString())
         val image1 = elements[0].getElementsByTag("img")
         val image1Link = image1[0].attr("src")
         val intro: String = elements[1].toString().replace("\n", "") + "\n\n" +
@@ -31,7 +31,7 @@ object AboutDataParser {
             .replace("<ul>", "")
             .replace("</ul>", "")
         val list: String = Html.fromHtml(elements[10].toString()).toString() + "\n\n" + list2
-        Log.d("test", list2)
+//        Log.d("test", list2)
         val image2 = elements[9].getElementsByTag("img")
         val image2Link = image2.attr("src")
         AboutDataRepository.setAboutImages(listOf(image1Link, image2Link))

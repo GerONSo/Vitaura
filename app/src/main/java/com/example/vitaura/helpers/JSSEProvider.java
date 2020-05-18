@@ -1,4 +1,4 @@
-package com.example.vitaura;
+package com.example.vitaura.helpers;
 
 import java.security.AccessController;
 import java.security.Provider;

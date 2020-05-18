@@ -1,6 +1,6 @@
 package com.example.vitaura.send_review
 
-import com.example.vitaura.GMailSender
+import com.example.vitaura.helpers.GMailSender
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -21,7 +21,10 @@ object SendReviewRepository {
 
     fun sendEmail(subject: String, body: String) {
         GlobalScope.launch {
-            val sender = GMailSender("vitauraclinic.informator@gmail.com", "4%9jc#2Xuv")
+            val sender = GMailSender(
+                "vitauraclinic.informator@gmail.com",
+                "4%9jc#2Xuv"
+            )
             sender.sendMail(
                 subject,
                 body,

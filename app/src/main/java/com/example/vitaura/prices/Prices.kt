@@ -2,13 +2,8 @@ package com.example.vitaura.prices
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.example.vitaura.MutablePair
-import com.example.vitaura.NMeasureArray
+import com.example.vitaura.helpers.MutablePair
 import com.google.gson.annotations.SerializedName
-import com.squareup.moshi.FromJson
-import com.squareup.moshi.Json
-import java.util.*
-import kotlin.collections.HashMap
 
 data class Prices(@SerializedName("data") var set: MutableMap<List<Int>, MutablePair<String, MutableList<Price>>>)
 
