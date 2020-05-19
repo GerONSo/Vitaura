@@ -63,16 +63,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun initData() = runBlocking {
         val job = GlobalScope.launch {
-            ServerHelper.getAboutData()
-            ServerHelper.getDoctors()
-            ServerHelper.getPrices()
-            ServerHelper.getReviews()
-            ServerHelper.getSpecials()
-            ServerHelper.getVideos()
-            ServerHelper.getGallery()
-            ServerHelper.getChangeGallery()
-            ServerHelper.getServiceTypes()
-            ServerHelper.getMainSlider()
+            ServerHelper.apply {
+                getAboutData()
+                getDoctors()
+                getPrices()
+                getReviews()
+                getSpecials()
+                getVideos()
+                getGallery()
+                getChangeGallery()
+                getServiceTypes()
+                getMainSlider()
+                getProblems()
+            }
         }
         job.join()
     }
@@ -176,17 +179,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun initViewModel() {
         var resultList: MutableList<String?> = mutableListOf()
+        var problemList: MutableList<String?> = mutableListOf()
         MainRepository.sliderIds.observe(this, Observer {
             resultList = Collections.nCopies(it.data.size, "").toMutableList()
             for(slider in it.data) {
                 ServerHelper.getSliderFile(slider.relationships.photo.data.id)
             }
         })
+        MainRepository.sliderProblems.observe(this, Observer {
+            problemList = Collections.nCopies(it.data.size, "").toMutableList()
+            for(problem in it.data) {
+                ServerHelper.getSliderFile(problem.relationships.data.data.id)
+            }
+        })
         MainRepository.sliderMap.observe(this, Observer {
             for(i in 0 until resultList.size) {
                 resultList[i] = it[MainRepository.sliderIds.value?.data?.get(i)?.relationships?.photo?.data?.id]
             }
+            for(i in 0 until problemList.size) {
+                problemList[i] = it[MainRepository.sliderProblems.value?.data?.get(i)?.relationships?.data?.data?.id]
+            }
             MainRepository.sliderImages.value = resultList.toList()
+            MainRepository.problemImageList.value = problemList.toList()
         })
 
     }

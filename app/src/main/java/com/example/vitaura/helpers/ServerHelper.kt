@@ -322,6 +322,25 @@ object ServerHelper {
         }
     }
 
+    fun getProblems() {
+        val service = makeApi2Service()
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.getProblems()
+            withContext(Dispatchers.Main) {
+                try {
+                    if(response.isSuccessful) {
+                        MainRepository.sliderProblems.value = response.body()!!
+                    }
+                    else {
+                        Log.d("HTTP request", "Server didn't send response")
+                    }
+                } catch (e: Exception) {
+                    Log.d("HTTP request", "Server didn't send response")
+                }
+            }
+        }
+    }
+
     private fun makeApiService(): ApiService {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)

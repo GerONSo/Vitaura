@@ -19,14 +19,12 @@ import com.google.android.material.tabs.TabLayout
 import com.smarteist.autoimageslider.SliderView
 import kotlinx.android.synthetic.main.fragment_about.*
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_tab_info.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class MainFragment : Fragment() {
-
-    val TAB_INFO = "T1"
-    val TAB_REVIEW = "T2"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +39,7 @@ class MainFragment : Fragment() {
             MainRepository.sliderImages.observe(viewLifecycleOwner, Observer {
                 val imageSlider: SliderView = view.findViewById(R.id.image_slider_main)
                 val imageSliderAdapter = ImageSliderAdapter(it, MainRepository.sliderIds.value)
+
                 imageSlider.setSliderAdapter(imageSliderAdapter)
                 pb_image_slider_main.indeterminateDrawable.setColorFilter(
                     resources.getColor(R.color.colorPrimary),
@@ -62,19 +61,32 @@ class MainFragment : Fragment() {
                     when (main_tab_layout.selectedTabPosition) {
                         0 -> {
                             val tabInfoFragment = TabInfoFragment()
-                            changeFragment(tabInfoFragment, TAB_INFO)
+                            changeFragment(tabInfoFragment, MainRepository.TAB_INFO)
                         }
                         1 -> {
                             val tabReviewFragment = ReviewFragment()
-                            changeFragment(tabReviewFragment, TAB_REVIEW)
+                            changeFragment(tabReviewFragment, MainRepository.TAB_REVIEW)
                         }
                     }
                 }
             })
         }
+        if(MainRepository.lastMainFragment == MainRepository.TAB_INFO) {
+            val tab = main_tab_layout.getTabAt(0)
+            tab?.select()
+            val tabInfoFragment = TabInfoFragment()
+            changeFragment(tabInfoFragment, MainRepository.TAB_INFO)
+        }
+        else {
+            val tab = main_tab_layout.getTabAt(1)
+            tab?.select()
+            val tabReviewFragment = ReviewFragment()
+            changeFragment(tabReviewFragment, MainRepository.TAB_REVIEW)
+        }
     }
 
     private fun changeFragment(newFragment: Fragment, tag: String) {
+        MainRepository.lastMainFragment = tag
         childFragmentManager.beginTransaction()
             .replace(R.id.frame_layout_main, newFragment, tag)
             .commit()

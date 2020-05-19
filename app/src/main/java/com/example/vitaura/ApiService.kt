@@ -10,6 +10,7 @@ import com.example.vitaura.media.gallery.GalleryFileData
 import com.example.vitaura.media.video.VideoData
 import com.example.vitaura.prices.Prices
 import com.example.vitaura.reviews.Patients
+import com.example.vitaura.send_review.ProblemData
 import com.example.vitaura.services.ServiceData
 import com.example.vitaura.services.Services
 import com.example.vitaura.services.ServicesJSON
@@ -54,4 +55,7 @@ interface ApiService {
 
     @GET("/jsonapi/node/sliders")
     suspend fun getSlider(): Response<SliderData>
+
+    @GET("/jsonapi/node/problem")
+    suspend fun getProblems(): Response<ProblemData>
 }
