@@ -1,0 +1,46 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <group
+        android:id="@+id/g_main"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/main"
+            android:title="Главная"/>
+    </group>
+    <group
+        android:id="@+id/g_about"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/about"
+            android:title="О нас"/>
+    </group>
+    <group
+        android:id="@+id/g_special"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/special"
+            android:title="Акции" />
+    </group>
+
+    <group
+        android:id="@+id/g_media"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/media"
+            android:title="Фото и видео" />
+    </group>
+
+    <group
+        android:id="@+id/g_contacts"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/contacts"
+            android:title="Контакты" />
+    </group>
+
+
+
+</menu>

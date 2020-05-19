@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1081133372223",
+    "firebase_url": "https://vitauraapp.firebaseio.com",
+    "project_id": "vitauraapp",
+    "storage_bucket": "vitauraapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081133372223:android:a619304bd304bdf8bd798a",
+        "android_client_info": {
+          "package_name": "com.example.vitaura"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1081133372223-265cumc1n78ncrpabceb1f4u4rv3o9r8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vitaura",
+            "certificate_hash": "994c2223f0708854b73d9495fa060449c9e7d253"
+          }
+        },
+        {
+          "client_id": "1081133372223-4eov7j1rs5r4eq5oitk2vj12480lmair.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQg41m1ymQ3L3yMclRG07p5h35kJGthgo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1081133372223-4eov7j1rs5r4eq5oitk2vj12480lmair.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
