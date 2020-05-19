@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.example.vitaura.MainRepository
 import com.example.vitaura.R
@@ -17,14 +19,21 @@ import com.example.vitaura.about.TabLicenseFragment
 import com.example.vitaura.reviews.ReviewFragment
 import com.google.android.material.tabs.TabLayout
 import com.smarteist.autoimageslider.SliderView
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_about.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_tab_info.*
+
 
 /**
  * A simple [Fragment] subclass.
  */
 class MainFragment : Fragment() {
+
+    lateinit var toolbar: Toolbar
+
+    val TAB_INFO = "T1"
+    val TAB_REVIEW = "T2"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,11 +44,11 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+        updateUI()
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             MainRepository.sliderImages.observe(viewLifecycleOwner, Observer {
                 val imageSlider: SliderView = view.findViewById(R.id.image_slider_main)
                 val imageSliderAdapter = ImageSliderAdapter(it, MainRepository.sliderIds.value)
-
                 imageSlider.setSliderAdapter(imageSliderAdapter)
                 pb_image_slider_main.indeterminateDrawable.setColorFilter(
                     resources.getColor(R.color.colorPrimary),
@@ -65,19 +74,18 @@ class MainFragment : Fragment() {
                         }
                         1 -> {
                             val tabReviewFragment = ReviewFragment()
-                            changeFragment(tabReviewFragment, MainRepository.TAB_REVIEW)
+                            changeFragment(tabReviewFragment, TAB_REVIEW)
                         }
                     }
                 }
             })
         }
-        if(MainRepository.lastMainFragment == MainRepository.TAB_INFO) {
+        if (MainRepository.lastMainFragment == MainRepository.TAB_INFO) {
             val tab = main_tab_layout.getTabAt(0)
             tab?.select()
             val tabInfoFragment = TabInfoFragment()
             changeFragment(tabInfoFragment, MainRepository.TAB_INFO)
-        }
-        else {
+        } else {
             val tab = main_tab_layout.getTabAt(1)
             tab?.select()
             val tabReviewFragment = ReviewFragment()
@@ -85,10 +93,24 @@ class MainFragment : Fragment() {
         }
     }
 
+
     private fun changeFragment(newFragment: Fragment, tag: String) {
         MainRepository.lastMainFragment = tag
         childFragmentManager.beginTransaction()
             .replace(R.id.frame_layout_main, newFragment, tag)
             .commit()
+    }
+
+    fun updateUI() {
+        toolbar = activity?.toolbar!!
+        toolbar.setBackgroundColor(
+            ContextCompat.getColor(requireContext(),
+                R.color.colorAccent
+            ))
+        toolbar.navigationIcon?.setColorFilter(resources.getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP)
+        val toolbarLogo = activity?.toolbar_logo
+        toolbarLogo?.visibility = View.VISIBLE
+        val toolbarTitle = activity?.toolbar_title
+        toolbarTitle?.visibility = View.INVISIBLE
     }
 }

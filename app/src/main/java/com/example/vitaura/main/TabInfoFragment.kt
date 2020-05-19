@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.example.vitaura.MainRepository
-
 import com.example.vitaura.R
 import com.example.vitaura.about.AboutDataRepository
 import com.smarteist.autoimageslider.SliderView

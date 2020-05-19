@@ -7,13 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-
 import com.example.vitaura.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_tab_send_review.*
+import kotlinx.android.synthetic.main.fragment_tab_send_review.view.*
+import kotlinx.android.synthetic.main.review_card.view.*
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
 /**
@@ -36,17 +38,21 @@ class TabSendReviewFragment : Fragment() {
         updateUI()
         btn_send_review.setOnClickListener {
             if(et_name.text.toString() != "" && et_review.text.toString() != "") {
-                val name = et_name.text.toString()
-                val phone = et_phone.text.toString()
-                val review = et_review.text.toString()
+                val name = et_name.text?.toString()
+                val phone = et_phone_number.text?.toString()
+                val review = et_review.text?.toString()
                 SendReviewRepository.sendEmail(
                     "Новый отзыв в приложении Vitaura Clinic",
                     SendReviewRepository.getReviewBody(name, phone, review))
                 SendReviewRepository.openSendReviewResult(SendReviewViewModel.SEND_REVIEW)
             }
+            else{
+                Toast.LENGTH_LONG
+                Toast.makeText(context,"Пожалуйста заполните все поля ",Toast.LENGTH_LONG ).show()
+            }
         }
         et_name.setText(sendReviewViewModel.getName().value!!)
-        et_phone.setText(sendReviewViewModel.getNumber().value!!)
+        et_phone_number.setText(sendReviewViewModel.getNumber().value!!)
         et_review.setText(sendReviewViewModel.getReview().value!!)
         KeyboardVisibilityEvent.setEventListener(activity) {
             if(it) {
@@ -62,7 +68,7 @@ class TabSendReviewFragment : Fragment() {
 
     override fun onDestroyView() {
         sendReviewViewModel.setName(et_name.text.toString())
-        sendReviewViewModel.setNumber(et_phone.text.toString())
+        sendReviewViewModel.setNumber(et_phone_number.text.toString())
         sendReviewViewModel.setReview(et_review.text.toString())
         super.onDestroyView()
     }

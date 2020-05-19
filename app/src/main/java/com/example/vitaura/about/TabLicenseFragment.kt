@@ -1,6 +1,4 @@
 package com.example.vitaura.about
-
-
 import android.app.ActionBar
 import android.graphics.Point
 import android.graphics.Rect
@@ -16,7 +14,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.example.vitaura.MainRepository
-
 import com.example.vitaura.R
 import com.example.vitaura.doctors.DoctorsRepository
 import com.example.vitaura.send_review.SendReviewFragment

@@ -23,7 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="2"
-            android:src="@drawable/logo" />
+            android:src="@drawable/ic_vitaura" />
 
         <View
             android:layout_width="0dp"
@@ -71,22 +71,22 @@
                 app:layout_constraintRight_toRightOf="@id/et_name"
                 app:layout_constraintTop_toTopOf="@id/et_name" />
 
-
-            <EditText
-                android:id="@+id/et_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <com.santalu.maskedittext.MaskEditText
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
                 android:layout_marginRight="15dp"
-                android:background="@drawable/rounded_edit_text"
-                android:fontFamily="sans-serif"
-                android:hint="Номер телефона"
+                android:layout_marginTop="15dp"
+                android:id="@+id/et_phone_number"
+                android:layout_width="match_parent"
                 android:padding="10dp"
-                android:textColor="@color/textColor"
                 android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@id/et_name" />
-
+                android:hint="+7(###) ### ## ##"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/textColor"
+                android:background="@drawable/rounded_edit_text"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                app:layout_constraintTop_toBottomOf="@id/et_name"
+                app:met_mask="+7(###) ### ## ##"/>
 
             <EditText
                 android:id="@+id/et_review"
@@ -101,9 +101,9 @@
                 android:padding="10dp"
                 android:textColor="@color/textColor"
                 android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@id/et_phone"
-                app:layout_constraintVertical_weight="1"
-                app:layout_constraintBottom_toTopOf="@id/tv_mandatory"/>
+                app:layout_constraintBottom_toTopOf="@id/tv_mandatory"
+                app:layout_constraintTop_toBottomOf="@id/et_phone_number"
+                app:layout_constraintVertical_weight="1"/>
 
             <View
                 android:id="@+id/review_adjust_view"

@@ -23,7 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="2"
-            android:src="@drawable/logo" />
+            android:src="@drawable/ic_vitaura" />
 
         <View
             android:layout_width="0dp"
@@ -76,7 +76,7 @@
                         android:background="@drawable/necessary_circle" />
                 </FrameLayout>
 
-                <EditText
+                <com.santalu.maskedittext.MaskEditText
                     android:id="@+id/et_phone_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -85,10 +85,13 @@
                     android:layout_marginRight="15dp"
                     android:background="@drawable/rounded_edit_text"
                     android:fontFamily="sans-serif"
-                    android:hint="Номер телефона"
+                    android:hint="+7(###) ### ## ##"
+                    android:inputType="phone"
                     android:padding="10dp"
                     android:textColor="@color/textColor"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toBottomOf="@id/et_name"
+                    app:met_mask="+7(###) ### ## ##" />
 
                 <EditText
                     android:id="@+id/et_email"
@@ -104,7 +107,7 @@
                     android:textColor="@color/textColor"
                     android:textSize="14sp" />
 
-                <EditText
+                <com.santalu.maskedittext.MaskEditText
                     android:id="@+id/et_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -113,10 +116,13 @@
                     android:layout_marginRight="15dp"
                     android:background="@drawable/rounded_edit_text"
                     android:fontFamily="sans-serif"
-                    android:hint="Удобная дата и время приема"
+                    android:hint="ДД.ММ.ГГ ЧЧ.ММ (Дата и время приёма)"
+                    android:inputType="phone"
                     android:padding="10dp"
                     android:textColor="@color/textColor"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toBottomOf="@id/et_name"
+                    app:met_mask="##.##.##  ##:##" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -185,12 +191,12 @@
                         android:layout_weight="1" />
 
                     <Button
+                        android:id="@+id/btn_login"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="6"
                         android:background="@drawable/sign_up_button_white"
                         android:fontFamily="sans-serif"
-                        android:id="@+id/btn_login"
                         android:text="Отправить"
                         android:textColor="@color/textColor" />
 

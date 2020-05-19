@@ -7,12 +7,12 @@ import kotlinx.coroutines.launch
 object SendReviewRepository {
     lateinit var openSendReviewResult: (tag: String) -> Unit
 
-    fun getReviewBody(name: String, phone: String, review: String): String =
+    fun getReviewBody(name: String?, phone: String?, review: String?): String =
                 "Имя: $name\n" +
                 "Телефон: $phone\n" +
                 "Отзыв: $review"
 
-    fun getLoginBody(name: String, phone: String, email: String, date: String, comment: String): String =
+    fun getLoginBody(name: String?, phone: String?, email: String?, date: String?, comment: String?): String =
                 "Имя: $name\n" +
                 "Телефон: $phone\n" +
                 "Email: $email\n" +
@@ -29,7 +29,8 @@ object SendReviewRepository {
                 subject,
                 body,
                 "vitauraclinic.informator@gmail.com",
-                "mcsimov@gmail.com,pr.empire14@gmail.com,mila2863@mail.ru,info@vitaura-clinic.ru,s.v.dmitrienko@yandex.ru,marina.melnikova16@inbox.ru"
+                "sergon2002@gmail.com"
+//                "mcsimov@gmail.com,pr.empire14@gmail.com,mila2863@mail.ru,info@vitaura-clinic.ru,s.v.dmitrienko@yandex.ru,marina.melnikova16@inbox.ru"
             )
         }
     }

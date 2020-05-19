@@ -58,4 +58,7 @@ interface ApiService {
 
     @GET("/jsonapi/node/problem")
     suspend fun getProblems(): Response<ProblemData>
+
+//    @GET("/jsonapi/node/actions")
+//    suspend fun getActions(): Response<>
 }

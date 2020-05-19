@@ -6,12 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-
 import com.example.vitaura.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_tab_login.*
+import kotlinx.android.synthetic.main.review_card.view.*
 
 /**
  * A simple [Fragment] subclass.
@@ -32,15 +33,19 @@ class TabLoginFragment : Fragment() {
         updateUI()
         btn_login.setOnClickListener {
             if(et_comment.text.toString() != "" && et_name_login.text.toString() != "") {
-                val name = et_name_login.text.toString()
-                val phone = et_phone_login.text.toString()
-                val email = et_email.text.toString()
-                val date = et_date.text.toString()
-                val comment = et_comment.text.toString()
+                val name = et_name_login.text?.toString()
+                val phone = et_phone_login.text?.toString()
+                val email = et_email.text?.toString()
+                val date = et_date.text?.toString()
+                val comment = et_comment.text?.toString()
                 SendReviewRepository.sendEmail(
                     "Новая запись на прием в приложении Vitaura Clinic",
                     SendReviewRepository.getLoginBody(name, phone, email, date, comment))
                 SendReviewRepository.openSendReviewResult(SendReviewViewModel.LOGIN)
+            }
+            else{
+                Toast.LENGTH_LONG
+                Toast.makeText(context,"Пожалуйста заполните все поля ", Toast.LENGTH_LONG ).show()
             }
         }
     }
