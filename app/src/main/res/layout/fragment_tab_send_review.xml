@@ -57,7 +57,7 @@
                 android:hint="Ваше имя"
                 android:padding="10dp"
                 android:textColor="@color/textColor"
-                android:textSize="14sp"
+                android:textSize="@dimen/adaptive_text_size"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <View
@@ -78,7 +78,7 @@
                 android:id="@+id/et_phone_number"
                 android:layout_width="match_parent"
                 android:padding="10dp"
-                android:textSize="14sp"
+                android:textSize="@dimen/adaptive_text_size"
                 android:hint="+7(###) ### ## ##"
                 android:fontFamily="sans-serif"
                 android:textColor="@color/textColor"
@@ -100,7 +100,7 @@
                 android:inputType="textMultiLine"
                 android:padding="10dp"
                 android:textColor="@color/textColor"
-                android:textSize="14sp"
+                android:textSize="@dimen/adaptive_text_size"
                 app:layout_constraintBottom_toTopOf="@id/tv_mandatory"
                 app:layout_constraintTop_toBottomOf="@id/et_phone_number"
                 app:layout_constraintVertical_weight="1"/>
@@ -140,7 +140,7 @@
                 android:textColor="@color/colorAccent"
                 app:layout_constraintLeft_toRightOf="@id/circle_description"
                 app:layout_constraintBottom_toTopOf="@id/send_review_btn_layout"
-                android:textSize="14sp"
+                android:textSize="@dimen/adaptive_text_size"
                 android:layout_marginBottom="15dp"/>
 
             <LinearLayout
@@ -169,6 +169,7 @@
                     android:focusableInTouchMode="false"
                     android:fontFamily="sans-serif"
                     android:text="Отправить"
+                    android:textSize="@dimen/adaptive_text_size"
                     android:textColor="@color/textColor" />
 
                 <View

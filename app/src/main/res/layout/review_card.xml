@@ -31,7 +31,7 @@
             android:fontFamily="sans-serif"
             android:text="Любава Грешнова, актриса"
             android:textColor="@color/textColorDark"
-            android:textSize="19sp"
+            android:textSize="@dimen/adaptive_text_size_title"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -39,10 +39,11 @@
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/adaptive_text_size"
         android:layout_gravity="bottom"
         android:layout_marginLeft="5dp"
         android:fontFamily="sans-serif"
         android:text="smdglfdlkgjsldkflskdmvvlsdmv"
         android:textColor="@color/textColor" />
-        android:textSize="17sp" />
+        />
 </LinearLayout>

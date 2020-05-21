@@ -99,6 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@id/logo_layout"
                 app:layout_constraintLeft_toLeftOf="@id/logo_layout"
                 app:layout_constraintTop_toTopOf="@id/logo_layout" />
@@ -189,7 +190,7 @@
                     android:text="Запись на прием"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/adaptive_text_size"
                     app:layout_constraintBottom_toBottomOf="@id/sign_up_btn"
                     app:layout_constraintLeft_toLeftOf="@id/sign_up_btn"
                     app:layout_constraintRight_toLeftOf="@id/image_btn"

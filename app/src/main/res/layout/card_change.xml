@@ -22,7 +22,7 @@
             android:fontFamily="sans-serif"
             android:text="Увеличение губ филлером"
             android:textColor="@color/textColor"
-            android:textSize="16sp"
+            android:textSize="@dimen/adaptive_text_size"
             android:textStyle="bold" />
 
         <ImageView

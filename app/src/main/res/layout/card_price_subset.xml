@@ -8,7 +8,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="15sp"
+        android:textSize="@dimen/adaptive_text_size"
         android:textStyle="bold"
         android:text="Test Text"
         android:id="@+id/tv_price_subset"

@@ -41,7 +41,7 @@
                         android:hint="Ваше имя"
                         android:padding="10dp"
                         android:textColor="@color/textColor"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/adaptive_text_size" />
 
                     <View
                         android:layout_width="8dp"
@@ -64,7 +64,7 @@
                     android:hint="Номер телефона"
                     android:padding="10dp"
                     android:textColor="@color/textColor"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/adaptive_text_size" />
 
                 <EditText
                     android:id="@+id/et_email"
@@ -92,7 +92,7 @@
                     android:hint="Удобная дата и время приема"
                     android:padding="10dp"
                     android:textColor="@color/textColor"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/adaptive_text_size" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -144,7 +144,7 @@
                         android:fontFamily="sans-serif"
                         android:text="Обязательные поля"
                         android:textColor="@color/colorAccent"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/adaptive_text_size" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -168,6 +168,7 @@
                         android:background="@drawable/sign_up_button_white"
                         android:fontFamily="sans-serif"
                         android:text="Отправить"
+                        android:textSize="@dimen/adaptive_text_size"
                         android:id="@+id/btn_login"
                         android:textColor="@color/textColor" />
 

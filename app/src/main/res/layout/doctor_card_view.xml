@@ -35,7 +35,7 @@
             app:layout_constraintHorizontal_weight="2"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:paddingBottom="15dp"
             android:paddingRight="15dp"
             app:layout_constraintLeft_toRightOf="@id/portrait_iv"
@@ -48,12 +48,12 @@
                 android:id="@+id/name_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:fontFamily="sans-serif"
                 android:text="СИБРИНА\nЕлена Викторовна"
                 android:textColor="@color/colorPrimaryLight"
-                android:fontFamily="sans-serif"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:layout_gravity="start" />
+                android:textSize="@dimen/adaptive_text_size_title"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/spec_tv"
@@ -62,7 +62,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="15dp"
                 android:layout_gravity="start"
-                android:textSize="12sp"
+                android:textSize="@dimen/adaptive_text_size"
                 android:textColor="@color/textColorLight"
                 android:text="Главный врач, косметолог"/>
 
@@ -75,7 +75,7 @@
                 android:textColor="@color/colorAccent"
                 android:fontFamily="sans-serif-medium"
                 android:background="@drawable/mini_log_in_btn"
-                android:textSize="10sp"/>
+                android:textSize="@dimen/adaptive_text_size"/>
         </LinearLayout>
 
         <TextView
@@ -85,6 +85,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mini_description_layout"
             android:layout_marginTop="15dp"
+            android:textSize="@dimen/adaptive_text_size"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:fontFamily="sans-serif"
