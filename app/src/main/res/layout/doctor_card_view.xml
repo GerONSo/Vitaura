@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -79,18 +80,21 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/description"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mini_description_layout"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="15dp"
-            android:textSize="@dimen/adaptive_text_size"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:drawableEnd="@drawable/arrow_next1"
             android:fontFamily="sans-serif"
+            android:layout_marginLeft="16dp"
             android:textColor="@color/textColor"
-            android:visibility="visible"/>
+            android:textSize="@dimen/adaptive_text_size"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mini_description_layout"
+            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
