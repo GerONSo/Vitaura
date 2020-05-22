@@ -141,6 +141,7 @@
                         android:inputType="textMultiLine"
                         android:padding="10dp"
                         android:textColor="@color/textColor"
+                        android:minHeight="250dp"
                         android:textSize="@dimen/adaptive_text_size" />
 
                     <View

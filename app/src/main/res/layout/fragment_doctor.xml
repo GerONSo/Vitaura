@@ -102,7 +102,6 @@
                     android:layout_height="match_parent"
                     android:layout_margin="20dp"
                     android:textSize="16sp"
-                    android:lineSpacingMultiplier="@android:integer/config_longAnimTime"
                     android:fontFamily="sans-serif"
                     android:text=""
                     android:textColor="@color/textColor" />

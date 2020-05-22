@@ -1,7 +1,12 @@
 package com.example.vitaura.doctors
 
+import android.content.Context
 import android.content.res.Resources
 import android.text.Html
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.TextUtils
+import android.text.style.ImageSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,11 +24,11 @@ class DoctorsAdapter(
 ) : RecyclerView.Adapter<DoctorsAdapter.ViewHolder>() {
 
     var resources: Resources? = null
-
-
+    lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         resources = parent.context.resources
+        context = parent.context
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_doctor, parent, false))
     }
 
@@ -46,7 +51,11 @@ class DoctorsAdapter(
             ?.replace("</p>", "")
             ?.replace("<p>", "")
         if(miniDescription != null && miniDescription.isNotEmpty()){
-            holder.descriptionTextView.text = Html.fromHtml(miniDescription)
+            var spannableString = SpannableString(" ")
+            spannableString.setSpan(ImageSpan(context, R.drawable.arrow_next1), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+            val result: CharSequence = TextUtils.concat(SpannableString(Html.fromHtml(miniDescription)), spannableString)
+            holder.descriptionTextView.text = result
             holder.descriptionTextView.visibility = View.VISIBLE
         }
         else {
