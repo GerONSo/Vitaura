@@ -41,7 +41,7 @@
                         android:hint="Ваше имя"
                         android:padding="10dp"
                         android:textColor="@color/textColor"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/adaptive_text_size" />
 
                     <View
                         android:layout_width="8dp"
@@ -63,7 +63,7 @@
                         android:id="@+id/et_phone_number"
                         android:layout_width="match_parent"
                         android:padding="10dp"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/adaptive_text_size"
                         android:hint="+7(###) ### ## ##"
                         android:fontFamily="sans-serif"
                         android:textColor="@color/textColor"
@@ -92,7 +92,7 @@
                         android:inputType="textMultiLine"
                         android:padding="10dp"
                         android:textColor="@color/textColor"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/adaptive_text_size" />
 
                     <View
                         android:layout_width="8dp"
@@ -124,7 +124,7 @@
                         android:fontFamily="sans-serif"
                         android:text="Обязательные поля"
                         android:textColor="@color/colorAccent"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/adaptive_text_size" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -145,6 +145,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="6"
+                        android:textSize="@dimen/adaptive_text_size"
                         android:background="@drawable/sign_up_button_white"
                         android:focusable="false"
                         android:id="@+id/btn_send_review"

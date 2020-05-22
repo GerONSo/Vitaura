@@ -10,6 +10,6 @@
         android:id="@+id/iv_card_gallery"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
+        android:scaleType="centerInside"
         android:src="@drawable/d1" />
 </LinearLayout>

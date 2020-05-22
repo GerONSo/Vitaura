@@ -27,7 +27,7 @@
             android:fontFamily="sans-serif"
             android:textAlignment="center"
             android:textColor="@color/colorAccent"
-            android:textSize="28sp"
+            android:textSize="@dimen/adaptive_text_size_title"
             android:textStyle="bold"
             tools:text="Лазерный липолиз Zerona Green" />
 
@@ -39,7 +39,7 @@
             android:fontFamily="sans-serif"
             android:textAlignment="center"
             android:textColor="@color/colorAccent"
-            android:textSize="15sp"
+            android:textSize="@dimen/adaptive_text_size"
             android:textStyle="bold"
             tools:text="Эксклюзивно в Москве! Похудение быстро, безболезненно, в нескольких зонах!" />
 

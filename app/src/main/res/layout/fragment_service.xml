@@ -33,7 +33,7 @@
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@color/textColor"
-            android:textSize="19dp" />
+            android:textSize="@dimen/adaptive_text_size_title" />
 
         <TextView
             android:id="@+id/tv_in_service_type"
@@ -48,7 +48,7 @@
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimary"
-            android:textSize="20dp" />
+            android:textSize="@dimen/adaptive_text_size_title" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

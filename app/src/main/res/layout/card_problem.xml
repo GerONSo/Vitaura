@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv_problem_title"
         android:text="Целлюлит, жировые отложения"
-        android:textSize="16sp"
+        android:textSize="@dimen/adaptive_text_size"
         android:fontFamily="sans-serif"
         android:textColor="@color/textColor"
         android:textAlignment="center"

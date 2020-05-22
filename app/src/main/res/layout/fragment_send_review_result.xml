@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Ваше сообщение\nуспешно отправлено!"
-                android:textSize="18sp"
+                android:textSize="@dimen/adaptive_text_size"
                 android:fontFamily="sans-serif-medium"
                 android:textAlignment="center"/>
             <TextView
@@ -62,7 +62,7 @@
                 android:layout_marginTop="15dp"
                 android:text="Mы свяжемся с Вами\nв ближайшее время."
                 android:textAlignment="center"
-                android:textSize="16sp"
+                android:textSize="@dimen/adaptive_text_size"
                 android:fontFamily="sans-serif-medium"
                 android:layout_marginBottom="30dp"/>
         </LinearLayout>

@@ -39,6 +39,7 @@ class GalleryChangeAdapter(var galleryData: ArrayList<ChangeFile>?): RecyclerVie
 
     inner class ViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
         var galleryImageView: ImageView = view.iv_card_gallery
+
         var titleTextView: TextView = view.title
     }
 }

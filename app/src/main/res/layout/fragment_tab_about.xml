@@ -23,7 +23,7 @@
             android:layout_marginTop="15dp"
             android:fontFamily="sans-serif"
             android:textColor="@color/colorPrimary"
-            android:textSize="23sp"
+            android:textSize="@dimen/adaptive_text_size_title"
             android:textStyle="bold" />
 
         <TextView
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:textColor="@color/colorPrimary"
-            android:textSize="15sp"
+            android:textSize="@dimen/adaptive_text_size"
             android:textStyle="bold" />
 
         <TextView
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:textColor="@color/colorPrimary"
-            android:textSize="15sp"
+            android:textSize="@dimen/adaptive_text_size"
             android:textStyle="bold" />
 
         <TextView
@@ -89,6 +89,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
+                android:textSize="@dimen/adaptive_text_size"
                 android:background="@drawable/sign_up_button"
                 android:text="Записаться на прием"
                 android:textColor="@color/colorAccent" />
