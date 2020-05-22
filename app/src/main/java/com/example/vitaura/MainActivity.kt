@@ -31,7 +31,9 @@ import com.example.vitaura.services.ServiceFragment
 import com.example.vitaura.services.ServiceRepository
 import com.example.vitaura.services.ServicesFragment
 import com.example.vitaura.services.ServicesTypesFragment
+import com.example.vitaura.special.ActionFragment
 import com.example.vitaura.special.SpecialFragment
+import com.example.vitaura.special.SpecialsRepository
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -59,6 +61,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     val SERVICES_FRAGMENT = "F12"
     val SERVICE_FRAGMENT = "F13"
     val MAIN_FRAGMENT = "F14"
+    val ACTION_FRAGMENT = "F15"
 
 
     fun initData() = runBlocking {
@@ -75,6 +78,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 getServiceTypes()
                 getMainSlider()
                 getProblems()
+                getActions()
+                getNodeDoctors()
+                getNodePrices()
             }
         }
         job.join()
@@ -120,10 +126,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             changeFragment(ServicesFragment.newInstance(it), SERVICES_FRAGMENT)
         }
         ServiceRepository.openServiceFragment = { pos, t1, t2 ->
-            changeFragment(ServiceFragment.newInstance(pos, t1, t2), SERVICE_FRAGMENT)
+            changeFragment(ServiceFragment().also { it.setParams(pos, t1, t2) }, SERVICE_FRAGMENT)
         }
         SendReviewRepository.openSendReviewResult = { tag ->
-            changeFragment(SendReviewResultFragment.newInstance(tag), SEND_REVIEW_RESULT_FRAGMENT_TAG)
+            changeFragment(
+                SendReviewResultFragment.newInstance(tag),
+                SEND_REVIEW_RESULT_FRAGMENT_TAG
+            )
+        }
+        SpecialsRepository.openActionFragment = { title, body, position ->
+            changeFragment(
+                ActionFragment().also { it.setParams(title, body, position) },
+                ACTION_FRAGMENT
+            )
+        }
+        MainRepository.openDoctorFragment = { position ->
+            val fragment = DoctorFragment().also { it.setData(position) }
+            changeFragment(fragment, DOCTOR_FRAGMENT_TAG)
         }
         ServiceRepository.imageList = listOf(
             BitmapFactory.decodeResource(resources, R.drawable.face),
@@ -140,7 +159,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 R.id.doctors -> {
                     val doctorsFragment = DoctorsFragment.newInstance { position ->
-                        val fragment = DoctorFragment.newInstance(position)
+                        val fragment = DoctorFragment().also { fragment -> fragment.setData(position) }
                         changeFragment(fragment, DOCTOR_FRAGMENT_TAG)
                     }
                     changeFragment(doctorsFragment, DOCTORS_FRAGMENT_TAG)
@@ -182,27 +201,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         var problemList: MutableList<String?> = mutableListOf()
         MainRepository.sliderIds.observe(this, Observer {
             resultList = Collections.nCopies(it.data.size, "").toMutableList()
-            for(slider in it.data) {
+            for (slider in it.data) {
                 ServerHelper.getSliderFile(slider.relationships.photo.data.id)
             }
         })
         MainRepository.sliderProblems.observe(this, Observer {
             problemList = Collections.nCopies(it.data.size, "").toMutableList()
-            for(problem in it.data) {
+            for (problem in it.data) {
                 ServerHelper.getSliderFile(problem.relationships.data.data.id)
             }
         })
         MainRepository.sliderMap.observe(this, Observer {
-            for(i in 0 until resultList.size) {
-                resultList[i] = it[MainRepository.sliderIds.value?.data?.get(i)?.relationships?.photo?.data?.id]
+            for (i in 0 until resultList.size) {
+                resultList[i] =
+                    it[MainRepository.sliderIds.value?.data?.get(i)?.relationships?.photo?.data?.id]
             }
-            for(i in 0 until problemList.size) {
-                problemList[i] = it[MainRepository.sliderProblems.value?.data?.get(i)?.relationships?.data?.data?.id]
+            for (i in 0 until problemList.size) {
+                problemList[i] =
+                    it[MainRepository.sliderProblems.value?.data?.get(i)?.relationships?.data?.data?.id]
             }
             MainRepository.sliderImages.value = resultList.toList()
             MainRepository.problemImageList.value = problemList.toList()
         })
-
+        MainRepository.nidList.observe(this, Observer {
+            ServerHelper.getPrices2()
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -254,11 +277,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.special -> {
                 val specialFragment = SpecialFragment()
                 changeFragment(specialFragment, SPECIAL_FRAGMENT_TAG)
-                toolbar_logo.visibility = View.INVISIBLE
-                toolbar_title.visibility = View.VISIBLE
             }
             R.id.media -> {
                 changeFragment(MediaFragment(), MEDIA_FRAGMENT_TAG)
+            }
+            R.id.services -> {
+                changeFragment(ServicesTypesFragment(), SERVICE_TYPES_FRAGMENT)
+            }
+
+            R.id.doctors -> {
+                val doctorsFragment = DoctorsFragment.newInstance { position ->
+                    val fragment = DoctorFragment().also { fragment -> fragment.setData(position) }
+                    changeFragment(fragment, DOCTOR_FRAGMENT_TAG)
+                }
+                changeFragment(doctorsFragment, DOCTORS_FRAGMENT_TAG)
+            }
+
+            R.id.reviews -> {
+                val reviewFragment = ReviewFragment()
+                changeFragment(reviewFragment, REVIEW_FRAGMENT_TAG)
             }
         }
         drawer.closeDrawer(GravityCompat.START)
@@ -267,14 +304,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun changeFragment(newFragment: Fragment, tag: String) {
         if (model.getFragmentStack().value?.size == 0 ||
-            model.getFragmentStack().value?.get(model.getFragmentStack().value!!.size - 1) != tag
+            model.getFragmentStack().value?.get(model.getFragmentStack().value!!.size - 1) != tag ||
+            model.getFragmentStack().value?.get(model.getFragmentStack().value!!.size - 1) == ACTION_FRAGMENT ||
+            model.getFragmentStack().value?.get(model.getFragmentStack().value!!.size - 1) == DOCTOR_FRAGMENT_TAG
         ) {
 //            fragmentStack.add(tag)
-            model.addToFragmentStack(tag)
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, newFragment, tag)
-                .addToBackStack(null)
-                .commit()
+            if (!supportFragmentManager.isDestroyed) {
+                model.addToFragmentStack(tag)
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frame_layout, newFragment, tag)
+                    .addToBackStack(null)
+                    .commit()
+            }
         }
     }
 

@@ -18,6 +18,21 @@
             android:title="О нас"/>
     </group>
     <group
+        android:id="@+id/g_services"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/services"
+            android:title="Услуги"/>
+    </group>
+    <group
+        android:id="@+id/g_doctors"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/doctors"
+            android:title="Специалисты"/>
+    </group>
+
+    <group
         android:id="@+id/g_special"
         android:checkableBehavior="single">
         <item
@@ -32,7 +47,13 @@
             android:id="@+id/media"
             android:title="Фото и видео" />
     </group>
-
+    <group
+        android:id="@+id/g_reviews"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/reviews"
+            android:title="Отзывы"/>
+    </group>
     <group
         android:id="@+id/g_contacts"
         android:checkableBehavior="single">

@@ -15,7 +15,7 @@
             android:id="@+id/rv_doctors"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/doctor_card_view" />
+            tools:listitem="@layout/card_doctor" />
 
         <include
             layout="@layout/flower_view"

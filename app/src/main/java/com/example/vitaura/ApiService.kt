@@ -2,18 +2,21 @@ package com.example.vitaura
 
 import com.example.vitaura.about.Pages
 import com.example.vitaura.doctors.Doctor
+import com.example.vitaura.doctors.DoctorsData
 import com.example.vitaura.main.SliderData
 import com.example.vitaura.media.gallery.ChangeFile
 import com.example.vitaura.media.gallery.GalleryData
 import com.example.vitaura.media.gallery.GalleryFile
 import com.example.vitaura.media.gallery.GalleryFileData
 import com.example.vitaura.media.video.VideoData
+import com.example.vitaura.prices.PriceData
 import com.example.vitaura.prices.Prices
 import com.example.vitaura.reviews.Patients
 import com.example.vitaura.send_review.ProblemData
 import com.example.vitaura.services.ServiceData
 import com.example.vitaura.services.Services
 import com.example.vitaura.services.ServicesJSON
+import com.example.vitaura.special.ActionsData
 import com.example.vitaura.special.Special
 import retrofit2.Response
 import retrofit2.http.GET
@@ -59,6 +62,12 @@ interface ApiService {
     @GET("/jsonapi/node/problem")
     suspend fun getProblems(): Response<ProblemData>
 
-//    @GET("/jsonapi/node/actions")
-//    suspend fun getActions(): Response<>
+    @GET("/jsonapi/node/actions")
+    suspend fun getActions(): Response<ActionsData>
+
+    @GET("/jsonapi/node/doctors")
+    suspend fun getNodeDoctors(): Response<DoctorsData>
+
+    @GET("/jsonapi/node/price")
+    suspend fun getNodePrices(): Response<PriceData>
 }

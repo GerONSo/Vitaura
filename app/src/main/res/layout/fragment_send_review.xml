@@ -16,7 +16,8 @@
         app:tabIndicatorColor="@color/colorPrimaryLight"
         app:tabMaxWidth="0dp"
         app:tabMode="fixed"
-        app:tabRippleColor="@color/colorPrimaryLight" />
+        app:tabRippleColor="@color/colorPrimaryLight"
+        app:tabTextAppearance="@style/TabLayout"/>
 
     <FrameLayout
         android:layout_width="match_parent"

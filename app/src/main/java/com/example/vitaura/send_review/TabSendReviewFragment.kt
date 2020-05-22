@@ -15,7 +15,7 @@ import com.example.vitaura.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_tab_send_review.*
 import kotlinx.android.synthetic.main.fragment_tab_send_review.view.*
-import kotlinx.android.synthetic.main.review_card.view.*
+import kotlinx.android.synthetic.main.card_review.view.*
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
 /**

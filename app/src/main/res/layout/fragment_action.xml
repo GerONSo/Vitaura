@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layoutDescription="@xml/layout_action_animation_description"
+    tools:context=".special.ActionFragment">
+
+    <com.smarteist.autoimageslider.SliderView
+        android:id="@+id/image_slider_action"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:maxHeight="250dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:sliderAnimationDuration="600"
+        app:sliderAutoCycleDirection="back_and_forth"
+        app:sliderAutoCycleEnabled="true"
+        app:sliderIndicatorAnimationDuration="600"
+        app:sliderIndicatorGravity="center_horizontal|bottom"
+        app:sliderIndicatorMargin="15dp"
+        app:sliderIndicatorOrientation="horizontal"
+        app:sliderIndicatorPadding="3dp"
+        app:sliderIndicatorRadius="2dp"
+        app:sliderIndicatorSelectedColor="@color/colorPrimary"
+        app:sliderIndicatorUnselectedColor="@color/colorAccent"
+        app:sliderScrollTimeInSec="1"
+        app:sliderStartAutoCycle="true">
+
+        <ProgressBar
+            android:id="@+id/pb_image_slider_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/colorPrimary"
+            android:elevation="10dp"
+            android:progressBackgroundTint="@color/colorPrimary"
+            android:progressDrawable="@color/colorPrimary"
+            android:progressTint="@color/colorPrimary"
+            android:visibility="visible" />
+
+    </com.smarteist.autoimageslider.SliderView>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/image_slider_action">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:clipToPadding="false">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_title_action"
+                android:fontFamily="sans-serif-medium"
+                android:text="Лазерный липолиз на аппарате ZERONA GREEN!"
+                android:textColor="@color/colorPrimary"
+                android:textSize="26sp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_body_action"
+                android:fontFamily="sans-serif"
+                android:textSize="19sp"
+                android:textColor="@color/textColor"
+                android:text="Эксклюзивно в Москве! Похудение быстро, безболезненно, в нескольких зонах!"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_action"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_login_action"
+                app:layout_constraintWidth_percent="0.7"
+                android:background="@drawable/sign_up_button"
+                android:text="Записаться на прием"
+                android:textColor="@color/colorAccent"
+                android:padding="15dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_body_action"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_other_specials"
+                app:layout_constraintTop_toBottomOf="@id/btn_login_action"
+                android:layout_marginTop="20dp"
+                android:text="Другие акции"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textColor="@color/textColor"
+                android:textAllCaps="true"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"/>
+
+            <include
+                android:id="@+id/action_special_card_1"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                layout="@layout/card_special"
+                app:layout_constraintTop_toBottomOf="@id/tv_other_specials"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"/>
+
+            <include
+                android:id="@+id/action_special_card_2"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                layout="@layout/card_special"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/action_special_card_1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"/>
+
+            <include
+                android:id="@+id/flower_view"
+                layout="@layout/flower_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/action_special_card_2"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

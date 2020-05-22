@@ -1,43 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    app:layoutDescription="@xml/layout_about_animation_description"
+    tools:context=".about.AboutFragment">
 
-    <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/about_tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutDescription="@xml/layout_about_animation_description"
-        tools:context=".about.AboutFragment">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/image_slider"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/colorPrimaryLight"
+        app:tabMaxWidth="0dp"
+        app:tabMode="fixed"
+        app:tabRippleColor="@color/colorPrimaryLight"
+        app:tabTextAppearance="@style/TabLayout"
+        android:defaultFocusHighlightEnabled="false"/>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/about_tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:defaultFocusHighlightEnabled="false"
-            app:layout_constraintTop_toBottomOf="@id/image_slider"
-            app:tabIndicatorColor="@color/colorPrimaryLight"
-            app:tabRippleColor="@color/colorPrimaryLight" />
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/about_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/about_tab_layout">
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/about_scroll_view"
+        <FrameLayout
+            android:id="@+id/frame_layout_about"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:fillViewport="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/about_tab_layout">
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-            <FrameLayout
-                android:id="@+id/frame_layout_about"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
-        </androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
-    </androidx.constraintlayout.motion.widget.MotionLayout>
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.motion.widget.MotionLayout>

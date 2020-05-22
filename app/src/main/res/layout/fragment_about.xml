@@ -51,6 +51,7 @@
         app:tabMaxWidth="0dp"
         app:tabMode="fixed"
         app:tabRippleColor="@color/colorPrimaryLight"
+        app:tabTextAppearance="@style/TabLayout"
         android:defaultFocusHighlightEnabled="false"/>
 
     <androidx.core.widget.NestedScrollView

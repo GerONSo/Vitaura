@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.vitaura.R
@@ -21,6 +22,7 @@ class DoctorsFragment : Fragment() {
 
     var doctorsAdapter: DoctorsAdapter? = null
     lateinit var toolbar: androidx.appcompat.widget.Toolbar
+    val viewModel: DoctorViewModel by viewModels()
 
     companion object {
 
@@ -43,7 +45,7 @@ class DoctorsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         updateUI()
         val mLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        doctorsAdapter = DoctorsAdapter(openDoctorFragment)
+        doctorsAdapter = DoctorsAdapter(openDoctorFragment, viewModel)
         rv_doctors.apply {
             layoutManager = mLayoutManager
             adapter = doctorsAdapter

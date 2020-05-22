@@ -20,6 +20,7 @@
             app:tabIndicatorColor="@color/colorPrimaryLight"
             app:tabMaxWidth="0dp"
             app:tabMode="fixed"
+            app:tabTextAppearance="@style/TabLayout"
             app:tabRippleColor="@color/colorPrimaryLight" />
 
         <FrameLayout

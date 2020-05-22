@@ -5,6 +5,7 @@ import com.example.vitaura.reviews.Review
 
 object PricesRepository {
     private var prices: MutableLiveData<Prices> = MutableLiveData()
+    var servicePrices: MutableLiveData<Prices> = MutableLiveData()
 
     fun getPrices(): MutableLiveData<Prices> {
         return prices

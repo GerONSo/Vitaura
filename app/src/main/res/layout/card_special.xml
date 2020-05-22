@@ -8,6 +8,7 @@
     android:layout_marginLeft="15dp"
     android:layout_marginRight="15dp"
     android:background="@color/backgroundDark"
+    android:id="@+id/card_special"
     android:orientation="vertical"
     app:cardCornerRadius="16dp">
 
@@ -15,12 +16,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <com.joooonho.SelectableRoundedImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:id="@+id/background_image"
-            android:src="@drawable/d2" />
+            android:src="@drawable/d2"
+            app:sriv_left_top_corner_radius="16dp"
+            app:sriv_left_bottom_corner_radius="16dp"
+            app:sriv_right_bottom_corner_radius="16dp"
+            app:sriv_right_top_corner_radius="16dp"/>
+
+        <View
+            android:id="@+id/empty_view2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/media_card"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/empty_view"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:layout_width="0dp"

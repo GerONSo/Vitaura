@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import com.example.vitaura.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_tab_login.*
-import kotlinx.android.synthetic.main.review_card.view.*
+import kotlinx.android.synthetic.main.card_review.view.*
 
 /**
  * A simple [Fragment] subclass.

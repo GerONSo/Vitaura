@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 
 object DoctorsRepository {
     private var doctors: MutableLiveData<List<Doctor?>> = MutableLiveData()
+    var position: Int = 0
 
     fun getDoctors(): MutableLiveData<List<Doctor?>> {
         return doctors

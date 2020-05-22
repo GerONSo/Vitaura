@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vitaura.R
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.special_card.view.*
+import kotlinx.android.synthetic.main.card_special.view.*
 
 class SpecialAdapter() : RecyclerView.Adapter<SpecialAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.special_card, parent, false))
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_special, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -25,6 +25,12 @@ class SpecialAdapter() : RecyclerView.Adapter<SpecialAdapter.ViewHolder>() {
             .into(holder.backgroundImage)
         holder.titleText.text = Html.fromHtml(SpecialsRepository.getSpecials().value?.get(position)?.name)
         holder.descriptionText.text = Html.fromHtml(SpecialsRepository.getSpecials().value?.get(position)?.body)
+        holder.view.setOnClickListener {
+            val title = SpecialsRepository.getSpecialTitle(position)
+            val body = SpecialsRepository.getSpecialBody(position)
+            SpecialsRepository.openActionFragment(title, body, position)
+        }
+        holder.cardView.preventCornerOverlap = false
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -32,6 +38,7 @@ class SpecialAdapter() : RecyclerView.Adapter<SpecialAdapter.ViewHolder>() {
         val backgroundImage = view.background_image
         val titleText = view.title
         val descriptionText = view.special_description
+        val cardView = view.card_special
     }
 
 }

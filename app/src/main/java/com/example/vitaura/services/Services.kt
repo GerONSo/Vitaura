@@ -17,7 +17,10 @@ data class Data(@field:Json(name ="id") var dataServiceID : String)
 
 data class Services(@field:Json(name = "data") var data: ServiceData)
 
-data class ServiceData(@field:Json(name = "attributes") var attrs: ServiceAttributes)
+data class ServiceData(
+    @field:Json(name = "attributes") var attrs: ServiceAttributes,
+    @field:Json(name = "id") var id: String
+)
 
 data class ServiceAttributes(
     @field:Json(name = "name") var name: String,

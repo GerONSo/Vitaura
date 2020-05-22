@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vitaura.R
-import kotlinx.android.synthetic.main.review_card.view.*
+import kotlinx.android.synthetic.main.card_review.view.*
 
 class ReviewAdapter: RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.review_card, parent, false))
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_review, parent, false))
     }
 
     override fun getItemCount(): Int {

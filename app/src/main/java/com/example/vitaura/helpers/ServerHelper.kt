@@ -12,11 +12,13 @@ import com.example.vitaura.media.gallery.ChangeFile
 import com.example.vitaura.media.video.VideoAdapter
 import com.example.vitaura.prices.Prices
 import com.example.vitaura.prices.PricesDeserializer
+import com.example.vitaura.prices.PricesDeserializer2
 import com.example.vitaura.prices.PricesRepository
 import com.example.vitaura.reviews.Review
 import com.example.vitaura.reviews.ReviewRepository
 import com.example.vitaura.services.ServiceRepository
 import com.example.vitaura.services.Services
+import com.example.vitaura.special.Special
 import com.example.vitaura.special.SpecialsRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -341,6 +343,83 @@ object ServerHelper {
         }
     }
 
+    fun getActions() {
+        val service = makeApi2Service()
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.getActions()
+            withContext(Dispatchers.Main) {
+                try {
+                    if(response.isSuccessful) {
+                        SpecialsRepository.actions.value = response.body()!!
+                    }
+                    else {
+                        Log.d("HTTP request", "Server didn't send response")
+                    }
+                } catch (e: Exception) {
+                    Log.d("HTTP request", "Server didn't send response")
+                }
+            }
+        }
+    }
+
+    fun getNodeDoctors() {
+        val service = makeApi2Service()
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.getNodeDoctors()
+            withContext(Dispatchers.Main) {
+                try {
+                    if(response.isSuccessful) {
+                        MainRepository.nodeDoctors.value = response.body()!!
+                    }
+                    else {
+                        Log.d("HTTP request", "Server didn't send response")
+                    }
+                } catch (e: Exception) {
+                    Log.d("HTTP request", "Server didn't send response")
+                }
+            }
+        }
+    }
+
+    fun getNodePrices() {
+        val service = makeApi2Service()
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.getNodePrices()
+            withContext(Dispatchers.Main) {
+                try {
+                    if(response.isSuccessful) {
+                        MainRepository.nodePrices.value = response.body()!!
+                    }
+                    else {
+                        Log.d("HTTP request", "Server didn't send response")
+                    }
+                } catch (e: Exception) {
+                    Log.d("HTTP request", "Server didn't send response")
+                }
+            }
+        }
+    }
+
+    fun getPrices2() {
+        val service =
+            makeApiPrice2Service()
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.getPrices()
+            withContext(Dispatchers.Main) {
+                try {
+                    if (response.isSuccessful) {
+                        PricesRepository.servicePrices.value = response.body()
+                    } else {
+                        Log.d("HTTP request", "Server didn't send response")
+                    }
+
+                } catch (e: Exception) {
+                    Log.d("HTTP request", "Server didn't send response")
+                }
+            }
+        }
+    }
+
     private fun makeApiService(): ApiService {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -371,6 +450,23 @@ object ServerHelper {
             .registerTypeAdapter(
                 Prices::class.java,
                 PricesDeserializer()
+            )
+            .create()
+    }
+
+    private fun makeApiPrice2Service(): ApiService {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL2)
+            .addConverterFactory(GsonConverterFactory.create(getGsonConverter2()))
+            .build()
+            .create(ApiService::class.java)
+    }
+
+    private fun getGsonConverter2(): Gson {
+        return GsonBuilder()
+            .registerTypeAdapter(
+                Prices::class.java,
+                PricesDeserializer2()
             )
             .create()
     }
