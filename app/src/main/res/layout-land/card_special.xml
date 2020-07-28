@@ -62,12 +62,24 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            </LinearLayout>
+            <TextView
+                android:id="@+id/special_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="@dimen/adaptive_text_size"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"
+                android:layout_marginTop="15dp"
+                android:text="Эксклюзивно в Москве! Похудение быстро, безболезненно, в нескольких зонах!"/>
+        </LinearLayout>
         <View
             android:id="@+id/empty_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintHorizontal_weight="4"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toRightOf="@id/name_layout"
             app:layout_constraintTop_toTopOf="parent"

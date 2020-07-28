@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.vitaura.MainRepository
 import com.example.vitaura.helpers.MutablePair
 import com.google.gson.*
+import java.lang.Exception
 import java.lang.reflect.Type
 import kotlin.collections.ArrayList
 
@@ -71,9 +72,13 @@ class PricesDeserializer2 : JsonDeserializer<Prices> {
         typeOfT: Type?,
         context: JsonDeserializationContext?
     ): Prices {
-        val jsonObject = json?.asJsonObject
-        val data = jsonObject?.get("data")!!
-        dfs(data, mutableListOf(0, 0), 0)
+        try {
+            val jsonObject = json?.asJsonObject
+            val data = jsonObject?.get("data")!!
+            dfs(data, mutableListOf(0, 0), 0)
+        } catch (e: Exception) {
+            Log.d("empty prices", "empty")
+        }
         return Prices(array)
     }
 }

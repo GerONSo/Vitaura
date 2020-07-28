@@ -5,29 +5,6 @@
     android:layout_gravity="bottom"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintVertical_weight="1"
-        app:layout_constraintHorizontal_weight="1"
-        android:id="@+id/flower"
-        android:src="@drawable/flower"
-        app:layout_constraintLeft_toRightOf="@id/empty3"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/flower_inner_layout"
-        app:layout_constraintTop_toTopOf="parent"
-        android:scaleType="fitXY"
-        android:elevation="8dp"/>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:id="@+id/empty3"
-        app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/flower"
-        app:layout_constraintTop_toTopOf="parent"/>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,40 +12,6 @@
         android:id="@+id/flower_inner_layout"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="40dp">
-        
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/title"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/empty"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textSize="@dimen/adaptive_text_size_title"
-            android:textColor="@color/colorAccent"
-            android:text="Бережное отношение \nк вашей красоте"
-
-            android:fontFamily="sans-serif-medium"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="15dp"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:id="@+id/empty"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/title"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:id="@+id/empty2"
-            app:layout_constraintHorizontal_weight="2"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/log_in_flower_btn"
-            app:layout_constraintTop_toTopOf="parent"/>
 
         <Button
             android:id="@+id/log_in_flower_btn"
@@ -83,9 +26,64 @@
             android:textColor="@color/colorAccent"
             app:layout_constraintTop_toBottomOf="@id/title"
             app:layout_constraintLeft_toLeftOf="@id/title"
-            app:layout_constraintRight_toLeftOf="@id/empty2"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:onClick="onFlowerClicked"/>
+            android:layout_marginRight="15dp"
+            android:onClick="onFlowerClicked"
+            android:elevation="10dp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/title"
+            app:layout_constraintHorizontal_weight="6"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/empty"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/adaptive_text_size_title"
+            android:textColor="@color/colorAccent"
+            android:elevation="100dp"
+            android:text="Бережное отношение к вашей красоте"
+
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:id="@+id/empty"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/title"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintHorizontal_weight="1"
+        android:id="@+id/flower"
+        android:src="@drawable/flower"
+        app:layout_constraintLeft_toRightOf="@id/empty3"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/flower_inner_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="fitXY"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:id="@+id/empty3"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/flower"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

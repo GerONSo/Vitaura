@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,7 +19,7 @@
             android:layout_marginBottom="20dp"
             android:fontFamily="sans-serif"
             android:textColor="@color/colorPrimary"
-            android:textSize="23sp"
+            android:textSize="@dimen/adaptive_text_size_title"
             android:textStyle="bold"
             tools:text="Лицензия на медицинскую деятельность" />
 
@@ -156,6 +155,7 @@
                 app:layout_constraintBottom_toTopOf="@id/iv_license3"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <com.github.chrisbanes.photoview.PhotoView
                 android:id="@+id/iv_license3"
                 android:layout_width="match_parent"
@@ -178,7 +178,7 @@
             android:layout_marginBottom="20dp"
             android:fontFamily="sans-serif"
             android:textColor="@color/colorPrimary"
-            android:textSize="23sp"
+            android:textSize="@dimen/adaptive_text_size_title"
             android:textStyle="bold"
             tools:text="Контакты органов исполнительной власти в сфере охраны здоровья граждан" />
 
@@ -187,6 +187,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
+            android:lineSpacingExtra="10dp"
             android:textColor="@color/textColor"
             android:textSize="15sp"
             tools:text="Департамент здравоохранения города Москвы\n
@@ -209,17 +210,18 @@ E-mail: uprav@77.rospotrebnadzor.ru" />
             android:id="@+id/log_in_license_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:textSize="@dimen/adaptive_text_size"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:layout_marginRight="50dp"
+            android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
             android:background="@drawable/sign_up_button"
             android:text="Записаться на прием"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/adaptive_text_size" />
 
 
     </LinearLayout>
+
     <include
         android:id="@+id/flower_view"
         layout="@layout/flower_view"

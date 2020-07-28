@@ -32,22 +32,25 @@ class ServicesTypesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         updateUI()
-        ServiceRepository.serviceTypes.observe(viewLifecycleOwner, Observer {
-            val serviceTypesAdapter = ServiceTypesAdapter(resources, it)
-            rv_service_types.apply {
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                adapter = serviceTypesAdapter
-            }
-        })
+        val serviceTypesAdapter = ServiceTypesAdapter(resources)
+        rv_service_types.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = serviceTypesAdapter
+        }
     }
 
     fun updateUI() {
         toolbar = activity?.toolbar!!
         toolbar.setBackgroundColor(
-            ContextCompat.getColor(requireContext(),
-            R.color.colorAccent
-        ))
-        toolbar.navigationIcon?.setColorFilter(resources.getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP)
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.colorAccent
+            )
+        )
+        toolbar.navigationIcon?.setColorFilter(
+            resources.getColor(R.color.colorPrimary),
+            PorterDuff.Mode.SRC_ATOP
+        )
         val title = activity?.toolbar_title
         title?.setTextColor(ContextCompat.getColor(requireContext(), R.color.textColor))
         title?.text = "Услуги"

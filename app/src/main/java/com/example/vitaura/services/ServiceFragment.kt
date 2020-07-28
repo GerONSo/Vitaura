@@ -1,6 +1,5 @@
 package com.example.vitaura.services
 
-import android.database.DataSetObserver
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.Html
@@ -12,11 +11,13 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.vitaura.helpers.HtmlNormalizer
 import com.example.vitaura.MainRepository
 import com.example.vitaura.R
-import com.example.vitaura.doctors.DoctorAttributes
+import com.example.vitaura.helpers.GlideImageGetter
+//import com.example.vitaura.helpers.ImageGetter
 import com.example.vitaura.prices.PricesRepository
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_service.*
 
@@ -26,15 +27,23 @@ import kotlinx.android.synthetic.main.fragment_service.*
 class ServiceFragment : Fragment() {
 
     lateinit var toolbar: Toolbar
+    val viewModel = ServiceViewModel()
     var position: Int = 0
-    var serviceTitle: String = ""
-    var serviceTypeTitle: String = ""
+    var serviceTitle: String? = ""
+    var serviceTypeTitle: String? = ""
+    var parentPosition: Int = 0
+    var serviceId: String = ""
+    lateinit var imageGetter: GlideImageGetter
 
-    fun setParams(newPosition: Int, newTitle: String, newTypeTitle: String) {
+    fun setParams(newPosition: Int, newTitle: String?, newTypeTitle: String?, newParentPosition: Int, newServiceId: String) {
         position = newPosition
         serviceTitle = newTitle
         serviceTypeTitle = newTypeTitle
-
+        parentPosition = newParentPosition
+        serviceId = newServiceId
+        viewModel.serviceId = newServiceId
+//        viewModel.serviceTitle = serviceTitle
+//        viewModel.serviceTypeTitle = serviceTypeTitle
     }
 
     override fun onCreateView(
@@ -47,52 +56,82 @@ class ServiceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         updateUI()
+        imageGetter = GlideImageGetter(tv_in_about_service)
+        val service = ServiceRepository.services.value?.get(ServiceRepository.serviceTypesAlias[parentPosition])?.get(position)
+        service_tab_layout.apply {
+            addTab(service_tab_layout.newTab().setText("Эффективность"))
+            addTab(service_tab_layout.newTab().setText("Преимущества"))
+            addTab(service_tab_layout.newTab().setText("Противопоказания"))
+            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    when(service_tab_layout.selectedTabPosition) {
+                        0 -> {
+                            service?.let {
+                                tv_in_about_service.text = Html.fromHtml(HtmlNormalizer.normalize(it.efficiency), imageGetter, null)
+                            }
+                        }
+
+                        1 -> {
+                            service?.let {
+                                tv_in_about_service.text = Html.fromHtml(HtmlNormalizer.normalize(it.advantage), imageGetter, null)
+//                                web_view.loadDataWithBaseURL(null, HtmlNormalizer.normalize(it.advantage), "text/html", "utf-8", null)
+                            }
+                        }
+
+                        2 -> {
+                            service?.let {
+                                tv_in_about_service.text = Html.fromHtml(HtmlNormalizer.normalize(it.contraindication), imageGetter, null)
+                            }
+                        }
+                    }
+                }
+
+            })
+        }
         pb_service.visibility = View.VISIBLE
         rv_service_prices.visibility = View.GONE
         pb_service.indeterminateDrawable.setColorFilter(
             resources.getColor(R.color.colorPrimary),
             PorterDuff.Mode.SRC_IN);
-        tv_in_service_type_title.text = serviceTitle
-        tv_in_service_type.text = serviceTypeTitle
-        if (ServicesFragment.position < ServiceRepository.imageList.size) {
-            iv_in_service_type_circle.setImageBitmap(ServiceRepository.imageList[ServicesFragment.position])
+        tv_in_service_type.text = ServiceRepository.services.value?.get(ServiceRepository.serviceTypesAlias[parentPosition])?.get(position)?.title
+        tv_in_service_type_title.text = ServiceRepository.serviceTypes[parentPosition]
+        if (parentPosition < ServiceRepository.imageList.size) {
+            iv_in_service_type_circle.setImageBitmap(ServiceRepository.imageList[parentPosition])
         }
-        var text = ServiceRepository.services.value?.get(position)?.data?.attrs?.body?.value
-        text = text
-            ?.replace("[block:webform=client-block-563]", "")
-        if (text != null) {
-            tv_in_about_service.text = Html.fromHtml(text)
+        val tab = service_tab_layout.getTabAt(0)
+        tab?.select()
+        service?.let {
+            tv_in_about_service.text = Html.fromHtml(HtmlNormalizer.normalize(it.efficiency), imageGetter, null)
+//            web_view.loadDataWithBaseURL(null, HtmlNormalizer.normalize(it.efficiency), "text/html", "utf-8", null)
         }
-        MainRepository.nodeDoctors.observe(viewLifecycleOwner, Observer {
-            var serviceDoctorsList: ArrayList<DoctorAttributes?> = arrayListOf()
-            for(i in it.data) {
-                val doctors = i.relationships.services.data
-                var flag = false
-                for (doctorService in doctors) {
-                    if (doctorService.id == ServiceRepository.services.value?.get(position)?.data?.id) {
-                        flag = true
-                    }
-                }
-                if (flag) {
-                    serviceDoctorsList.add(i.attrs)
-                }
-            }
+        if(!viewModel.mainRepository.serviceDoctorsMap.value.isNullOrEmpty()) {
+            var list = viewModel.mainRepository.serviceDoctorsMap.value?.get(viewModel.serviceId)
+            val newAdapter = ServiceDoctorsAdapter(list)
             rv_service_doctors.apply {
-                adapter = ServiceDoctorsAdapter(serviceDoctorsList)
+                adapter = newAdapter
                 layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             }
+            newAdapter.notifyDataSetChanged()
+        }
+        viewModel.mainRepository.serviceDoctorsMap.observe(viewLifecycleOwner, Observer {
+            val newAdapter = ServiceDoctorsAdapter(it[serviceId])
+            rv_service_doctors.apply {
+                adapter = newAdapter
+                layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            }
+            newAdapter.notifyDataSetChanged()
         })
-        MainRepository.nodePrices.observe(viewLifecycleOwner, Observer {
+        viewModel.mainRepository.servicePricesMap.observe(viewLifecycleOwner, Observer {
             var nidList = arrayListOf<String>()
-            for(priceElement in it.data) {
-                var flag = false
-                for(priceService in priceElement.relationships.services.data) {
-                    if(priceService.id == ServiceRepository.services.value?.get(position)?.data?.id) {
-                        flag = true
-                    }
-                }
-                if(flag) {
+            var list = viewModel.mainRepository.servicePricesMap.value?.get(viewModel.serviceId)
+            list?.let {
+                for (priceElement in it) {
                     nidList.add(priceElement.attrs.nid)
                 }
             }

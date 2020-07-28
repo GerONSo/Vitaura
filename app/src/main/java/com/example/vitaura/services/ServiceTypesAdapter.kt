@@ -14,27 +14,35 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.card_service_types.view.*
 import java.util.*
 
-class ServiceTypesAdapter(val resources: Resources,
-                          var serviceTypesList: ServicesJSON): RecyclerView.Adapter<ServiceTypesAdapter.ViewHolder>() {
+class ServiceTypesAdapter(val resources: Resources): RecyclerView.Adapter<ServiceTypesAdapter.ViewHolder>() {
 
     private val imageList: List<Bitmap> = listOf(
         BitmapFactory.decodeResource(resources, R.drawable.face),
         BitmapFactory.decodeResource(resources, R.drawable.body),
         BitmapFactory.decodeResource(resources, R.drawable.hair),
-        BitmapFactory.decodeResource(resources, R.drawable.intim)
+        BitmapFactory.decodeResource(resources, R.drawable.intim),
+        BitmapFactory.decodeResource(resources, R.drawable.diagnostics)
+    )
+
+    private val serviceTypesList: List<String> = listOf(
+        "Лицо",
+        "Тело",
+        "Волосы",
+        "Интимные зоны",
+        "Диагностика"
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_service_types, parent, false))
     }
 
-    override fun getItemCount(): Int = serviceTypesList.data.size
+    override fun getItemCount(): Int = serviceTypesList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if(position < imageList.size) {
             holder.serviceTypeImageView.setImageBitmap(imageList[position])
         }
-        holder.serviceTypeTextView.text = serviceTypesList.data[position].attrs.name
+        holder.serviceTypeTextView.text = serviceTypesList[position]
         holder.view.setOnClickListener {
             ServiceRepository.openServicesFragment(position)
         }

@@ -33,6 +33,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif"
             android:textColor="@color/textColor"
+            android:lineSpacingExtra="10dp"
             android:textSize="15sp" />
 
         <TextView
@@ -43,7 +44,8 @@
             android:fontFamily="sans-serif"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/adaptive_text_size"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
 
         <TextView
             android:id="@+id/tv_text_about2"
@@ -51,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:fontFamily="sans-serif"
+            android:lineSpacingExtra="10dp"
             android:textColor="@color/textColor"
             android:textSize="15sp" />
 
@@ -62,7 +65,8 @@
             android:fontFamily="sans-serif"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/adaptive_text_size"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
 
         <TextView
             android:id="@+id/tv_text_about3"
@@ -70,6 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:fontFamily="sans-serif"
+            android:lineSpacingExtra="10dp"
             android:textColor="@color/textColor"
             android:textSize="15sp" />
 
@@ -77,6 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
             <View

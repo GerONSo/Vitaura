@@ -11,7 +11,8 @@ data class Slider(
 
 data class SliderAttrs(
     @field:Json(name = "title") var title: String,
-    @field:Json(name = "body") var body: SliderBody
+    @field:Json(name = "body") var body: SliderBody,
+    @field:Json(name = "field_link") var link: String
 )
 
 data class SliderBody(@field:Json(name = "value") var value: String)

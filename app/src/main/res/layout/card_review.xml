@@ -44,6 +44,7 @@
         android:layout_marginLeft="5dp"
         android:fontFamily="sans-serif"
         android:text="smdglfdlkgjsldkflskdmvvlsdmv"
+        android:lineSpacingExtra="10dp"
         android:textColor="@color/textColor" />
         />
 </LinearLayout>

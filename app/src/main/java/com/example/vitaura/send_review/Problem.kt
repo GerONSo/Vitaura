@@ -9,7 +9,12 @@ data class Problem(
     @field:Json(name = "relationships") var relationships: ProblemRelationships
 )
 
-data class ProblemAttributes(@field:Json(name = "title") var title: String)
+data class ProblemAttributes(
+    @field:Json(name = "title") var title: String,
+    @field:Json(name = "path") var path: ProblemPath
+)
+
+data class ProblemPath(@field:Json(name = "alias") var alias: String)
 
 data class ProblemRelationships(@field:Json(name = "field_photo") var data: ProblemPhotoData)
 

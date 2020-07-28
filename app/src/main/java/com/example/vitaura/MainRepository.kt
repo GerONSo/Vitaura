@@ -1,11 +1,16 @@
 package com.example.vitaura
 
 import androidx.lifecycle.MutableLiveData
+import com.example.vitaura.doctors.Doctor
+import com.example.vitaura.doctors.Doctors
 import com.example.vitaura.doctors.DoctorsData
 import com.example.vitaura.main.SliderData
 import com.example.vitaura.prices.PriceData
+import com.example.vitaura.prices.PriceElement
+import com.example.vitaura.prices.Prices
 import com.example.vitaura.send_review.ProblemData
 import com.example.vitaura.send_review.SendReviewViewModel
+import com.example.vitaura.services.Service
 
 object MainRepository {
     val TAB_INFO = "T1"
@@ -13,6 +18,7 @@ object MainRepository {
     var currentSendReviewTab = SendReviewViewModel.SEND_REVIEW
     lateinit var openSendReviewFragment: () -> Unit
     lateinit var openDoctorFragment: (position: Int) -> Unit
+    lateinit var openServiceFragment: () -> Unit
     var sliderIds: MutableLiveData<SliderData> = MutableLiveData()
     var sliderImages: MutableLiveData<List<String?>> = MutableLiveData()
     var sliderMap: MutableLiveData<MutableMap<String, String>> = MutableLiveData(mutableMapOf())
@@ -25,10 +31,17 @@ object MainRepository {
     var nodePrices: MutableLiveData<PriceData> = MutableLiveData()
     var nidList: MutableLiveData<ArrayList<String>> = MutableLiveData(arrayListOf())
 
+    var services: MutableLiveData<MutableList<MutableList<Service?>>> = MutableLiveData(mutableListOf())
+
+    var serviceDoctorsMap: MutableLiveData<MutableMap<String, ArrayList<Doctors>>> = MutableLiveData(mutableMapOf())
+    var servicePricesMap: MutableLiveData<MutableMap<String, ArrayList<PriceElement>>> = MutableLiveData(mutableMapOf())
+
     fun isUsedNid(nid: String): Boolean {
-        for(i in nidList.value!!) {
-            if(i == nid) {
-                return true
+        nidList.value?.let {
+            for (i in it) {
+                if (i == nid) {
+                    return true
+                }
             }
         }
         return false

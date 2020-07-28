@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.example.vitaura.MainRepository
 import com.example.vitaura.R
 import com.example.vitaura.send_review.SendReviewViewModel
@@ -43,9 +44,11 @@ class DoctorsAdapter(
             MainRepository.currentSendReviewTab = SendReviewViewModel.LOGIN
             MainRepository.openSendReviewFragment()
         }
-        Picasso.get()
-            .load("https://vitaura-clinic.ru/sites/default/files/${DoctorsRepository.getDoctors().value?.get(position)?.photoName}")
-            .into(holder.portraitImageView)
+
+        holder.portraitImageView.load("https://www.vitaura-clinic.ru/sites/default/files/${DoctorsRepository.getDoctors().value?.get(position)?.photoName}")
+//        Picasso.get()
+//            .load("https://vitaura-clinic.ru/sites/default/files/${DoctorsRepository.getDoctors().value?.get(position)?.photoName}")
+//            .into(holder.portraitImageView)
         val miniDescription = MainRepository.nodeDoctors.value?.data?.get(position)?.attrs?.shortDescription?.value
             ?.replace("\n", "")
             ?.replace("</p>", "")

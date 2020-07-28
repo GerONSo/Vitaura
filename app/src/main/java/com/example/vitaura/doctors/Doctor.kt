@@ -22,6 +22,7 @@ data class DoctorAttributes(
     @field:Json(name = "field_mobile_information") var information: DoctorTextField,
     @field:Json(name = "field_mobile_short_description") var shortDescription: DoctorTextField,
     @field:Json(name = "field_mobile_specialization") var specialization: DoctorTextField,
+    @field:Json(name = "field_mobile_price_spec") var consultationPrice: String,
     @field:Json(name = "field_post") var post: String
 )
 

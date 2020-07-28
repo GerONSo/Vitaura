@@ -31,6 +31,18 @@
             android:textStyle="bold"
             tools:text="Лазерный липолиз Zerona Green" />
 
+        <TextView
+            android:id="@+id/tv_slider_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:fontFamily="sans-serif"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            tools:text="Эксклюзивно в Москве! Похудение быстро, безболезненно, в нескольких зонах!" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

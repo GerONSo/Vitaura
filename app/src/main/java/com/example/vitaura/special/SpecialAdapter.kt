@@ -16,7 +16,10 @@ class SpecialAdapter() : RecyclerView.Adapter<SpecialAdapter.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return SpecialsRepository.getSpecials().value?.size!!
+        SpecialsRepository.getSpecials().value?.size?.let {
+            return it
+        }
+        return 0
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -24,7 +27,7 @@ class SpecialAdapter() : RecyclerView.Adapter<SpecialAdapter.ViewHolder>() {
             .load("https://vitaura-clinic.ru${SpecialsRepository.getSpecials().value?.get(position)?.imagePreviewPath}")
             .into(holder.backgroundImage)
         holder.titleText.text = Html.fromHtml(SpecialsRepository.getSpecials().value?.get(position)?.name)
-        holder.descriptionText.text = Html.fromHtml(SpecialsRepository.getSpecials().value?.get(position)?.body)
+        holder.descriptionText?.text = Html.fromHtml(SpecialsRepository.getSpecials().value?.get(position)?.body)
         holder.view.setOnClickListener {
             val title = SpecialsRepository.getSpecialTitle(position)
             val body = SpecialsRepository.getSpecialBody(position)

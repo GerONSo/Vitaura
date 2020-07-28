@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.vitaura.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_services.*
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -22,15 +23,10 @@ class ServicesFragment : Fragment() {
 
     lateinit var toolbar: Toolbar
     val viewModel = ServiceViewModel()
+    var position = 0
 
-    companion object {
-
-        var position = 0
-
-        fun newInstance(newPosition: Int): ServicesFragment {
-            position = newPosition
-            return ServicesFragment()
-        }
+    fun setData(newPosition: Int) {
+        position = newPosition
     }
 
     override fun onCreateView(
@@ -47,22 +43,10 @@ class ServicesFragment : Fragment() {
         if(position < ServiceRepository.imageList.size) {
             iv_service_type_circle.setImageBitmap(ServiceRepository.imageList[position])
         }
-        val text = ServiceRepository.serviceTypes.value?.data?.get(position)?.attrs?.name
-        if(text != null){
-            tv_service_type.text = text
-        }
-        val services = ServiceRepository.serviceTypes.value?.data?.get(position)?.relationships?.dataServicesTypes?.dataList
-        ServiceRepository.services.value = arrayListOf()
-        for(service in services!!) {
-            val res = viewModel.getOrLoadService(service.dataServiceID) {
-                viewModel.servicesMap[service.dataServiceID] = it
-            }
-            if(res != null) {
-                ServiceRepository.services.value!!.add(res)
-            }
-        }
+        val text = ServiceRepository.serviceTypes[position]
+        tv_service_type.text = text
         ServiceRepository.services.observe(viewLifecycleOwner, Observer {
-            val servicesAdapter = ServicesAdapter(it, text!!)
+            val servicesAdapter = ServicesAdapter(it?.get(ServiceRepository.serviceTypesAlias[position])!!, text, position)
             rv_services.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 adapter = servicesAdapter

@@ -13,8 +13,8 @@ import com.example.vitaura.prices.PriceData
 import com.example.vitaura.prices.Prices
 import com.example.vitaura.reviews.Patients
 import com.example.vitaura.send_review.ProblemData
-import com.example.vitaura.services.ServiceData
-import com.example.vitaura.services.Services
+import com.example.vitaura.services.NodeServiceData
+import com.example.vitaura.services.Service
 import com.example.vitaura.services.ServicesJSON
 import com.example.vitaura.special.ActionsData
 import com.example.vitaura.special.Special
@@ -50,11 +50,8 @@ interface ApiService {
     @GET("/rest/do-i-posle")
     suspend fun getChangeGallery(): Response<List<ChangeFile>>
 
-    @GET("/jsonapi/taxonomy_term/services_type")
-    suspend fun getServiceTypes(): Response<ServicesJSON>
-
-    @GET("/jsonapi/taxonomy_term/services/{id}")
-    suspend fun getService(@Path("id") id: String): Response<Services>
+    @GET("/rest_mobile/services/{id}")
+    suspend fun getServices(@Path("id") id: String): Response<MutableList<Service?>>
 
     @GET("/jsonapi/node/sliders")
     suspend fun getSlider(): Response<SliderData>
@@ -70,4 +67,7 @@ interface ApiService {
 
     @GET("/jsonapi/node/price")
     suspend fun getNodePrices(): Response<PriceData>
+
+    @GET("/jsonapi/taxonomy_term/services/{id}")
+    suspend fun getService(@Path("id") id: String): Response<NodeServiceData>
 }

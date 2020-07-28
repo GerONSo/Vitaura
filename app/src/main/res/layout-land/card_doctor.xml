@@ -64,27 +64,20 @@
                 android:layout_marginBottom="15dp"
                 android:layout_gravity="start"
                 android:textSize="@dimen/adaptive_text_size"
-                android:lineSpacingExtra="8dp"
                 android:textColor="@color/textColorLight"
                 android:text="Главный врач, косметолог"/>
-        </LinearLayout>
 
-        <Button
-            android:id="@+id/log_in_btn"
-            android:maxWidth="165dp"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:text="Записаться на прием"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:textColor="@color/colorAccent"
-            android:fontFamily="sans-serif-medium"
-            android:background="@drawable/sign_up_button"
-            android:textSize="@dimen/adaptive_text_size"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mini_description_layout"/>
+            <Button
+                android:id="@+id/log_in_btn"
+                android:maxWidth="165dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="Записаться на прием"
+                android:textColor="@color/colorAccent"
+                android:fontFamily="sans-serif-medium"
+                android:background="@drawable/mini_log_in_btn"
+                android:textSize="@dimen/adaptive_text_size"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/description"
@@ -95,12 +88,12 @@
             android:fontFamily="sans-serif"
             android:layout_marginLeft="16dp"
             android:textColor="@color/textColor"
-            android:lineSpacingExtra="8dp"
+            android:lineSpacingExtra="10dp"
             android:textSize="@dimen/adaptive_text_size"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/log_in_btn"
+            app:layout_constraintTop_toBottomOf="@id/mini_description_layout"
             app:layout_constraintVertical_bias="0.0" />
 
 

@@ -6,10 +6,26 @@ import androidx.lifecycle.MutableLiveData
 import com.example.vitaura.R
 
 object ServiceRepository {
-    var serviceTypes: MutableLiveData<ServicesJSON> = MutableLiveData()
+    var serviceTypes: List<String> = listOf(
+        "Лицо",
+        "Тело",
+        "Волосы",
+        "Интимные зоны",
+        "Диагностика"
+    )
+    var serviceTypesAlias: List<String> = listOf(
+        "face",
+        "body",
+        "hair",
+        "intim",
+        "diagnostics"
+    )
+
+
     lateinit var openServicesFragment: (position: Int) -> Unit
-    lateinit var openServiceFragment: (position: Int, serviceTitle: String, serviceTypeTitle: String) -> Unit
-    var services: MutableLiveData<ArrayList<Services>> = MutableLiveData(arrayListOf())
+    lateinit var openServiceFragment: (position: Int, serviceTitle: String?, serviceTypeTitle: String?, parentPosition: Int, serviceId: String) -> Unit
+    var services: MutableLiveData<MutableMap<String, MutableList<Service?>>> = MutableLiveData(mutableMapOf())
+    var lastFragment = -1
 
     var imageList: List<Bitmap> = listOf()
 }

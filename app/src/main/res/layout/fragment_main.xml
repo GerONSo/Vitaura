@@ -40,33 +40,11 @@
 
     </com.smarteist.autoimageslider.SliderView>
 
-    <TextView
-        android:id="@+id/tv_clinic_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="@dimen/adaptive_text_size"
-        android:fontFamily="sans-serif-medium"
-        android:text="КЛИНИКА ЭСТЕТИЧЕСКОЙ МЕДИЦИНЫ"
-        android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@id/image_slider_main" />
-
-    <TextView
-        android:id="@+id/tv_vitaura"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-thin"
-        android:text="Vitaura"
-        android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/adaptive_text_size_title"
-        app:layout_constraintTop_toBottomOf="@id/tv_clinic_main" />
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/main_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_vitaura"
+        app:layout_constraintTop_toBottomOf="@id/image_slider_main"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/colorPrimaryLight"
         app:tabMaxWidth="0dp"

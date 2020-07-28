@@ -17,12 +17,16 @@ import com.example.vitaura.about.ImageSliderAdapter
 import com.example.vitaura.about.TabAboutFragment
 import com.example.vitaura.about.TabLicenseFragment
 import com.example.vitaura.reviews.ReviewFragment
+import com.example.vitaura.services.ServiceRepository
+import com.example.vitaura.services.ServiceViewModel
+import com.example.vitaura.services.ServicesAdapter
 import com.google.android.material.tabs.TabLayout
 import com.smarteist.autoimageslider.SliderView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_about.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_tab_info.*
+import java.util.*
 
 
 /**
@@ -31,6 +35,7 @@ import kotlinx.android.synthetic.main.fragment_tab_info.*
 class MainFragment : Fragment() {
 
     lateinit var toolbar: Toolbar
+    val viewModel = ServiceViewModel()
 
     val TAB_INFO = "T1"
     val TAB_REVIEW = "T2"

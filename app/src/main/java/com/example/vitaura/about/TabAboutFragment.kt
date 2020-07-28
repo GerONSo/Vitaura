@@ -3,6 +3,7 @@ package com.example.vitaura.about
 
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer
 import com.example.vitaura.MainRepository
 
 import com.example.vitaura.R
+import com.example.vitaura.helpers.HtmlNormalizer
 import com.example.vitaura.send_review.SendReviewRepository
 import com.example.vitaura.send_review.SendReviewViewModel
 import com.example.vitaura.special.SpecialsRepository
@@ -38,9 +40,11 @@ class TabAboutFragment : Fragment() {
             AboutDataRepository.openSendReviewFragment()
         }
         AboutDataRepository.getAboutText().observe(viewLifecycleOwner, Observer {
-            tv_text_about1.text = Html.fromHtml(it[0])
-            tv_text_about2.text = Html.fromHtml(it[1])
-            tv_text_about3.text = Html.fromHtml(it[2])
+            tv_text_about1.text = Html.fromHtml(HtmlNormalizer.normalizeAbout(it[0]))
+            tv_text_about2.text = Html.fromHtml(HtmlNormalizer.normalizeAbout(it[1]))
+            tv_text_about3.text = Html.fromHtml(HtmlNormalizer.normalizeAbout(it[2]))
+            Log.d("about", it[1])
+            Log.d("about", HtmlNormalizer.normalizeAbout(it[1]))
         })
         AboutDataRepository.getAboutTitles().observe(viewLifecycleOwner, Observer {
             tv_title_about1.text = it[0]
@@ -55,19 +59,37 @@ class TabAboutFragment : Fragment() {
             val position1 = 0
             val position2 = 1
             Picasso.get()
-                .load("https://vitaura-clinic.ru${SpecialsRepository.getSpecials().value?.get(position1)?.imagePreviewPath}")
+                .load(
+                    "https://vitaura-clinic.ru${SpecialsRepository.getSpecials().value?.get(
+                        position1
+                    )?.imagePreviewPath}"
+                )
                 .into(backgroundImage1)
             Picasso.get()
-                .load("https://vitaura-clinic.ru${SpecialsRepository.getSpecials().value?.get(position2)?.imagePreviewPath}")
+                .load(
+                    "https://vitaura-clinic.ru${SpecialsRepository.getSpecials().value?.get(
+                        position2
+                    )?.imagePreviewPath}"
+                )
                 .into(backgroundImage2)
             val titleText1 = actionSpecialCard1.findViewById<TextView>(R.id.title)
             val titleText2 = actionSpecialCard2.findViewById<TextView>(R.id.title)
-            titleText1.text = Html.fromHtml(SpecialsRepository.getSpecials().value?.get(position1)?.name)
-            titleText2.text = Html.fromHtml(SpecialsRepository.getSpecials().value?.get(position2)?.name)
-            val descriptionText1 = actionSpecialCard1.findViewById<TextView>(R.id.special_description)
-            val descriptionText2 = actionSpecialCard2.findViewById<TextView>(R.id.special_description)
-            descriptionText1.text = Html.fromHtml(SpecialsRepository.getSpecials().value?.get(position1)?.body)
-            descriptionText2.text = Html.fromHtml(SpecialsRepository.getSpecials().value?.get(position2)?.body)
+            titleText1.text =
+                Html.fromHtml(SpecialsRepository.getSpecials().value?.get(position1)?.name)
+            titleText2.text =
+                Html.fromHtml(SpecialsRepository.getSpecials().value?.get(position2)?.name)
+            val descriptionText1 =
+                actionSpecialCard1.findViewById<TextView>(R.id.special_description)
+            val descriptionText2 =
+                actionSpecialCard2.findViewById<TextView>(R.id.special_description)
+            descriptionText1?.let {
+                it.text =
+                    Html.fromHtml(SpecialsRepository.getSpecials().value?.get(position1)?.body)
+            }
+            descriptionText2?.let {
+                it.text =
+                    Html.fromHtml(SpecialsRepository.getSpecials().value?.get(position2)?.body)
+            }
 
             actionSpecialCard1.setOnClickListener {
                 val title = SpecialsRepository.getSpecialTitle(position1)

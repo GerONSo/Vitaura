@@ -1,191 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".send_review.TabSendReviewFragment">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/send_review_logo_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="visible">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".send_review.TabSendReviewFragment">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_weight="2"
-            android:src="@drawable/ic_vitaura" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="15dp"
-        android:layout_weight="4"
-        app:cardBackgroundColor="@color/colorPrimaryLight"
-        app:cardCornerRadius="10dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:id="@+id/send_review_logo_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-            <EditText
-                android:id="@+id/et_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/rounded_edit_text"
-                android:fontFamily="sans-serif"
-                android:hint="Ваше имя"
-                android:padding="10dp"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/adaptive_text_size"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <View
-                android:id="@+id/name_adjust_view"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:layout_gravity="end|top"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/necessary_circle"
-                app:layout_constraintRight_toRightOf="@id/et_name"
-                app:layout_constraintTop_toTopOf="@id/et_name" />
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
 
-            <com.santalu.maskedittext.MaskEditText
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:id="@+id/et_phone_number"
-                android:layout_width="match_parent"
-                android:padding="10dp"
-                android:textSize="@dimen/adaptive_text_size"
-                android:hint="+7(###) ### ## ##"
-                android:fontFamily="sans-serif"
-                android:textColor="@color/textColor"
-                android:background="@drawable/rounded_edit_text"
-                android:layout_height="wrap_content"
-                android:inputType="phone"
-                app:layout_constraintTop_toBottomOf="@id/et_name"
-                app:met_mask="+7(###) ### ## ##"/>
-
-            <EditText
-                android:id="@+id/et_review"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="15dp"
-                android:background="@drawable/rounded_edit_text"
-                android:fontFamily="sans-serif"
-                android:gravity="top|left"
-                android:hint="Отзыв"
-                android:inputType="textMultiLine"
-                android:padding="10dp"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/adaptive_text_size"
-                app:layout_constraintBottom_toTopOf="@id/tv_mandatory"
-                app:layout_constraintTop_toBottomOf="@id/et_phone_number"
-                app:layout_constraintVertical_weight="1"/>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="2"
+                android:src="@drawable/ic_vitaura" />
 
             <View
-                android:id="@+id/review_adjust_view"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:layout_gravity="end|top"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/necessary_circle"
-                app:layout_constraintRight_toRightOf="@id/et_review"
-                app:layout_constraintTop_toTopOf="@id/et_review" />
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+        </LinearLayout>
 
-
-            <View
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:layout_gravity="end|top"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/necessary_circle"
-                android:id="@+id/circle_description"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/tv_mandatory"
-                app:layout_constraintTop_toTopOf="@id/tv_mandatory"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/tv_mandatory"
-                android:fontFamily="sans-serif"
-                android:text="Обязательные поля"
-                android:textColor="@color/colorAccent"
-                app:layout_constraintLeft_toRightOf="@id/circle_description"
-                app:layout_constraintBottom_toTopOf="@id/send_review_btn_layout"
-                android:textSize="@dimen/adaptive_text_size"
-                android:layout_marginBottom="15dp"/>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="15dp"
+            app:cardBackgroundColor="@color/colorPrimaryLight"
+            app:cardCornerRadius="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="15dp"
-                android:clipToPadding="false"
-                android:paddingBottom="30dp"
-                android:id="@+id/send_review_btn_layout"
-                app:layout_constraintBottom_toBottomOf="parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
 
-                <Button
-                    android:id="@+id/btn_send_review"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6"
-                    android:background="@drawable/sign_up_button_white"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:fontFamily="sans-serif"
-                    android:text="Отправить"
-                    android:textSize="@dimen/adaptive_text_size"
-                    android:textColor="@color/textColor" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginRight="15dp">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
+                        <EditText
+                            android:id="@+id/et_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_edit_text"
+                            android:fontFamily="sans-serif"
+                            android:hint="Ваше имя"
+                            android:padding="10dp"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/adaptive_text_size" />
+
+                        <View
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:layout_gravity="end|top"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/necessary_circle" />
+                    </FrameLayout>
+
+                    <com.santalu.maskedittext.MaskEditText
+                        android:id="@+id/et_phone_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/rounded_edit_text"
+                        android:fontFamily="sans-serif"
+                        android:hint="+7(###) ### ## ##"
+                        android:inputType="phone"
+                        android:padding="10dp"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/adaptive_text_size"
+                        app:layout_constraintTop_toBottomOf="@id/et_name"
+                        app:met_mask="+7(###) ### ## ##" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_margin="15dp"
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/et_review"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/rounded_edit_text"
+                            android:fontFamily="sans-serif"
+                            android:gravity="top|left"
+                            android:hint="Отзыв"
+                            android:inputType="textMultiLine"
+                            android:minHeight="250dp"
+                            android:padding="10dp"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/adaptive_text_size" />
+
+                        <View
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:layout_gravity="end|top"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/necessary_circle" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:layout_gravity="end|top"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/necessary_circle" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="sans-serif"
+                            android:text="Обязательные поля"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/adaptive_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="15dp"
+                        android:clipToPadding="false"
+                        android:paddingBottom="30dp">
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
+                        <Button
+                            android:id="@+id/btn_send_review"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="6"
+                            android:background="@drawable/sign_up_button_white"
+                            android:fontFamily="sans-serif"
+                            android:text="Отправить"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/adaptive_text_size" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+                    </LinearLayout>
             </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
-    <View
-        android:id="@+id/view_to_move"
-        android:layout_width="1dp"
-        android:layout_height="0dp"
-        android:layout_weight="0" />
-
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>

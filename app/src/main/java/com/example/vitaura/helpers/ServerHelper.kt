@@ -1,24 +1,20 @@
 package com.example.vitaura.helpers
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.example.vitaura.ApiService
 import com.example.vitaura.MainRepository
 import com.example.vitaura.about.AboutDataParser
 import com.example.vitaura.about.AboutDataRepository
+import com.example.vitaura.doctors.Doctors
 import com.example.vitaura.doctors.DoctorsRepository
 import com.example.vitaura.media.MediaRepository
 import com.example.vitaura.media.gallery.ChangeFile
 import com.example.vitaura.media.video.VideoAdapter
-import com.example.vitaura.prices.Prices
-import com.example.vitaura.prices.PricesDeserializer
-import com.example.vitaura.prices.PricesDeserializer2
-import com.example.vitaura.prices.PricesRepository
+import com.example.vitaura.prices.*
 import com.example.vitaura.reviews.Review
 import com.example.vitaura.reviews.ReviewRepository
+import com.example.vitaura.services.NodeServiceData
 import com.example.vitaura.services.ServiceRepository
-import com.example.vitaura.services.Services
-import com.example.vitaura.special.Special
 import com.example.vitaura.special.SpecialsRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -26,13 +22,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
 import retrofit2.HttpException
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.lang.Exception
-import java.util.*
-import kotlin.collections.ArrayList
+import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.util.concurrent.TimeUnit
 
 
 object ServerHelper {
@@ -147,7 +144,7 @@ object ServerHelper {
                         val licenseTitle2 = response.body()?.data?.get(8)?.attributes?.title
                         AboutDataRepository.setLicenseTitles(listOf(licenseTitle1, licenseTitle2))
 
-                        val licenseText = AboutDataParser.parseLicenseEmail(response.body()?.data?.get(8)?.attributes?.body?.text)
+                        val licenseText = HtmlNormalizer.normalizeLicense(AboutDataParser.parseLicenseEmail(response.body()?.data?.get(8)?.attributes?.body?.text))
                         AboutDataRepository.setLicenseText(listOf(licenseText))
 
                         MediaRepository.parseFileData(response.body()?.data?.get(17)?.attributes?.body?.text!!)
@@ -242,37 +239,19 @@ object ServerHelper {
         }
     }
 
-    fun getServiceTypes() {
+    fun getServiceTypes(id: String) {
         val service = makeApi2Service()
         CoroutineScope(Dispatchers.IO).launch {
-            val response = service.getServiceTypes()
+            val response = service.getServices(id)
             withContext(Dispatchers.Main) {
                 try {
                     if(response.isSuccessful) {
-                        ServiceRepository.serviceTypes.value = response.body()
-                    }
-                    else {
-                        Log.d("HTTP request", "Server didn't send response")
-                    }
-                } catch (e: Exception) {
-                    Log.d("HTTP request", "Server didn't send response")
-                }
-            }
-        }
-    }
-
-    fun getService(id: String,
-                    cacheToViewModel: (services: Services) -> Unit) {
-        val service = makeApi2Service()
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = service.getService(id)
-            withContext(Dispatchers.Main) {
-                try {
-                    if(response.isSuccessful) {
-                        ServiceRepository.services.value = ServiceRepository.services.value.also {
-                            it?.add(response.body()!!)
+                        response.body()?.let { response ->
+                            ServiceRepository.services.value =
+                                ServiceRepository.services.value.also {
+                                    it?.set(id, response)
+                                }
                         }
-                        cacheToViewModel(response.body()!!)
                     }
                     else {
                         Log.d("HTTP request", "Server didn't send response")
@@ -420,26 +399,113 @@ object ServerHelper {
         }
     }
 
+    fun getService(id: String, doctor: Doctors) {
+        val service = makeApi2Service2()
+        try {
+            CoroutineScope(Dispatchers.IO).launch {
+                var response: Response<NodeServiceData>? = null
+                try {
+                    response = service.getService(id)
+                } catch (e: java.lang.Exception) {
+                    Log.d("malformed", id)
+                }
+                withContext(Dispatchers.Main) {
+                    try {
+                        if (response?.isSuccessful!!) {
+//                        print(response.body())
+                        MainRepository.serviceDoctorsMap.value = MainRepository.serviceDoctorsMap.value.also {
+                            var list = it?.get(response.body()?.data?.attrs?.path?.alias) ?: arrayListOf()
+                            it?.let { map ->
+                                map[response.body()?.data?.attrs?.path?.alias!!] = list.also { arrayList ->
+                                    arrayList.add(doctor)
+                                }
+                            }
+                        }
+                        } else {
+                            Log.d("HTTP request", "Server didn't send response")
+                        }
+                    } catch (e: Exception) {
+                        Log.d("HTTP request", "Server didn't send response")
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            print(e.stackTrace)
+        }
+    }
+
+    fun getService(id: String, price: PriceElement) {
+        val service = makeApi2Service()
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.getService(id)
+            withContext(Dispatchers.Main) {
+                try {
+                    if(response.isSuccessful) {
+//                        print(response.body())
+                        MainRepository.servicePricesMap.value = MainRepository.servicePricesMap.value.also {
+                            var list = it?.get(response.body()?.data?.attrs?.path?.alias) ?: arrayListOf()
+                            it?.let { map ->
+                                map[response.body()?.data?.attrs?.path?.alias!!] = list.also { arrayList ->
+                                    arrayList.add(price)
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        Log.d("HTTP request", "Server didn't send response")
+                    }
+                } catch (e: Exception) {
+                    Log.d("HTTP request", "Server didn't send response")
+                }
+            }
+        }
+    }
+
+
     private fun makeApiService(): ApiService {
+        val client = OkHttpClient.Builder()
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS).build()
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(client)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
             .create(ApiService::class.java)
     }
 
     private fun makeApi2Service(): ApiService {
+        val client = OkHttpClient.Builder()
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS).build()
         return Retrofit.Builder()
             .baseUrl(BASE_URL2)
+            .client(client)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
             .create(ApiService::class.java)
     }
 
-
-    private fun makeApiPriceService(): ApiService {
+    private fun makeApi2Service2(): ApiService {
+        val client = OkHttpClient.Builder()
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS).build()
         return Retrofit.Builder()
             .baseUrl(BASE_URL2)
+            .client(client)
+//            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+            .create(ApiService::class.java)
+    }
+
+    private fun makeApiPriceService(): ApiService {
+        val client = OkHttpClient.Builder()
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS).build()
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL2)
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create(getGsonConverter()))
             .build()
             .create(ApiService::class.java)
@@ -455,8 +521,12 @@ object ServerHelper {
     }
 
     private fun makeApiPrice2Service(): ApiService {
+        val client = OkHttpClient.Builder()
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS).build()
         return Retrofit.Builder()
             .baseUrl(BASE_URL2)
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create(getGsonConverter2()))
             .build()
             .create(ApiService::class.java)

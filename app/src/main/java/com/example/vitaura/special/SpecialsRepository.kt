@@ -15,14 +15,16 @@ object SpecialsRepository {
         specials.value = newSpecials
     }
 
-    fun getSpecialTitle(position: Int): String? {
+    fun  getSpecialTitle(position: Int): String? {
         return specials.value?.get(position)?.name
     }
 
     fun getSpecialBody(position: Int): String {
-        for(action in actions.value?.data!!) {
-            if(action.attrs.path.alias == specials.value?.get(position)?.id) {
-                return action.attrs.body.value
+        actions.value?.data?.let {
+            for (action in it) {
+                if (action.attrs.path.alias == specials.value?.get(position)?.id) {
+                    return action.attrs.body.value
+                }
             }
         }
         return ""

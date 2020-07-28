@@ -11,8 +11,12 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import coil.Coil
+import coil.request.GetRequest
+import coil.request.LoadRequest
 import com.example.vitaura.about.AboutDataRepository
 import com.example.vitaura.about.AboutFragment
+import com.example.vitaura.contacts.ContactsFragment
 import com.example.vitaura.doctors.DoctorFragment
 import com.example.vitaura.doctors.DoctorsFragment
 import com.example.vitaura.helpers.ServerHelper
@@ -62,11 +66,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     val SERVICE_FRAGMENT = "F13"
     val MAIN_FRAGMENT = "F14"
     val ACTION_FRAGMENT = "F15"
+    val CONTACTS_FRAGMENT_TAG = "F16"
 
 
     fun initData() = runBlocking {
         val job = GlobalScope.launch {
             ServerHelper.apply {
+                getMainSlider()
+                getProblems()
+                getActions()
                 getAboutData()
                 getDoctors()
                 getPrices()
@@ -75,10 +83,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 getVideos()
                 getGallery()
                 getChangeGallery()
-                getServiceTypes()
-                getMainSlider()
-                getProblems()
-                getActions()
+                for(type in ServiceRepository.serviceTypesAlias) {
+                    getServiceTypes(type)
+                }
                 getNodeDoctors()
                 getNodePrices()
             }
@@ -98,7 +105,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigation_view.setNavigationItemSelectedListener(this)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
         initViewModel()
 
     }
@@ -106,7 +112,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun initViews() {
         if (model.getFragmentStack().value?.size == 0) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, AboutFragment(), ABOUT_FRAGMENT_TAG)
+                .replace(R.id.frame_layout, MainFragment(), MAIN_FRAGMENT)
                 .commit()
         }
         bottom_navigation_view.uncheckAllItems()
@@ -122,11 +128,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         MediaRepository.openYouTubePlayerFragment = {
             changeFragment(YouTubePlayerFragment.newInstance(it), YOU_TUBE_PLAYER_FRAGMENT_TAG)
         }
-        ServiceRepository.openServicesFragment = {
-            changeFragment(ServicesFragment.newInstance(it), SERVICES_FRAGMENT)
+        ServiceRepository.openServicesFragment = { pos ->
+            changeFragment(ServicesFragment().also { it.setData(pos) }, SERVICES_FRAGMENT)
         }
-        ServiceRepository.openServiceFragment = { pos, t1, t2 ->
-            changeFragment(ServiceFragment().also { it.setParams(pos, t1, t2) }, SERVICE_FRAGMENT)
+        ServiceRepository.openServiceFragment = { pos, t1, t2, parentPosition, serviceId ->
+            changeFragment(ServiceFragment().also {
+                it.setParams(
+                    pos,
+                    t1,
+                    t2,
+                    parentPosition,
+                    serviceId
+                )
+            }, SERVICE_FRAGMENT)
         }
         SendReviewRepository.openSendReviewResult = { tag ->
             changeFragment(
@@ -148,7 +162,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             BitmapFactory.decodeResource(resources, R.drawable.face),
             BitmapFactory.decodeResource(resources, R.drawable.body),
             BitmapFactory.decodeResource(resources, R.drawable.hair),
-            BitmapFactory.decodeResource(resources, R.drawable.intim)
+            BitmapFactory.decodeResource(resources, R.drawable.intim),
+            BitmapFactory.decodeResource(resources, R.drawable.diagnostics)
         )
         val bottomNavigationListener = BottomNavigationView.OnNavigationItemSelectedListener {
             when (it.itemId) {
@@ -159,7 +174,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 R.id.doctors -> {
                     val doctorsFragment = DoctorsFragment.newInstance { position ->
-                        val fragment = DoctorFragment().also { fragment -> fragment.setData(position) }
+                        val fragment =
+                            DoctorFragment().also { fragment -> fragment.setData(position) }
                         changeFragment(fragment, DOCTOR_FRAGMENT_TAG)
                     }
                     changeFragment(doctorsFragment, DOCTORS_FRAGMENT_TAG)
@@ -194,6 +210,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             drawer.closeDrawer(GravityCompat.START)
         }
         bottom_navigation_view.setOnNavigationItemSelectedListener(bottomNavigationListener)
+        up_toolbar_layout.setOnClickListener {
+            changeFragment(ContactsFragment(), CONTACTS_FRAGMENT_TAG)
+        }
     }
 
     private fun initViewModel() {
@@ -225,6 +244,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
         MainRepository.nidList.observe(this, Observer {
             ServerHelper.getPrices2()
+        })
+        MainRepository.nodeDoctors.observe(this, Observer {
+//            if (!MainRepository.serviceDoctorsMap.value.isNullOrEmpty()) {
+                for (doctors in it.data) {
+                    for (service in doctors.relationships.services.data) {
+                        ServerHelper.getService(service.id, doctors)
+                    }
+                }
+//            }
+        })
+        MainRepository.nodePrices.observe(this, Observer {
+            for(priceElement in it.data) {
+                for(priceService in priceElement.relationships.services.data) {
+                    ServerHelper.getService(priceService.id, priceElement)
+                }
+            }
         })
     }
 
@@ -296,6 +331,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.reviews -> {
                 val reviewFragment = ReviewFragment()
                 changeFragment(reviewFragment, REVIEW_FRAGMENT_TAG)
+            }
+
+            R.id.contacts -> {
+                changeFragment(ContactsFragment(), CONTACTS_FRAGMENT_TAG)
             }
         }
         drawer.closeDrawer(GravityCompat.START)
