@@ -18,6 +18,7 @@ import com.example.vitaura.services.ServiceRepository
 import com.example.vitaura.special.SpecialsRepository
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.stream.MalformedJsonException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,7 +45,7 @@ object ServerHelper {
             val response = service.getDoctors()
             withContext(Dispatchers.Main) {
                 try {
-                    if (response.isSuccessful) {
+                    if (response.isSuccessful && response.body() != null) {
                         var doctors = response.body()
                         DoctorsRepository.setDoctors(doctors!!)
                     } else {
@@ -65,7 +66,7 @@ object ServerHelper {
             val response = service.getSpecials()
             withContext(Dispatchers.Main) {
                 try {
-                    if (response.isSuccessful) {
+                    if (response.isSuccessful && response.body() != null) {
                         val specials = response.body()
                         SpecialsRepository.setSpecials(specials!!)
                     } else {
@@ -84,7 +85,7 @@ object ServerHelper {
             val response = service.getReviews()
             withContext(Dispatchers.Main) {
                 try {
-                    if (response.isSuccessful) {
+                    if (response.isSuccessful && response.body() != null) {
                         val reviews = response.body()
                         var reviewsList = arrayListOf<Review>()
                         for (i in 0 until reviews?.data?.size!!) {
@@ -111,10 +112,15 @@ object ServerHelper {
         val service =
             makeApiPriceService()
         CoroutineScope(Dispatchers.IO).launch {
-            val response = service.getPrices()
+            var response: Response<Prices>? = null
+            try {
+                response = service.getPrices()
+            } catch (e: MalformedJsonException) {
+                Log.d("empty prices", "empty")
+            }
             withContext(Dispatchers.Main) {
                 try {
-                    if (response.isSuccessful) {
+                    if (response != null && response.isSuccessful && response.body() != null) {
                         PricesRepository.setPrices(response.body()!!)
                     } else {
                         Log.d("HTTP request", "Server didn't send response")
@@ -133,7 +139,7 @@ object ServerHelper {
             val response = service.getAboutData()
             withContext(Dispatchers.Main) {
                 try {
-                    if (response.isSuccessful) {
+                    if (response.isSuccessful && response.body() != null) {
 
                         AboutDataParser.parseAbout(
                             response.body()?.data?.get(0)?.attributes?.body?.text!!,
@@ -165,7 +171,7 @@ object ServerHelper {
             val response = service.getVideos()
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful) {
+                    if(response.isSuccessful && response.body() != null) {
                         var videoList = response.body()
                         videoList?.data = videoList?.data?.filter { it.attrs.link != null }!!
                         VideoAdapter.videoList = videoList
@@ -186,7 +192,7 @@ object ServerHelper {
             val response = service.getGallery()
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful) {
+                    if(response.isSuccessful && response.body() != null) {
                         MediaRepository.clinicGallery = response.body()?.data?.get(1)
                     }
                     else {
@@ -205,7 +211,7 @@ object ServerHelper {
             val response = service.getFile(id)
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful) {
+                    if(response.isSuccessful && response.body() != null) {
                         MediaRepository.clinicFileData.value = MediaRepository.clinicFileData.value.also {
                             it?.add(response.body()?.data?.attrs?.uri?.url!!)
                         }
@@ -226,7 +232,7 @@ object ServerHelper {
             val response = service.getChangeGallery()
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful) {
+                    if(response.isSuccessful && response.body() != null) {
                         MediaRepository.changePathsList.value = response.body() as ArrayList<ChangeFile>
                     }
                     else {
@@ -269,7 +275,7 @@ object ServerHelper {
             val response = service.getSlider()
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful) {
+                    if(response.isSuccessful && response.body() != null) {
                         MainRepository.sliderIds.value = response.body()!!
                     }
                     else {
@@ -288,7 +294,7 @@ object ServerHelper {
             val response = service.getFile(id)
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful) {
+                    if(response.isSuccessful && response.body() != null) {
                         MainRepository.sliderMap.value = MainRepository.sliderMap.value.also {
                             it?.set(id, response.body()?.data?.attrs?.uri?.url!!)
                         }
@@ -309,7 +315,7 @@ object ServerHelper {
             val response = service.getProblems()
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful) {
+                    if(response.isSuccessful && response.body() != null) {
                         MainRepository.sliderProblems.value = response.body()!!
                     }
                     else {
@@ -328,7 +334,7 @@ object ServerHelper {
             val response = service.getActions()
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful) {
+                    if(response.isSuccessful && response.body() != null) {
                         SpecialsRepository.actions.value = response.body()!!
                     }
                     else {
@@ -347,8 +353,9 @@ object ServerHelper {
             val response = service.getNodeDoctors()
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful) {
+                    if(response.isSuccessful && response.body() != null) {
                         MainRepository.nodeDoctors.value = response.body()!!
+                        MainRepository.sortNodeDoctors()
                     }
                     else {
                         Log.d("HTTP request", "Server didn't send response")
@@ -366,7 +373,7 @@ object ServerHelper {
             val response = service.getNodePrices()
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful) {
+                    if(response.isSuccessful && response.body() != null) {
                         MainRepository.nodePrices.value = response.body()!!
                     }
                     else {
@@ -386,7 +393,7 @@ object ServerHelper {
             val response = service.getPrices()
             withContext(Dispatchers.Main) {
                 try {
-                    if (response.isSuccessful) {
+                    if (response.isSuccessful && response.body() != null) {
                         PricesRepository.servicePrices.value = response.body()
                     } else {
                         Log.d("HTTP request", "Server didn't send response")
@@ -411,7 +418,7 @@ object ServerHelper {
                 }
                 withContext(Dispatchers.Main) {
                     try {
-                        if (response?.isSuccessful!!) {
+                        if (response?.isSuccessful!!  && response.body() != null) {
 //                        print(response.body())
                         MainRepository.serviceDoctorsMap.value = MainRepository.serviceDoctorsMap.value.also {
                             var list = it?.get(response.body()?.data?.attrs?.path?.alias) ?: arrayListOf()
@@ -440,7 +447,7 @@ object ServerHelper {
             val response = service.getService(id)
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful) {
+                    if(response.isSuccessful && response.body() != null) {
 //                        print(response.body())
                         MainRepository.servicePricesMap.value = MainRepository.servicePricesMap.value.also {
                             var list = it?.get(response.body()?.data?.attrs?.path?.alias) ?: arrayListOf()

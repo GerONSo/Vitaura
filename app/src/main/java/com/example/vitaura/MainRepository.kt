@@ -1,5 +1,6 @@
 package com.example.vitaura
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.vitaura.doctors.Doctor
 import com.example.vitaura.doctors.Doctors
@@ -45,5 +46,17 @@ object MainRepository {
             }
         }
         return false
+    }
+
+    fun sortNodeDoctors() {
+        nodeDoctors.value = nodeDoctors.value.also {
+            it?.data = it?.data?.sortedBy { doctors ->
+                doctors.attrs.weight
+            }!!
+        }
+        nodeDoctors.value?.data?.forEach {
+            Log.d("nodeDoctors", "${it.attrs.weight} ${it.attrs.title}")
+        }
+
     }
 }

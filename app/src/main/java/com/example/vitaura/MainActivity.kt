@@ -1,19 +1,17 @@
 package com.example.vitaura
 
+import android.content.Intent
 import android.graphics.BitmapFactory
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import coil.Coil
-import coil.request.GetRequest
-import coil.request.LoadRequest
 import com.example.vitaura.about.AboutDataRepository
 import com.example.vitaura.about.AboutFragment
 import com.example.vitaura.contacts.ContactsFragment
@@ -21,9 +19,9 @@ import com.example.vitaura.doctors.DoctorFragment
 import com.example.vitaura.doctors.DoctorsFragment
 import com.example.vitaura.helpers.ServerHelper
 import com.example.vitaura.main.MainFragment
-import com.example.vitaura.media.gallery.GalleryFragment
 import com.example.vitaura.media.MediaFragment
 import com.example.vitaura.media.MediaRepository
+import com.example.vitaura.media.gallery.GalleryFragment
 import com.example.vitaura.media.video.YouTubePlayerFragment
 import com.example.vitaura.prices.PricesFragment
 import com.example.vitaura.reviews.ReviewFragment
@@ -45,6 +43,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -68,33 +67,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     val ACTION_FRAGMENT = "F15"
     val CONTACTS_FRAGMENT_TAG = "F16"
 
-
-    fun initData() = runBlocking {
-        val job = GlobalScope.launch {
-            ServerHelper.apply {
-                getMainSlider()
-                getProblems()
-                getActions()
-                getAboutData()
-                getDoctors()
-                getPrices()
-                getReviews()
-                getSpecials()
-                getVideos()
-                getGallery()
-                getChangeGallery()
-                for(type in ServiceRepository.serviceTypesAlias) {
-                    getServiceTypes(type)
-                }
-                getNodeDoctors()
-                getNodePrices()
-            }
-        }
-        job.join()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        initData()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initViews()

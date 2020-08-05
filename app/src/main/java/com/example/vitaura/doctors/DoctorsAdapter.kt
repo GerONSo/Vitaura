@@ -7,6 +7,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextUtils
 import android.text.style.ImageSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,18 +35,29 @@ class DoctorsAdapter(
     }
 
     override fun getItemCount(): Int {
-        return DoctorsRepository.getDoctors().value?.size!!
+        return if (DoctorsRepository.getDoctors().value != null) {
+            DoctorsRepository.getDoctors().value?.size!!
+        }
+        else 0
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.nameTextView.text = DoctorsRepository.getDoctors().value?.get(position)?.name
-        holder.specTextView.text = DoctorsRepository.getDoctors().value?.get(position)?.spec
+        holder.nameTextView.text = MainRepository.nodeDoctors.value?.data?.get(position)?.attrs?.title
         holder.loginButton.setOnClickListener {
             MainRepository.currentSendReviewTab = SendReviewViewModel.LOGIN
             MainRepository.openSendReviewFragment()
         }
-
-        holder.portraitImageView.load("https://www.vitaura-clinic.ru/sites/default/files/${DoctorsRepository.getDoctors().value?.get(position)?.photoName}")
+        var photoName = ""
+        var specialization = ""
+        for (doctor in DoctorsRepository.getDoctors().value!!) {
+            Log.d("doctors", "${doctor?.name?.replace("\n", "")} ${MainRepository.nodeDoctors.value?.data?.get(position)?.attrs?.title}")
+            if (doctor?.name?.replace("\n", " ") == MainRepository.nodeDoctors.value?.data?.get(position)?.attrs?.title) {
+                photoName = doctor?.photoName!!
+                specialization = doctor.spec
+            }
+        }
+        holder.specTextView.text = specialization
+        holder.portraitImageView.load("https://www.vitaura-clinic.ru/sites/default/files/${photoName}")
 //        Picasso.get()
 //            .load("https://vitaura-clinic.ru/sites/default/files/${DoctorsRepository.getDoctors().value?.get(position)?.photoName}")
 //            .into(holder.portraitImageView)

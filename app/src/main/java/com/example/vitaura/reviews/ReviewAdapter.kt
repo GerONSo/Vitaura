@@ -15,7 +15,9 @@ class ReviewAdapter: RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return ReviewRepository.getReviews().value?.size!!
+        return if(ReviewRepository.getReviews().value != null){
+            ReviewRepository.getReviews().value?.size!!
+        } else 0
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

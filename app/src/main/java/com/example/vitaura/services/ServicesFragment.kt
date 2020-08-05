@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.vitaura.MainRepository
 
 import com.example.vitaura.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,6 +24,7 @@ class ServicesFragment : Fragment() {
 
     lateinit var toolbar: Toolbar
     val viewModel = ServiceViewModel()
+    lateinit var servicesAdapter: ServicesAdapter
     var position = 0
 
     fun setData(newPosition: Int) {
@@ -46,12 +48,20 @@ class ServicesFragment : Fragment() {
         val text = ServiceRepository.serviceTypes[position]
         tv_service_type.text = text
         ServiceRepository.services.observe(viewLifecycleOwner, Observer {
-            val servicesAdapter = ServicesAdapter(it?.get(ServiceRepository.serviceTypesAlias[position])!!, text, position)
-            rv_services.apply {
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                adapter = servicesAdapter
+            val type = it?.get(ServiceRepository.serviceTypesAlias[position])
+
+            type?.let { type1 ->
+                type1.sortBy { service ->
+                    service?.weight
+                }
+                servicesAdapter = ServicesAdapter(type1, text, position)
+                rv_services.apply {
+                    layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    adapter = servicesAdapter
+                }
+                servicesAdapter.notifyDataSetChanged()
             }
-            servicesAdapter.notifyDataSetChanged()
         })
     }
 

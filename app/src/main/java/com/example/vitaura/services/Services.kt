@@ -25,7 +25,8 @@ data class NodeService(
 )
 
 data class NodeServiceAttributes(
-    @field:Json(name = "path") var path: NodeServicePath
+    @field:Json(name = "path") var path: NodeServicePath,
+    @field:Json(name = "weight") var weight: Int
 )
 
 data class NodeServicePath(
@@ -39,5 +40,6 @@ data class Service(
     @field:Json(name = "title") var title: String?,
     @field:Json(name = "field_mobile_description1") var efficiency: String?,
     @field:Json(name = "field_mobile_description2") var advantage: String?,
-    @field:Json(name = "field_mobile_description3") var contraindication: String?
+    @field:Json(name = "field_mobile_description3") var contraindication: String?,
+    var weight: Int
 )
