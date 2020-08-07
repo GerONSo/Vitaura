@@ -31,7 +31,6 @@ object AboutDataParser {
             .replace("<ul>", "")
             .replace("</ul>", "")
         val list: String = Html.fromHtml(elements[10].toString()).toString() + "\n\n" + list2
-//        Log.d("test", list2)
         val image2 = elements[9].getElementsByTag("img")
         val image2Link = image2.attr("src")
         AboutDataRepository.setAboutImages(listOf(image1Link, image2Link))

@@ -63,7 +63,6 @@ class PricesDeserializer2 : JsonDeserializer<Prices> {
                 result.add(Price(name, value))
             }
         }
-        Log.d("data", result.toString())
         return result.toMutableList()
     }
 

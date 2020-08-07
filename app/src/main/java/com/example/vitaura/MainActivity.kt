@@ -29,10 +29,7 @@ import com.example.vitaura.send_review.SendReviewFragment
 import com.example.vitaura.send_review.SendReviewRepository
 import com.example.vitaura.send_review.SendReviewResultFragment
 import com.example.vitaura.send_review.SendReviewViewModel
-import com.example.vitaura.services.ServiceFragment
-import com.example.vitaura.services.ServiceRepository
-import com.example.vitaura.services.ServicesFragment
-import com.example.vitaura.services.ServicesTypesFragment
+import com.example.vitaura.services.*
 import com.example.vitaura.special.ActionFragment
 import com.example.vitaura.special.SpecialFragment
 import com.example.vitaura.special.SpecialsRepository
@@ -66,6 +63,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     val MAIN_FRAGMENT = "F14"
     val ACTION_FRAGMENT = "F15"
     val CONTACTS_FRAGMENT_TAG = "F16"
+    val SERVICE_LIST_FRAGMENT = "F17"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,14 +102,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         ServiceRepository.openServicesFragment = { pos ->
             changeFragment(ServicesFragment().also { it.setData(pos) }, SERVICES_FRAGMENT)
         }
-        ServiceRepository.openServiceFragment = { pos, t1, t2, parentPosition, serviceId ->
+        ServiceRepository.openServiceListFragment = { list ->
+            changeFragment(ServiceListFragment().also { it.list = list }, SERVICE_LIST_FRAGMENT)
+        }
+        ServiceRepository.openServiceFragment = { pos, t1, t2, parentPosition, serviceId, service ->
             changeFragment(ServiceFragment().also {
                 it.setParams(
                     pos,
                     t1,
                     t2,
                     parentPosition,
-                    serviceId
+                    serviceId,
+                    service
                 )
             }, SERVICE_FRAGMENT)
         }
@@ -128,7 +130,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             )
         }
         MainRepository.openDoctorFragment = { position ->
-            val fragment = DoctorFragment().also { it.setData(position) }
+            val fragment = DoctorFragment().also {
+                it.setData(position)
+            }
             changeFragment(fragment, DOCTOR_FRAGMENT_TAG)
         }
         ServiceRepository.imageList = listOf(
@@ -197,23 +201,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 ServerHelper.getSliderFile(slider.relationships.photo.data.id)
             }
         })
-        MainRepository.sliderProblems.observe(this, Observer {
-            problemList = Collections.nCopies(it.data.size, "").toMutableList()
-            for (problem in it.data) {
-                ServerHelper.getSliderFile(problem.relationships.data.data.id)
-            }
-        })
         MainRepository.sliderMap.observe(this, Observer {
             for (i in 0 until resultList.size) {
                 resultList[i] =
                     it[MainRepository.sliderIds.value?.data?.get(i)?.relationships?.photo?.data?.id]
             }
-            for (i in 0 until problemList.size) {
-                problemList[i] =
-                    it[MainRepository.sliderProblems.value?.data?.get(i)?.relationships?.data?.data?.id]
-            }
             MainRepository.sliderImages.value = resultList.toList()
-            MainRepository.problemImageList.value = problemList.toList()
         })
         MainRepository.nidList.observe(this, Observer {
             ServerHelper.getPrices2()

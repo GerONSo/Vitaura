@@ -9,14 +9,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.vitaura.MainRepository
 import com.example.vitaura.R
-import com.example.vitaura.send_review.ProblemData
+import com.example.vitaura.send_review.Problem
+import com.example.vitaura.services.Service
 import com.example.vitaura.services.ServiceRepository
 import com.smarteist.autoimageslider.SliderViewAdapter
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.card_problem.view.*
 import kotlinx.android.synthetic.main.image_slider_layout_item.view.*
 
-class ProblemSliderAdapter(var imageList: ProblemData) : SliderViewAdapter<ProblemSliderAdapter.SliderAdapterVH>() {
+class ProblemSliderAdapter(var imageList: List<Problem>) :
+    SliderViewAdapter<ProblemSliderAdapter.SliderAdapterVH>() {
     private val IMAGE_URL = "https://vitaura-clinic.ru"
     var problemList: List<String?> = listOf()
 
@@ -26,32 +28,27 @@ class ProblemSliderAdapter(var imageList: ProblemData) : SliderViewAdapter<Probl
         )
 
     override fun getCount(): Int {
-        return imageList.data.size
+        return imageList.size
     }
 
     override fun onBindViewHolder(viewHolder: SliderAdapterVH?, position: Int) {
-        if(position < problemList.size && problemList[position] != null) {
-            Picasso.get()
-                .load(IMAGE_URL + problemList[position])
-                .into(viewHolder?.problemImageView)
-        }
-//        Log.d("problem", imageList.data[position].attrs.title)
-        viewHolder?.problemTitleTextView?.text = imageList.data[position].attrs.title
-        val alias = imageList.data[position].attrs.path.alias
-        viewHolder?.view?.setOnClickListener {view ->
-            MainRepository.services.value?.let {
-                for (i in it.indices) {
-                    for(j in it[i].indices) {
-                        val service = it[i][j]
-//                            Log.d("debug", it[i][j]?.data?.attrs?.path?.alias + " ")
-                        if (service?.id == alias) {
-                            service.id?.let { id ->
-                                ServiceRepository.openServiceFragment(j, "", "", i, id)
-                            }
-                        }
+        Picasso.get()
+            .load(IMAGE_URL + imageList[position].photo)
+            .into(viewHolder?.problemImageView)
+        viewHolder?.problemTitleTextView?.text = imageList[position].title
+        val alias = imageList[position].services
+        viewHolder?.view?.setOnClickListener { view ->
+            var list = alias.split(", ")
+            var resultList: MutableList<Service?> = mutableListOf()
+            for (i in list) {
+                for (service in ServiceRepository.allServices.value!!) {
+                    if(i == service?.tid) {
+                        resultList.add(service)
+                        break
                     }
                 }
             }
+            ServiceRepository.openServiceListFragment(resultList)
         }
     }
 

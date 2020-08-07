@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.vitaura.R
 
 object ServiceRepository {
+
     var serviceTypes: List<String> = listOf(
         "Лицо",
         "Тело",
@@ -23,8 +24,11 @@ object ServiceRepository {
 
 
     lateinit var openServicesFragment: (position: Int) -> Unit
-    lateinit var openServiceFragment: (position: Int, serviceTitle: String?, serviceTypeTitle: String?, parentPosition: Int, serviceId: String) -> Unit
-    var services: MutableLiveData<MutableMap<String, MutableList<Service?>>> = MutableLiveData(mutableMapOf())
+    lateinit var openServiceListFragment: (list: MutableList<Service?>) -> Unit
+    lateinit var openServiceFragment: (position: Int, serviceTitle: String?, serviceTypeTitle: String?, parentPosition: Int, serviceId: String, service: Service?) -> Unit
+    var services: MutableLiveData<MutableMap<String, MutableList<Service?>>> =
+        MutableLiveData(mutableMapOf())
+    var allServices: MutableLiveData<MutableList<Service?>> = MutableLiveData(mutableListOf())
     var lastFragment = -1
 
     var imageList: List<Bitmap> = listOf()

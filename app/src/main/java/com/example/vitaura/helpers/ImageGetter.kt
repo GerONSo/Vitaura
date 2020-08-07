@@ -30,19 +30,7 @@ class ImageGetter(val resources: Resources, val context: Context) : Html.ImageGe
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun getDrawable(source: String): Drawable? {
-//        Log.d("image getter string", source)
-//        val imageLoader = Coil.imageLoader(context)
-//        val path = "https://www.$source"
-//        Log.d("path", path)
-//        val request = GetRequest.Builder(context)
-//            .data(path)
-//            .build()
         var d: Drawable? = null
-//        return d
-//        val drawable= imageLoader.execute(request).drawable!!
-//        collectValue(source) {
-//            it
-//        }
         CoroutineScope(Dispatchers.IO).launch {
             val imageLoader = Coil.imageLoader(context)
             val path = "https://www.$source"
@@ -51,17 +39,7 @@ class ImageGetter(val resources: Resources, val context: Context) : Html.ImageGe
                 .build()
             val drawable = imageLoader.execute(request).drawable
             d = drawable
-            Log.d("timeCoil", DateTimeFormatter
-                .ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS")
-                .withZone(ZoneOffset.UTC)
-                .format(Instant.now()).toString())
         }
-        Log.d("timeCoil", DateTimeFormatter
-            .ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS")
-            .withZone(ZoneOffset.UTC)
-            .format(Instant.now()).toString())
-//        while(!f) { }
-        Log.d("timeCoil", d.toString())
         return d
     }
 

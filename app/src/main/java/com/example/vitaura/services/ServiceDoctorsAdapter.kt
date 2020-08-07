@@ -47,8 +47,6 @@ class ServiceDoctorsAdapter(val doctorsList: ArrayList<Doctors>?) :
         }
         var photoName: String? = null
         for (doctor in DoctorsRepository.getDoctors().value!!) {
-//            Log.d("doctor", doctor?.name?.toUpperCase()?.replace("\n", " "))
-//            Log.d("doctor", doctorsList?.get(position)?.attrs?.title?.toUpperCase())
             if(doctor?.name?.toUpperCase()?.replace("\n", " ")?.replace(" ", "")
                 == doctorsList?.get(position)?.attrs?.title?.toUpperCase()?.replace(" ", "")) {
                 photoName = doctor?.photoName
@@ -72,8 +70,10 @@ class ServiceDoctorsAdapter(val doctorsList: ArrayList<Doctors>?) :
             holder.descriptionTextView.visibility = View.GONE
         }
         holder.view.setOnClickListener {
-            for (i in 0 until DoctorsRepository.getDoctors().value?.size!!) {
-                if(DoctorsRepository.getDoctors().value?.get(i)?.name?.toUpperCase()?.replace("\n", " ")?.replace(" ", "")
+
+            for (i in MainRepository.nodeDoctors.value?.data?.indices!!) {
+                val doctor = MainRepository.nodeDoctors.value?.data?.get(i)?.attrs
+                if(doctor?.title?.toUpperCase()?.replace(" ", "")
                     == doctorsList?.get(position)?.attrs?.title?.toUpperCase()?.replace(" ", "")) {
                     MainRepository.openDoctorFragment(i)
                 }

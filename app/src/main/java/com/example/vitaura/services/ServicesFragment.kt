@@ -2,6 +2,7 @@ package com.example.vitaura.services
 
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,8 @@ class ServicesFragment : Fragment() {
     lateinit var toolbar: Toolbar
     val viewModel = ServiceViewModel()
     lateinit var servicesAdapter: ServicesAdapter
+    var serviceList: MutableList<Service?> = mutableListOf()
+    var allServices: AllServices? = null
     var position = 0
 
     fun setData(newPosition: Int) {
@@ -42,19 +45,26 @@ class ServicesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         updateUI()
-        if(position < ServiceRepository.imageList.size) {
+        if (position < ServiceRepository.imageList.size) {
             iv_service_type_circle.setImageBitmap(ServiceRepository.imageList[position])
         }
         val text = ServiceRepository.serviceTypes[position]
         tv_service_type.text = text
+
         ServiceRepository.services.observe(viewLifecycleOwner, Observer {
             val type = it?.get(ServiceRepository.serviceTypesAlias[position])
-
             type?.let { type1 ->
                 type1.sortBy { service ->
                     service?.weight
                 }
-                servicesAdapter = ServicesAdapter(type1, text, position)
+                var list: MutableList<Service?> = mutableListOf()
+                for (service in type1) {
+//                    Log.d("service", service?.tid)
+                    if(service != null && service.parentTid == "") {
+                        list.add(service)
+                    }
+                }
+                servicesAdapter = ServicesAdapter(list, text, position, type1)
                 rv_services.apply {
                     layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -68,10 +78,15 @@ class ServicesFragment : Fragment() {
     fun updateUI() {
         toolbar = activity?.toolbar!!
         toolbar.setBackgroundColor(
-            ContextCompat.getColor(requireContext(),
+            ContextCompat.getColor(
+                requireContext(),
                 R.color.colorAccent
-            ))
-        toolbar.navigationIcon?.setColorFilter(resources.getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP)
+            )
+        )
+        toolbar.navigationIcon?.setColorFilter(
+            resources.getColor(R.color.colorPrimary),
+            PorterDuff.Mode.SRC_ATOP
+        )
         val title = activity?.toolbar_title
         title?.setTextColor(ContextCompat.getColor(requireContext(), R.color.textColor))
         title?.text = "Услуги"

@@ -14,6 +14,7 @@ import com.example.vitaura.prices.*
 import com.example.vitaura.reviews.Review
 import com.example.vitaura.reviews.ReviewRepository
 import com.example.vitaura.services.NodeServiceData
+import com.example.vitaura.services.Service
 import com.example.vitaura.services.ServiceRepository
 import com.example.vitaura.special.SpecialsRepository
 import com.google.gson.Gson
@@ -150,7 +151,9 @@ object ServerHelper {
                         val licenseTitle2 = response.body()?.data?.get(8)?.attributes?.title
                         AboutDataRepository.setLicenseTitles(listOf(licenseTitle1, licenseTitle2))
 
-                        val licenseText = HtmlNormalizer.normalizeLicense(AboutDataParser.parseLicenseEmail(response.body()?.data?.get(8)?.attributes?.body?.text))
+                        val licenseText = HtmlNormalizer.normalizeLicense(
+                            AboutDataParser.parseLicenseEmail(response.body()?.data?.get(8)?.attributes?.body?.text)
+                        )
                         AboutDataRepository.setLicenseText(listOf(licenseText))
 
                         MediaRepository.parseFileData(response.body()?.data?.get(17)?.attributes?.body?.text!!)
@@ -171,12 +174,11 @@ object ServerHelper {
             val response = service.getVideos()
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful && response.body() != null) {
+                    if (response.isSuccessful && response.body() != null) {
                         var videoList = response.body()
                         videoList?.data = videoList?.data?.filter { it.attrs.link != null }!!
                         VideoAdapter.videoList = videoList
-                    }
-                    else {
+                    } else {
                         Log.d("HTTP request", "Server didn't send response")
                     }
                 } catch (e: Exception) {
@@ -192,10 +194,9 @@ object ServerHelper {
             val response = service.getGallery()
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful && response.body() != null) {
+                    if (response.isSuccessful && response.body() != null) {
                         MediaRepository.clinicGallery = response.body()?.data?.get(1)
-                    }
-                    else {
+                    } else {
                         Log.d("HTTP request", "Server didn't send response")
                     }
                 } catch (e: Exception) {
@@ -211,12 +212,12 @@ object ServerHelper {
             val response = service.getFile(id)
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful && response.body() != null) {
-                        MediaRepository.clinicFileData.value = MediaRepository.clinicFileData.value.also {
-                            it?.add(response.body()?.data?.attrs?.uri?.url!!)
-                        }
-                    }
-                    else {
+                    if (response.isSuccessful && response.body() != null) {
+                        MediaRepository.clinicFileData.value =
+                            MediaRepository.clinicFileData.value.also {
+                                it?.add(response.body()?.data?.attrs?.uri?.url!!)
+                            }
+                    } else {
                         Log.d("HTTP request", "Server didn't send response")
                     }
                 } catch (e: Exception) {
@@ -232,10 +233,10 @@ object ServerHelper {
             val response = service.getChangeGallery()
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful && response.body() != null) {
-                        MediaRepository.changePathsList.value = response.body() as ArrayList<ChangeFile>
-                    }
-                    else {
+                    if (response.isSuccessful && response.body() != null) {
+                        MediaRepository.changePathsList.value =
+                            response.body() as ArrayList<ChangeFile>
+                    } else {
                         Log.d("HTTP request", "Server didn't send response")
                     }
                 } catch (e: Exception) {
@@ -245,21 +246,25 @@ object ServerHelper {
         }
     }
 
-    fun getServiceTypes(id: String) {
+    fun getAllServices() {
         val service = makeApi2Service()
         CoroutineScope(Dispatchers.IO).launch {
-            val response = service.getServices(id)
+            val response = service.getServices2()
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful) {
+                    if (response.isSuccessful) {
                         response.body()?.let { response ->
-                            ServiceRepository.services.value =
-                                ServiceRepository.services.value.also {
-                                    it?.set(id, response)
-                                }
+                            var map: MutableMap<String, MutableList<Service?>> = mutableMapOf()
+                            for (serviceType in ServiceRepository.serviceTypesAlias) {
+                                map[serviceType] = mutableListOf()
+                            }
+                            for (service in response) {
+                                map[service?.type]?.add(service)
+                            }
+                            ServiceRepository.allServices.value = response
+                            ServiceRepository.services.value = map
                         }
-                    }
-                    else {
+                    } else {
                         Log.d("HTTP request", "Server didn't send response")
                     }
                 } catch (e: Exception) {
@@ -275,10 +280,9 @@ object ServerHelper {
             val response = service.getSlider()
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful && response.body() != null) {
+                    if (response.isSuccessful && response.body() != null) {
                         MainRepository.sliderIds.value = response.body()!!
-                    }
-                    else {
+                    } else {
                         Log.d("HTTP request", "Server didn't send response")
                     }
                 } catch (e: Exception) {
@@ -294,12 +298,11 @@ object ServerHelper {
             val response = service.getFile(id)
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful && response.body() != null) {
+                    if (response.isSuccessful && response.body() != null) {
                         MainRepository.sliderMap.value = MainRepository.sliderMap.value.also {
                             it?.set(id, response.body()?.data?.attrs?.uri?.url!!)
                         }
-                    }
-                    else {
+                    } else {
                         Log.d("HTTP request", "Server didn't send response")
                     }
                 } catch (e: Exception) {
@@ -315,10 +318,9 @@ object ServerHelper {
             val response = service.getProblems()
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful && response.body() != null) {
+                    if (response.isSuccessful && response.body() != null) {
                         MainRepository.sliderProblems.value = response.body()!!
-                    }
-                    else {
+                    } else {
                         Log.d("HTTP request", "Server didn't send response")
                     }
                 } catch (e: Exception) {
@@ -334,10 +336,9 @@ object ServerHelper {
             val response = service.getActions()
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful && response.body() != null) {
+                    if (response.isSuccessful && response.body() != null) {
                         SpecialsRepository.actions.value = response.body()!!
-                    }
-                    else {
+                    } else {
                         Log.d("HTTP request", "Server didn't send response")
                     }
                 } catch (e: Exception) {
@@ -353,11 +354,10 @@ object ServerHelper {
             val response = service.getNodeDoctors()
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful && response.body() != null) {
+                    if (response.isSuccessful && response.body() != null) {
                         MainRepository.nodeDoctors.value = response.body()!!
                         MainRepository.sortNodeDoctors()
-                    }
-                    else {
+                    } else {
                         Log.d("HTTP request", "Server didn't send response")
                     }
                 } catch (e: Exception) {
@@ -373,10 +373,9 @@ object ServerHelper {
             val response = service.getNodePrices()
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful && response.body() != null) {
+                    if (response.isSuccessful && response.body() != null) {
                         MainRepository.nodePrices.value = response.body()!!
-                    }
-                    else {
+                    } else {
                         Log.d("HTTP request", "Server didn't send response")
                     }
                 } catch (e: Exception) {
@@ -418,16 +417,19 @@ object ServerHelper {
                 }
                 withContext(Dispatchers.Main) {
                     try {
-                        if (response?.isSuccessful!!  && response.body() != null) {
+                        if (response?.isSuccessful!! && response.body() != null) {
 //                        print(response.body())
-                        MainRepository.serviceDoctorsMap.value = MainRepository.serviceDoctorsMap.value.also {
-                            var list = it?.get(response.body()?.data?.attrs?.path?.alias) ?: arrayListOf()
-                            it?.let { map ->
-                                map[response.body()?.data?.attrs?.path?.alias!!] = list.also { arrayList ->
-                                    arrayList.add(doctor)
+                            MainRepository.serviceDoctorsMap.value =
+                                MainRepository.serviceDoctorsMap.value.also {
+                                    var list = it?.get(response.body()?.data?.attrs?.path?.alias)
+                                        ?: arrayListOf()
+                                    it?.let { map ->
+                                        map[response.body()?.data?.attrs?.path?.alias!!] =
+                                            list.also { arrayList ->
+                                                arrayList.add(doctor)
+                                            }
+                                    }
                                 }
-                            }
-                        }
                         } else {
                             Log.d("HTTP request", "Server didn't send response")
                         }
@@ -447,18 +449,20 @@ object ServerHelper {
             val response = service.getService(id)
             withContext(Dispatchers.Main) {
                 try {
-                    if(response.isSuccessful && response.body() != null) {
+                    if (response.isSuccessful && response.body() != null) {
 //                        print(response.body())
-                        MainRepository.servicePricesMap.value = MainRepository.servicePricesMap.value.also {
-                            var list = it?.get(response.body()?.data?.attrs?.path?.alias) ?: arrayListOf()
-                            it?.let { map ->
-                                map[response.body()?.data?.attrs?.path?.alias!!] = list.also { arrayList ->
-                                    arrayList.add(price)
+                        MainRepository.servicePricesMap.value =
+                            MainRepository.servicePricesMap.value.also {
+                                var list = it?.get(response.body()?.data?.attrs?.path?.alias)
+                                    ?: arrayListOf()
+                                it?.let { map ->
+                                    map[response.body()?.data?.attrs?.path?.alias!!] =
+                                        list.also { arrayList ->
+                                            arrayList.add(price)
+                                        }
                                 }
                             }
-                        }
-                    }
-                    else {
+                    } else {
                         Log.d("HTTP request", "Server didn't send response")
                     }
                 } catch (e: Exception) {
@@ -467,7 +471,6 @@ object ServerHelper {
             }
         }
     }
-
 
     private fun makeApiService(): ApiService {
         val client = OkHttpClient.Builder()

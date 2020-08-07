@@ -43,8 +43,6 @@ class TabAboutFragment : Fragment() {
             tv_text_about1.text = Html.fromHtml(HtmlNormalizer.normalizeAbout(it[0]))
             tv_text_about2.text = Html.fromHtml(HtmlNormalizer.normalizeAbout(it[1]))
             tv_text_about3.text = Html.fromHtml(HtmlNormalizer.normalizeAbout(it[2]))
-            Log.d("about", it[1])
-            Log.d("about", HtmlNormalizer.normalizeAbout(it[1]))
         })
         AboutDataRepository.getAboutTitles().observe(viewLifecycleOwner, Observer {
             tv_title_about1.text = it[0]

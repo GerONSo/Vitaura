@@ -19,6 +19,7 @@ import com.example.vitaura.helpers.GlideImageGetter
 import com.example.vitaura.prices.PricesRepository
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.card_change.*
 import kotlinx.android.synthetic.main.fragment_service.*
 
 /**
@@ -28,20 +29,22 @@ class ServiceFragment : Fragment() {
 
     lateinit var toolbar: Toolbar
     val viewModel = ServiceViewModel()
-    var position: Int = 0
+//    var position: Int = 0
     var serviceTitle: String? = ""
     var serviceTypeTitle: String? = ""
     var parentPosition: Int = 0
     var serviceId: String = ""
+    var service: Service? = null
     lateinit var imageGetter: GlideImageGetter
 
-    fun setParams(newPosition: Int, newTitle: String?, newTypeTitle: String?, newParentPosition: Int, newServiceId: String) {
-        position = newPosition
+    fun setParams(newPosition: Int, newTitle: String?, newTypeTitle: String?, newParentPosition: Int, newServiceId: String, newService: Service?) {
+//        position = newPosition
         serviceTitle = newTitle
         serviceTypeTitle = newTypeTitle
         parentPosition = newParentPosition
         serviceId = newServiceId
         viewModel.serviceId = newServiceId
+        service = newService
 //        viewModel.serviceTitle = serviceTitle
 //        viewModel.serviceTypeTitle = serviceTypeTitle
     }
@@ -57,7 +60,7 @@ class ServiceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         updateUI()
         imageGetter = GlideImageGetter(tv_in_about_service)
-        val service = ServiceRepository.services.value?.get(ServiceRepository.serviceTypesAlias[parentPosition])?.get(position)
+//        val service = ServiceRepository.services.value?.get(ServiceRepository.serviceTypesAlias[parentPosition])?.get(position)
         service_tab_layout.apply {
             addTab(service_tab_layout.newTab().setText("Эффективность"))
             addTab(service_tab_layout.newTab().setText("Преимущества"))
@@ -96,8 +99,8 @@ class ServiceFragment : Fragment() {
         rv_service_prices.visibility = View.GONE
         pb_service.indeterminateDrawable.setColorFilter(
             resources.getColor(R.color.colorPrimary),
-            PorterDuff.Mode.SRC_IN);
-        tv_in_service_type.text = ServiceRepository.services.value?.get(ServiceRepository.serviceTypesAlias[parentPosition])?.get(position)?.title
+            PorterDuff.Mode.SRC_IN)
+        tv_in_service_type.text = service?.title
         tv_in_service_type_title.text = ServiceRepository.serviceTypes[parentPosition]
         if (parentPosition < ServiceRepository.imageList.size) {
             iv_in_service_type_circle.setImageBitmap(ServiceRepository.imageList[parentPosition])

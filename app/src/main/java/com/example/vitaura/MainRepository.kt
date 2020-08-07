@@ -3,13 +3,14 @@ package com.example.vitaura
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.vitaura.doctors.Doctor
+import com.example.vitaura.doctors.DoctorAttributes
 import com.example.vitaura.doctors.Doctors
 import com.example.vitaura.doctors.DoctorsData
 import com.example.vitaura.main.SliderData
 import com.example.vitaura.prices.PriceData
 import com.example.vitaura.prices.PriceElement
 import com.example.vitaura.prices.Prices
-import com.example.vitaura.send_review.ProblemData
+import com.example.vitaura.send_review.Problem
 import com.example.vitaura.send_review.SendReviewViewModel
 import com.example.vitaura.services.Service
 
@@ -23,8 +24,7 @@ object MainRepository {
     var sliderIds: MutableLiveData<SliderData> = MutableLiveData()
     var sliderImages: MutableLiveData<List<String?>> = MutableLiveData()
     var sliderMap: MutableLiveData<MutableMap<String, String>> = MutableLiveData(mutableMapOf())
-    var sliderProblems: MutableLiveData<ProblemData> = MutableLiveData()
-    var problemImageList: MutableLiveData<List<String?>> = MutableLiveData()
+    var sliderProblems: MutableLiveData<List<Problem>> = MutableLiveData(listOf())
     var lastMainFragment = TAB_INFO
 
     var nodeDoctors: MutableLiveData<DoctorsData> = MutableLiveData()
@@ -53,9 +53,6 @@ object MainRepository {
             it?.data = it?.data?.sortedBy { doctors ->
                 doctors.attrs.weight
             }!!
-        }
-        nodeDoctors.value?.data?.forEach {
-            Log.d("nodeDoctors", "${it.attrs.weight} ${it.attrs.title}")
         }
 
     }

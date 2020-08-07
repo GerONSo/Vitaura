@@ -4,6 +4,7 @@ package com.example.vitaura.doctors
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
@@ -89,8 +90,18 @@ class DoctorFragment : Fragment() {
             var info = HtmlNormalizer.normalize(it)
             description_tv.text = Html.fromHtml(info)
         }
-        val doctor2 = DoctorsRepository.getDoctors()
-            .value?.get(position)
+//        val doctor2 = DoctorsRepository.getDoctors()
+//            .value?.get(position)
+        var doctor2: Doctor? = null
+        var pos: Int = 0
+        for (i in DoctorsRepository.getDoctors().value?.indices!!) {
+            val d = DoctorsRepository.getDoctors().value?.get(i)
+            if (d?.name?.replace("\n", " ") == doctor?.title) {
+                doctor2 = d
+                pos = i
+                break
+            }
+        }
 
         val portraitImageView: ImageView = toolbar_top.findViewById(R.id.portrait_iv_profile)
         val nameTextView: TextView = toolbar_top.findViewById(R.id.name_tv_profile)
@@ -105,13 +116,14 @@ class DoctorFragment : Fragment() {
 
         val otherDoctorView1 = view.findViewById<View>(R.id.other_doctor_card_1)
         val otherDoctorView2 = view.findViewById<View>(R.id.other_doctor_card_2)
+        Log.d("pos", pos.toString())
         setOtherDoctorsData(
             otherDoctorView1,
-            (position + 1) % DoctorsRepository.getDoctors().value?.size!!
+            (pos + 1) % DoctorsRepository.getDoctors().value?.size!!
         )
         setOtherDoctorsData(
             otherDoctorView2,
-            (position + 2) % DoctorsRepository.getDoctors().value?.size!!
+            (pos + 2) % DoctorsRepository.getDoctors().value?.size!!
         )
         super.onViewCreated(view, savedInstanceState)
     }
@@ -181,7 +193,12 @@ class DoctorFragment : Fragment() {
         }
         holder.setOnClickListener {
             DoctorsRepository.position = position
-            MainRepository.openDoctorFragment(position)
+            for (pos in MainRepository.nodeDoctors.value?.data?.indices!!) {
+                var i = MainRepository.nodeDoctors.value?.data?.get(pos)
+                if (i?.attrs?.title == DoctorsRepository.getDoctors().value?.get(position)?.name?.replace("\n", " ")) {
+                    MainRepository.openDoctorFragment(pos)
+                }
+            }
         }
     }
 }

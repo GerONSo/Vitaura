@@ -57,9 +57,7 @@ class SplashActivity : AppCompatActivity() {
                 getVideos()
                 getGallery()
                 getChangeGallery()
-                for(type in ServiceRepository.serviceTypesAlias) {
-                    getServiceTypes(type)
-                }
+                getAllServices()
                 getNodeDoctors()
                 getNodePrices()
             }

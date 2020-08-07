@@ -40,9 +40,6 @@ class TabInfoFragment : Fragment() {
             problemSlider.setSliderAdapter(problemAdapter!!)
             problemAdapter?.notifyDataSetChanged()
         })
-        MainRepository.problemImageList.observe(viewLifecycleOwner, Observer {
-            problemAdapter?.problemList = it
-        })
         btn_right_slide.setOnClickListener {
             problemSlider.slideToNextPosition()
         }

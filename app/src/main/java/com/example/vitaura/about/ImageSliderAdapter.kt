@@ -30,8 +30,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class ImageSliderAdapter(var imageList: List<String?>,
-                         var sliderData: SliderData? = null) : SliderViewAdapter<ImageSliderAdapter.SliderAdapterVH>() {
+class ImageSliderAdapter(
+    var imageList: List<String?>,
+    var sliderData: SliderData? = null
+) : SliderViewAdapter<ImageSliderAdapter.SliderAdapterVH>() {
 
     private val IMAGE_URL = "https://vitaura-clinic.ru"
     lateinit var context: Context
@@ -64,7 +66,7 @@ class ImageSliderAdapter(var imageList: List<String?>,
             }
 
         }
-        if(sliderData != null) {
+        if (sliderData != null) {
             val title = sliderData?.data?.get(position)?.attrs?.title
             val body = sliderData?.data?.get(position)?.attrs?.body?.value
             viewHolder?.titleTextView?.text = Html.fromHtml(title)
@@ -73,7 +75,7 @@ class ImageSliderAdapter(var imageList: List<String?>,
             SpecialsRepository.getSpecials().value?.let {
                 for (i in it.indices) {
                     val special = it[i]
-                    if(special?.id == sliderData?.data?.get(position)?.attrs?.link) {
+                    if (special?.id == sliderData?.data?.get(position)?.attrs?.link) {
                         pos = i
                     }
                 }
@@ -83,28 +85,23 @@ class ImageSliderAdapter(var imageList: List<String?>,
                 SpecialsRepository.actions.value?.data?.let {
                     for (i in it.indices) {
                         val action = it[i]
-                        if(action.attrs.path.alias == alias) {
+                        if (action.attrs.path.alias == alias) {
                             val title = action.attrs.title
                             val body = action.attrs.body.value
                             SpecialsRepository.openActionFragment(title, body, i)
                         }
                     }
                 }
-                MainRepository.services.value?.let {
-                    for (i in it.indices) {
-                        for(j in it[i].indices) {
-                            val service = it[i][j]
-//                            Log.d("debug", it[i][j]?.data?.attrs?.path?.alias + " ")
-                            if (service?.id == alias) {
-                                service?.id?.let { id ->
-                                    ServiceRepository.openServiceFragment(j, "", "", i, id)
-                                }
+                for (i in ServiceRepository.serviceTypesAlias.indices) {
+                    val serviceAlias = ServiceRepository.serviceTypesAlias[i]
+                    for (service in ServiceRepository.services.value?.get(serviceAlias)!!) {
+                        service?.id?.let { id ->
+                            if(service.id == sliderData?.data?.get(position)?.attrs?.link) {
+                                ServiceRepository.openServiceFragment(0, "", "", i, id, service)
                             }
                         }
                     }
                 }
-
-
             }
         }
     }

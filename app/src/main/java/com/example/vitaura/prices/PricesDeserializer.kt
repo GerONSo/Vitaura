@@ -51,7 +51,6 @@ class PricesDeserializer : JsonDeserializer<Prices> {
             val value = priceObject.get("field_price_sum").asString
             result.add(Price(name, value))
         }
-        Log.d("data", result.toString())
         return result.toMutableList()
     }
 
