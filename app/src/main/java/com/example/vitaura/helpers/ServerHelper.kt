@@ -38,7 +38,10 @@ object ServerHelper {
 
     const val BASE_URL = "http://91.210.170.129:5000"
     const val BASE_URL2 = "https://vitaura-clinic.ru"
-
+    const val TIMEOUT = 5L
+    var doctorServicesCount = 0
+    var service: ApiService? = null
+    var service2: ApiService? = null
 
     fun getDoctors() {
         val service = makeApiService()
@@ -349,13 +352,15 @@ object ServerHelper {
     }
 
     fun getNodeDoctors() {
-        val service = makeApi2Service()
+        if(service == null) {
+            service = makeApi2Service()
+        }
         CoroutineScope(Dispatchers.IO).launch {
-            val response = service.getNodeDoctors()
+            val response = service?.getNodeDoctors()
             withContext(Dispatchers.Main) {
                 try {
-                    if (response.isSuccessful && response.body() != null) {
-                        MainRepository.nodeDoctors.value = response.body()!!
+                    if (response != null && response.isSuccessful && response.body() != null) {
+                        MainRepository.nodeDoctors.value = response.body()
                         MainRepository.sortNodeDoctors()
                     } else {
                         Log.d("HTTP request", "Server didn't send response")
@@ -405,33 +410,43 @@ object ServerHelper {
         }
     }
 
-    fun getService(id: String, doctor: Doctors) {
-        val service = makeApi2Service2()
+    fun getService(id: String, doctor: Doctors, size: Int) {
+        if(service == null) {
+            service = makeApi2Service2()
+        }
+//        Log.d("ram", Runtime.getRuntime().freeMemory().toString())
         try {
             CoroutineScope(Dispatchers.IO).launch {
                 var response: Response<NodeServiceData>? = null
                 try {
-                    response = service.getService(id)
+                    response = service?.getService(id)
                 } catch (e: java.lang.Exception) {
                     Log.d("malformed", id)
                 }
                 withContext(Dispatchers.Main) {
                     try {
+                        doctorServicesCount++
                         if (response?.isSuccessful!! && response.body() != null) {
 //                        print(response.body())
-                            MainRepository.serviceDoctorsMap.value =
-                                MainRepository.serviceDoctorsMap.value.also {
-                                    var list = it?.get(response.body()?.data?.attrs?.path?.alias)
-                                        ?: arrayListOf()
-                                    it?.let { map ->
-                                        map[response.body()?.data?.attrs?.path?.alias!!] =
-                                            list.also { arrayList ->
-                                                arrayList.add(doctor)
-                                            }
-                                    }
+                            MainRepository.serviceDoctorsMap.value.let {
+                                var list = it?.get(response.body()?.data?.attrs?.path?.alias)
+                                    ?: arrayListOf()
+                                it?.let { map ->
+                                    map[response.body()?.data?.attrs?.path?.alias!!] =
+                                        list.also { arrayList ->
+                                            arrayList.add(doctor)
+                                        }
                                 }
+                            }
                         } else {
                             Log.d("HTTP request", "Server didn't send response")
+                        }
+                        if (doctorServicesCount == size) {
+                            MainRepository.serviceDoctorsMap.value =
+                                MainRepository.serviceDoctorsMap.value
+                        }
+                        else {
+
                         }
                     } catch (e: Exception) {
                         Log.d("HTTP request", "Server didn't send response")
@@ -444,12 +459,14 @@ object ServerHelper {
     }
 
     fun getService(id: String, price: PriceElement) {
-        val service = makeApi2Service()
+        if(service2 == null) {
+            service2 = makeApi2Service()
+        }
         CoroutineScope(Dispatchers.IO).launch {
-            val response = service.getService(id)
+            val response = service?.getService(id)
             withContext(Dispatchers.Main) {
                 try {
-                    if (response.isSuccessful && response.body() != null) {
+                    if (response != null && response.isSuccessful && response.body() != null) {
 //                        print(response.body())
                         MainRepository.servicePricesMap.value =
                             MainRepository.servicePricesMap.value.also {
@@ -474,8 +491,8 @@ object ServerHelper {
 
     private fun makeApiService(): ApiService {
         val client = OkHttpClient.Builder()
-            .connectTimeout(100, TimeUnit.SECONDS)
-            .readTimeout(100, TimeUnit.SECONDS).build()
+            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT, TimeUnit.SECONDS).build()
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
@@ -486,8 +503,8 @@ object ServerHelper {
 
     private fun makeApi2Service(): ApiService {
         val client = OkHttpClient.Builder()
-            .connectTimeout(100, TimeUnit.SECONDS)
-            .readTimeout(100, TimeUnit.SECONDS).build()
+            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT, TimeUnit.SECONDS).build()
         return Retrofit.Builder()
             .baseUrl(BASE_URL2)
             .client(client)
@@ -498,8 +515,8 @@ object ServerHelper {
 
     private fun makeApi2Service2(): ApiService {
         val client = OkHttpClient.Builder()
-            .connectTimeout(100, TimeUnit.SECONDS)
-            .readTimeout(100, TimeUnit.SECONDS).build()
+            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT, TimeUnit.SECONDS).build()
         return Retrofit.Builder()
             .baseUrl(BASE_URL2)
             .client(client)
@@ -511,8 +528,8 @@ object ServerHelper {
 
     private fun makeApiPriceService(): ApiService {
         val client = OkHttpClient.Builder()
-            .connectTimeout(100, TimeUnit.SECONDS)
-            .readTimeout(100, TimeUnit.SECONDS).build()
+            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT, TimeUnit.SECONDS).build()
         return Retrofit.Builder()
             .baseUrl(BASE_URL2)
             .client(client)
@@ -532,8 +549,8 @@ object ServerHelper {
 
     private fun makeApiPrice2Service(): ApiService {
         val client = OkHttpClient.Builder()
-            .connectTimeout(100, TimeUnit.SECONDS)
-            .readTimeout(100, TimeUnit.SECONDS).build()
+            .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT, TimeUnit.SECONDS).build()
         return Retrofit.Builder()
             .baseUrl(BASE_URL2)
             .client(client)

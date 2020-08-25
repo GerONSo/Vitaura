@@ -212,17 +212,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             ServerHelper.getPrices2()
         })
         MainRepository.nodeDoctors.observe(this, Observer {
-//            if (!MainRepository.serviceDoctorsMap.value.isNullOrEmpty()) {
                 for (doctors in it.data) {
                     for (service in doctors.relationships.services.data) {
-                        ServerHelper.getService(service.id, doctors)
+                        ServerHelper.getService(service.id, doctors, doctors.relationships.services.data.size)
                     }
                 }
-//            }
         })
         MainRepository.nodePrices.observe(this, Observer {
-            for(priceElement in it.data) {
-                for(priceService in priceElement.relationships.services.data) {
+            for (priceElement in it.data) {
+                for (priceService in priceElement.relationships.services.data) {
                     ServerHelper.getService(priceService.id, priceElement)
                 }
             }

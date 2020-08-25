@@ -49,11 +49,12 @@ object MainRepository {
     }
 
     fun sortNodeDoctors() {
-        nodeDoctors.value = nodeDoctors.value.also {
-            it?.data = it?.data?.sortedBy { doctors ->
-                doctors.attrs.weight
-            }!!
+        nodeDoctors.value?.let {
+            it.data = it.data.also { list ->
+                list.sortedBy { doctors ->
+                    doctors.attrs.weight
+                }
+            }
         }
-
     }
 }
