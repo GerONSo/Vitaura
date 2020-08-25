@@ -32,9 +32,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif"
+            android:lineSpacingExtra="8dp"
             android:textColor="@color/textColor"
-            android:lineSpacingExtra="10dp"
-            android:textSize="15sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_title_about2"
@@ -53,9 +53,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:fontFamily="sans-serif"
-            android:lineSpacingExtra="10dp"
+            android:lineSpacingExtra="8dp"
             android:textColor="@color/textColor"
-            android:textSize="15sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_title_about3"
@@ -74,9 +74,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:fontFamily="sans-serif"
-            android:lineSpacingExtra="10dp"
+            android:lineSpacingExtra="8dp"
             android:textColor="@color/textColor"
-            android:textSize="15sp" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="match_parent"

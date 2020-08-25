@@ -46,5 +46,4 @@
         android:text="smdglfdlkgjsldkflskdmvvlsdmv"
         android:lineSpacingExtra="10dp"
         android:textColor="@color/textColor" />
-        />
 </LinearLayout>

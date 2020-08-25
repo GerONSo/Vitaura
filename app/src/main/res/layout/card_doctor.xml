@@ -20,14 +20,14 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="0dp"
             app:layout_constraintHorizontal_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="30dp"
             android:layout_marginLeft="20dp"
             android:elevation="5dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toLeftOf="@id/mini_description_layout"
-            app:layout_constraintBottom_toBottomOf="@id/mini_description_layout"
+            app:layout_constraintBottom_toTopOf="@id/log_in_btn"
             android:src="@drawable/d1"
             android:id="@+id/portrait_iv"/>
 
@@ -71,19 +71,19 @@
 
         <Button
             android:id="@+id/log_in_btn"
-            android:maxWidth="165dp"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:maxWidth="130dp"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            app:layout_constraintHorizontal_weight="1"
             android:text="Записаться на прием"
-            android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:textColor="@color/colorAccent"
             android:fontFamily="sans-serif-medium"
             android:background="@drawable/sign_up_button"
             android:textSize="@dimen/adaptive_text_size"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/mini_description_layout"
             app:layout_constraintTop_toBottomOf="@id/mini_description_layout"/>
 
         <TextView
@@ -94,9 +94,9 @@
             android:layout_marginTop="15dp"
             android:fontFamily="sans-serif"
             android:layout_marginLeft="16dp"
-            android:textColor="@color/textColor"
             android:lineSpacingExtra="8dp"
-            android:textSize="@dimen/adaptive_text_size"
+            android:textColor="@color/textColor"
+            android:textSize="16sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

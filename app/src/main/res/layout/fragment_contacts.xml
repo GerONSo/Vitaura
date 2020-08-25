@@ -21,8 +21,9 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:fontFamily="sans-serif"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/adaptive_text_size_title"
+            android:lineSpacingExtra="8dp"
+            android:textColor="@color/textColor"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:text="Клиника Vitaura" />
 
@@ -34,12 +35,12 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="15dp"
             android:fontFamily="sans-serif"
-            android:lineSpacingExtra="10dp"
+            android:lineSpacingExtra="8dp"
+            android:textColor="@color/textColor"
+            android:textSize="16sp"
             android:text="г. Москва, Большой Тишинский пер., 10 стр. 1\nпн-сб: 10:00 – 21:00, вс: 10:00 – 20:00\n\n
 +7(495)324-10-03 \n\n
-info@vitaura-clinic.ru"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/adaptive_text_size" />
+info@vitaura-clinic.ru"/>
 
         <LinearLayout
             android:layout_width="match_parent"

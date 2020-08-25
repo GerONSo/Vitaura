@@ -71,11 +71,11 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_body_action"
                 android:fontFamily="sans-serif"
-                android:textSize="19sp"
-                android:textColor="@color/textColor"
                 android:text="Эксклюзивно в Москве! Похудение быстро, безболезненно, в нескольких зонах!"
                 android:layout_marginTop="15dp"
                 android:lineSpacingExtra="8dp"
+                android:textColor="@color/textColor"
+                android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_title_action"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"/>

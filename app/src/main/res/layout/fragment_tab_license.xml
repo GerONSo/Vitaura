@@ -177,8 +177,9 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="20dp"
             android:fontFamily="sans-serif"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/adaptive_text_size_title"
+            android:lineSpacingExtra="8dp"
+            android:textColor="@color/textColor"
+            android:textSize="16sp"
             android:textStyle="bold"
             tools:text="Контакты органов исполнительной власти в сфере охраны здоровья граждан" />
 
@@ -187,9 +188,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:lineSpacingExtra="10dp"
+            android:lineSpacingExtra="8dp"
             android:textColor="@color/textColor"
-            android:textSize="15sp"
+            android:textSize="16sp"
             tools:text="Департамент здравоохранения города Москвы\n
 \n
 Сокращенное название: ДЗМ\n

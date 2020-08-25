@@ -55,7 +55,7 @@ class DoctorsAdapter(
                 specialization = doctor.spec
             }
         }
-        holder.specTextView.text = specialization
+        holder.specTextView.text = specialization + "\n"
         holder.portraitImageView.load("https://www.vitaura-clinic.ru/sites/default/files/${photoName}")
 //        Picasso.get()
 //            .load("https://vitaura-clinic.ru/sites/default/files/${DoctorsRepository.getDoctors().value?.get(position)?.photoName}")

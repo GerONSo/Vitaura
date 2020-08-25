@@ -15,7 +15,7 @@
     <ConstraintSet android:id="@+id/expanded">
         <Constraint
             android:id="@id/image_slider_main"
-            android:layout_height="250dp"
+            android:layout_height="350dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

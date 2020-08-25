@@ -12,10 +12,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv_main_info"
         tools:text="/gjs;ladjgnkljsajdfjhsdkj"
-        android:lineSpacingExtra="10dp"
         android:fontFamily="sans-serif"
+        android:lineSpacingExtra="8dp"
         android:textColor="@color/textColor"
-        android:textSize="@dimen/adaptive_text_size"
+        android:textSize="16sp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="15dp"/>

@@ -3,6 +3,9 @@ package com.example.vitaura
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.RelativeSizeSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -83,8 +86,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun initViews() {
         if (model.getFragmentStack().value?.size == 0) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, MainFragment(), MAIN_FRAGMENT)
-                .commit()
+                    .replace(R.id.frame_layout, MainFragment(), MAIN_FRAGMENT)
+                    .commit()
         }
         bottom_navigation_view.uncheckAllItems()
         AboutDataRepository.openSendReviewFragment = {
@@ -108,25 +111,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         ServiceRepository.openServiceFragment = { pos, t1, t2, parentPosition, serviceId, service ->
             changeFragment(ServiceFragment().also {
                 it.setParams(
-                    pos,
-                    t1,
-                    t2,
-                    parentPosition,
-                    serviceId,
-                    service
+                        pos,
+                        t1,
+                        t2,
+                        parentPosition,
+                        serviceId,
+                        service
                 )
             }, SERVICE_FRAGMENT)
         }
         SendReviewRepository.openSendReviewResult = { tag ->
             changeFragment(
-                SendReviewResultFragment.newInstance(tag),
-                SEND_REVIEW_RESULT_FRAGMENT_TAG
+                    SendReviewResultFragment.newInstance(tag),
+                    SEND_REVIEW_RESULT_FRAGMENT_TAG
             )
         }
         SpecialsRepository.openActionFragment = { title, body, position ->
             changeFragment(
-                ActionFragment().also { it.setParams(title, body, position) },
-                ACTION_FRAGMENT
+                    ActionFragment().also { it.setParams(title, body, position) },
+                    ACTION_FRAGMENT
             )
         }
         MainRepository.openDoctorFragment = { position ->
@@ -136,11 +139,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             changeFragment(fragment, DOCTOR_FRAGMENT_TAG)
         }
         ServiceRepository.imageList = listOf(
-            BitmapFactory.decodeResource(resources, R.drawable.face),
-            BitmapFactory.decodeResource(resources, R.drawable.body),
-            BitmapFactory.decodeResource(resources, R.drawable.hair),
-            BitmapFactory.decodeResource(resources, R.drawable.intim),
-            BitmapFactory.decodeResource(resources, R.drawable.diagnostics)
+                BitmapFactory.decodeResource(resources, R.drawable.face),
+                BitmapFactory.decodeResource(resources, R.drawable.body),
+                BitmapFactory.decodeResource(resources, R.drawable.hair),
+                BitmapFactory.decodeResource(resources, R.drawable.intim),
+                BitmapFactory.decodeResource(resources, R.drawable.diagnostics)
         )
         val bottomNavigationListener = BottomNavigationView.OnNavigationItemSelectedListener {
             when (it.itemId) {
@@ -152,7 +155,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 R.id.doctors -> {
                     val doctorsFragment = DoctorsFragment.newInstance { position ->
                         val fragment =
-                            DoctorFragment().also { fragment -> fragment.setData(position) }
+                                DoctorFragment().also { fragment -> fragment.setData(position) }
                         changeFragment(fragment, DOCTOR_FRAGMENT_TAG)
                     }
                     changeFragment(doctorsFragment, DOCTORS_FRAGMENT_TAG)
@@ -204,7 +207,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         MainRepository.sliderMap.observe(this, Observer {
             for (i in 0 until resultList.size) {
                 resultList[i] =
-                    it[MainRepository.sliderIds.value?.data?.get(i)?.relationships?.photo?.data?.id]
+                        it[MainRepository.sliderIds.value?.data?.get(i)?.relationships?.photo?.data?.id]
             }
             MainRepository.sliderImages.value = resultList.toList()
         })
@@ -212,11 +215,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             ServerHelper.getPrices2()
         })
         MainRepository.nodeDoctors.observe(this, Observer {
-                for (doctors in it.data) {
-                    for (service in doctors.relationships.services.data) {
-                        ServerHelper.getService(service.id, doctors, doctors.relationships.services.data.size)
-                    }
+            for (doctors in it.data) {
+                for (service in doctors.relationships.services.data) {
+                    ServerHelper.getService(service.id, doctors, doctors.relationships.services.data.size)
                 }
+            }
         })
         MainRepository.nodePrices.observe(this, Observer {
             for (priceElement in it.data) {
@@ -307,17 +310,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun changeFragment(newFragment: Fragment, tag: String) {
         if (model.getFragmentStack().value?.size == 0 ||
-            model.getFragmentStack().value?.get(model.getFragmentStack().value!!.size - 1) != tag ||
-            model.getFragmentStack().value?.get(model.getFragmentStack().value!!.size - 1) == ACTION_FRAGMENT ||
-            model.getFragmentStack().value?.get(model.getFragmentStack().value!!.size - 1) == DOCTOR_FRAGMENT_TAG
+                model.getFragmentStack().value?.get(model.getFragmentStack().value!!.size - 1) != tag ||
+                model.getFragmentStack().value?.get(model.getFragmentStack().value!!.size - 1) == ACTION_FRAGMENT ||
+                model.getFragmentStack().value?.get(model.getFragmentStack().value!!.size - 1) == DOCTOR_FRAGMENT_TAG
         ) {
 //            fragmentStack.add(tag)
             if (!supportFragmentManager.isDestroyed) {
                 model.addToFragmentStack(tag)
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.frame_layout, newFragment, tag)
-                    .addToBackStack(null)
-                    .commit()
+                        .replace(R.id.frame_layout, newFragment, tag)
+                        .addToBackStack(null)
+                        .commit()
             }
         }
     }
