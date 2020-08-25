@@ -36,8 +36,11 @@ class ProblemSliderAdapter(var imageList: List<Problem>) :
             .load(IMAGE_URL + imageList[position].photo)
             .into(viewHolder?.problemImageView)
         viewHolder?.problemTitleTextView?.text = imageList[position].title
-        val alias = imageList[position].services
+        var alias = imageList[position].services
         viewHolder?.view?.setOnClickListener { view ->
+            if(alias == "") {
+                alias = "168, 75, 167, 87, 70, 3, 71"
+            }
             var list = alias.split(", ")
             var resultList: MutableList<Service?> = mutableListOf()
             for (i in list) {
