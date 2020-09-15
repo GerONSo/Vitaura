@@ -264,6 +264,15 @@ object ServerHelper {
                             for (service in response) {
                                 map[service?.type]?.add(service)
                             }
+                            map[ServiceRepository.serviceTypesAlias[1]]?.let {
+                                for (i in it) {
+                                    for ((weight, j) in ServiceRepository.bodyServices.withIndex()) {
+                                        if (j.toUpperCase() == i?.title?.toUpperCase()) {
+                                            i.weight = weight
+                                        }
+                                    }
+                                }
+                            }
                             ServiceRepository.allServices.value = response
                             ServiceRepository.services.value = map
                         }
@@ -352,7 +361,7 @@ object ServerHelper {
     }
 
     fun getNodeDoctors() {
-        if(service == null) {
+        if (service == null) {
             service = makeApi2Service()
         }
         CoroutineScope(Dispatchers.IO).launch {
@@ -411,7 +420,7 @@ object ServerHelper {
     }
 
     fun getService(id: String, doctor: Doctors, size: Int) {
-        if(service == null) {
+        if (service == null) {
             service = makeApi2Service2()
         }
 //        Log.d("ram", Runtime.getRuntime().freeMemory().toString())
@@ -444,8 +453,7 @@ object ServerHelper {
                         if (doctorServicesCount == size) {
                             MainRepository.serviceDoctorsMap.value =
                                 MainRepository.serviceDoctorsMap.value
-                        }
-                        else {
+                        } else {
 
                         }
                     } catch (e: Exception) {
@@ -459,7 +467,7 @@ object ServerHelper {
     }
 
     fun getService(id: String, price: PriceElement) {
-        if(service2 == null) {
+        if (service2 == null) {
             service2 = makeApi2Service()
         }
         CoroutineScope(Dispatchers.IO).launch {

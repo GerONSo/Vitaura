@@ -8,18 +8,28 @@ import com.example.vitaura.R
 object ServiceRepository {
 
     var serviceTypes: List<String> = listOf(
-        "Лицо",
-        "Тело",
-        "Волосы",
-        "Интимные зоны",
-        "Диагностика"
+            "Лицо",
+            "Тело",
+            "Волосы",
+            "Интимные зоны",
+            "Диагностика"
     )
     var serviceTypesAlias: List<String> = listOf(
-        "face",
-        "body",
-        "hair",
-        "intim",
-        "diagnostics"
+            "face",
+            "body",
+            "hair",
+            "intim",
+            "diagnostics"
+    )
+
+    var bodyServices: List<String> = listOf(
+            "АППАРАТНАЯ КОСМЕТОЛОГИЯ",
+            "МАССАЖ",
+            "ЭПИЛЯЦИЯ",
+            "МЕЗОТЕРАПИЯ",
+            "ТРЕДЛИФТИНГ",
+            "ПЛАЗМОФИЛЛИНГ",
+            "БОТУЛИНОТЕРАПИЯ"
     )
 
 
@@ -27,7 +37,7 @@ object ServiceRepository {
     lateinit var openServiceListFragment: (list: MutableList<Service?>) -> Unit
     lateinit var openServiceFragment: (position: Int, serviceTitle: String?, serviceTypeTitle: String?, parentPosition: Int, serviceId: String, service: Service?) -> Unit
     var services: MutableLiveData<MutableMap<String, MutableList<Service?>>> =
-        MutableLiveData(mutableMapOf())
+            MutableLiveData(mutableMapOf())
     var allServices: MutableLiveData<MutableList<Service?>> = MutableLiveData(mutableListOf())
     var lastFragment = -1
 

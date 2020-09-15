@@ -64,6 +64,9 @@ class ServicesFragment : Fragment() {
                         list.add(service)
                     }
                 }
+                list.sortBy { service ->
+                    service?.weight
+                }
                 servicesAdapter = ServicesAdapter(list, text, position, type1)
                 rv_services.apply {
                     layoutManager =

@@ -96,7 +96,7 @@ class DoctorFragment : Fragment() {
         var pos: Int = 0
         for (i in DoctorsRepository.getDoctors().value?.indices!!) {
             val d = DoctorsRepository.getDoctors().value?.get(i)
-            if (d?.name?.replace("\n", " ") == doctor?.title) {
+            if (d?.name?.replace("\n", " ")?.substring(0, 2) == doctor?.title?.substring(0, 2)) {
                 doctor2 = d
                 pos = i
                 break

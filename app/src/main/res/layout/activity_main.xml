@@ -60,7 +60,7 @@
         android:layout_height="100dp"
         android:background="@color/colorAccent"
         android:elevation="8dp"
-        android:minHeight="74dp"
+        android:minHeight="100dp"
         app:contentInsetLeft="0dp"
         app:contentInsetStart="0dp"
         app:contentInsetStartWithNavigation="0dp"
@@ -152,11 +152,13 @@
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navigation_view"
             style="@style/NavigationView"
-            android:layout_width="400dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:layout_marginEnd="-65dp"
+            android:layout_marginRight="-65dp"
             android:layout_gravity="start"
             android:clipToPadding="false"
-            android:fitsSystemWindows="true"
             android:paddingLeft="10dp"
             android:paddingBottom="100dp"
             android:paddingTop="20dp"
@@ -202,7 +204,7 @@
 
                 <Button
                     android:id="@+id/sign_up_btn"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:layout_margin="15dp"
                     android:background="@drawable/sign_up_button"

@@ -41,6 +41,9 @@ class ServicesAdapter(
                     list.add(service)
                 }
             }
+            list.sortBy {
+                it?.weight
+            }
             holder.innerRecyclerView.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 adapter = ServiceInnerAdapter(list, title, parentPosition)

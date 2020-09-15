@@ -286,6 +286,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.services -> {
                 changeFragment(ServicesTypesFragment(), SERVICE_TYPES_FRAGMENT)
             }
+            R.id.prices -> {
+                changeFragment(PricesFragment(), PRICES_FRAGMENT_TAG)
+            }
 
             R.id.doctors -> {
                 val doctorsFragment = DoctorsFragment.newInstance { position ->

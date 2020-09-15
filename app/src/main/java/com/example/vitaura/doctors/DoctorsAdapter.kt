@@ -50,7 +50,8 @@ class DoctorsAdapter(
         var photoName = ""
         var specialization = ""
         for (doctor in DoctorsRepository.getDoctors().value!!) {
-            if (doctor?.name?.replace("\n", " ") == MainRepository.nodeDoctors.value?.data?.get(position)?.attrs?.title) {
+            if (doctor?.name?.replace("\n", " ")?.substring(0, 2) ==
+                MainRepository.nodeDoctors.value?.data?.get(position)?.attrs?.title?.substring(0, 2)) {
                 photoName = doctor?.photoName!!
                 specialization = doctor.spec
             }

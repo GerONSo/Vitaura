@@ -8,7 +8,7 @@ data class Doctor(@field:Json(name = "name") var name: String,
                   @field:Json(name = "mini_description") var miniDescription: String,
                   @field:Json(name = "description") var description: String)
 
-data class DoctorsData(@field:Json(name = "data") var data: List<Doctors>)
+data class DoctorsData(@field:Json(name = "data") var data: MutableList<Doctors>)
 
 data class Doctors(
     @field:Json(name = "relationships") var relationships: DoctorRelationships,

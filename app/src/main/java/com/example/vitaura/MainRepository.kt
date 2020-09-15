@@ -51,7 +51,7 @@ object MainRepository {
     fun sortNodeDoctors() {
         nodeDoctors.value?.let {
             it.data = it.data.also { list ->
-                list.sortedBy { doctors ->
+                list.sortBy { doctors ->
                     doctors.attrs.weight
                 }
             }
